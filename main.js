@@ -4,9 +4,7 @@ function setup() {
     createCanvas(400,200);
 
     input = select('#city');
-
-    button = select('#submit');
-    button.mousePressed(loadWeatherData(input.value(), 0));
+    loadWeatherData(input.value(), 0);
 }
 
 function draw() {
