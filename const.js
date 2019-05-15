@@ -13,5 +13,10 @@ class CONST {
             'acceleration' : 0.098,
             'rain_num' : 100,
         }
+
+        this.SERIAL = {
+            'port' : '/dev/serial0',
+            'baudrate' : {'baudrate': 115200},
+        }
     };
 }
