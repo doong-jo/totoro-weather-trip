@@ -4,6 +4,7 @@ let dandalion;
 let wheather;
 let rain;
 let snow;
+let serial;
 
 function setup() {
     createCanvas(960,520);
@@ -20,19 +21,38 @@ function setup() {
 
     snow = new Snow();
 
+    serial = new Serial();
+    serial.init();
+    serial.setMainSerialEventCallback(serialDataCallback);
+
     input = select('#city');
     wheather.loadWeatherData(input.value(), 0, setWheaterData);
 }
 
 function setWheaterData(data) {
-    wheather = data;
-    print(wheather);
+    print(data);
+}
+
+function serialDataCallback(data) {
+    print('main serial data callback receive : ', data);
+    // wind, country
+    // changeCountry(city)
+    // blowDandalion(wind)
+
+}
+
+function changeCountry(city) {
+    wheather.loadWeatherData(city, 0, setWheaterData);
+}
+
+function blowDandalion(wind) {
+    // dandalion.blow(wind);
 }
 
 function draw() {
     dandalion.Dandaliondraw();
     // rain.draw();
-    snow.draw();
+    // snow.draw();
 
   /*background(0);
   var data = getWeatherData() ;
