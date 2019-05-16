@@ -1,12 +1,20 @@
 const CONSTANT = new CONST();
 
 var input, button;
+var totoroBody;
+var totoroFace;
+
 
 let dandalion;
 let wheather;
 let rain;
 let snow;
 let serial;
+
+function preload() {
+  totoroBody = loadImage('assets/Totoro_body.png');
+  totoroFace = loadImage('assets/Totoro_body_02.png');
+}
 
 function setup() {
     createCanvas(960,520);
@@ -51,7 +59,15 @@ function blowDandalion(wind) {
 }
 
 function draw() {
-    dandalion.Dandaliondraw();
+
+  drawSky(CONSTANT.DIMEN.NewYock, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
+
+  dandalion.Dandaliondraw();
+
+  image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+
+
     // rain.draw();
     // snow.draw();
 

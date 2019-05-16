@@ -57,6 +57,7 @@ class Dandalion {
 
     image(this.img, 0, 0, this.canvas_x, this.canvas_y);
     //main branch display
+
     if (params.displayMode || params.windMode) {
       push();
       strokeWeight(3);
@@ -134,93 +135,3 @@ class Dandalion {
     }
   }
 }
-
-
-/*function DandalionSetup() {
-  createCanvas(960, 520);
-    textSize(12);
-    for (var i = 0; i < 200; i++) {
-      particles.push(new Particle(random(width), random(height)));
-    }
-    centerBranch = createVector(width / 6, height * 1 / 2);
-
-    img = loadImage('assets/background.png');
-}*/
-
-
-/*function Dandaliondraw() {
-
-  image(img, 0, 0, img.width * 1/2, img.height * 1/2);
-
-  //main branch display
-  if (params.displayMode || params.windMode) {
-    push();
-    strokeWeight(3);
-    stroke(255, 100);
-    line(centerBranch.x, height, centerBranch.x, centerBranch.y);
-    pop();
-  }
-
-  for (var i = 0; i < particles.length; i++) {
-    if (params.displayMode) {
-      particles[i].moveWithLerp();
-    } else if (params.windMode) {
-      if (blowArea < params.s + 20 / params.test) {
-        blowArea += 0.001;
-      }
-      var distance = particles[i].pos.dist(centerBranch);
-      if (distance > params.s - blowArea + 20) {
-        particles[i].wind();
-      }
-    } else {
-      // particles[i].checkBoundaries();
-    }
-    particles[i].update();
-    particles[i].display();
-  }
-
-  push();
-  translate(centerBranch.x, centerBranch.y);
-  var count = 0;
-  for (var a = 0; a < TWO_PI * params.t; a += params.step) {
-    //clock shape
-    noStroke();
-    // if (params.debugMode) {
-    //   alpha_value = 0;
-    // } else {
-    //   alpha_value = 0;
-    // }
-    fill(255, alpha_value);
-    var k = params.n / params.d;
-    var r = params.s * cos(k * a) + params.c;
-    var x = r * cos(a) + (r / params.p) * cos(params.angle);
-    var y = r * sin(a) + (r / params.p) * sin(params.angle);
-    ellipse(x, y, 3, 3);
-    //match
-    if (count < particles.length) {
-      particles[count].targetPos = createVector(x + centerBranch.x, y + centerBranch.y);
-    }
-    count++;
-  }
-  //count adjustment
-  if (count < particles.length) {
-    particles.pop();
-  } else if (count > particles.length) {
-    particles.push(new Particle(centerBranch.x, centerBranch.y));
-  }
-  pop();
-  if (params.debugMode) {
-    // text display
-    fill(255);
-    text("frameRate:" + round(frameRate()), 15, 30);
-    text("count:" + count, 15, 50);
-    text("# of particles:" + particles.length, 15, 70);
-    //text("r = s * cos(n / d * theta) + c", 15, 90);
-    //text("x = r * cos(theta) + r / p * cos(angle)", 15, 110);
-    //text("y = r * sin(theta) + r / p * sin(angle)", 15, 130);
-    stroke(255);
-    noFill();
-    //ellipse(centerBranch.x, centerBranch.y, 2 * params.s + params.c, 2 * params.s + params.c);
-    ellipse(centerBranch.x, centerBranch.y, blowArea, blowArea);
-  }
-}*/
