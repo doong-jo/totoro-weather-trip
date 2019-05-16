@@ -1,8 +1,3 @@
-const CONSTANT = new CONST();
-
-var serial;
-var inData;
-
 class Serial {
     constructor(props) {
         this.serial = {};

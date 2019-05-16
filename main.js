@@ -1,3 +1,5 @@
+const CONSTANT = new CONST();
+
 var input, button;
 
 let dandalion;
@@ -9,7 +11,6 @@ let serial;
 function setup() {
     createCanvas(960,520);
 
-    const CONSTANT = new CONST();
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
 

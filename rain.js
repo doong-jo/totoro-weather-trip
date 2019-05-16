@@ -1,5 +1,3 @@
-const CONSTANT = new CONST();
-
 class Drop {
     constructor(props) {
         this.initX = function() {
