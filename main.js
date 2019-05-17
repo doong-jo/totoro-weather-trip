@@ -4,7 +4,7 @@ var input, button;
 var totoroBody;
 var totoroFace;
 
-
+let timebackground;
 let dandalion;
 let wheather;
 let rain;
@@ -18,6 +18,9 @@ function preload() {
 
 function setup() {
     createCanvas(960,520);
+
+    timebackground = new timeBackground(0.8);
+    timebackground.init();
 
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
@@ -60,7 +63,7 @@ function blowDandalion(wind) {
 
 function draw() {
 
-  drawSky(CONSTANT.DIMEN.NewYock, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
+  timebackground.drawSky(CONSTANT.DIMEN.Seoul, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
 
   dandalion.Dandaliondraw();
 

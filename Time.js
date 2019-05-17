@@ -1,116 +1,112 @@
+class timeBackground{
 
-var ratio;
+  constructor(ratio){
+    this.ratio = ratio;
+  }
 
-var r1;
-var g1;
-var b1;
+  init(){
+        this.hours = 0;
 
-var r2;
-var g2;
-var b2;
+        this.r1 = 0;
+        this.g1 = 0;
+        this.b1 = 0;
 
-var color1;
-var color2;
-var color3;
-var color4;
+        this.r2 = 0;
+        this.g2 = 0;
+        this.b2 = 0;
 
-function setGradient(x, y, w, h, c1, c2) {
+        this.color1 = {};
+        this.color2 = {};
+        this.color3 = {};
+        this.color4 = {};
+  }
 
-  noFill();
+  getCityHours(tzOffset) { // 24시간제
+    var now = new Date();
+    var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
+    now.setTime(tz);
 
-    for (var i = y; i <= y+h; i++) {
-      var inter = map(i, y, y+h, 0, 0.8);
-      var c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(x, i, x+w, i);
+    var s = now.getHours() + now.getMinutes() / 60;
+
+    this.hours = s;
+  }
+
+  drawSky(tzOffset){
+
+    this.getCityHours(tzOffset);
+
+    if(this.hours <= 5){
+
+      this.color1 = CONSTANT.COLOR.black;
+      this.color2 = CONSTANT.COLOR.bright_indigo;
+      this.color3 = CONSTANT.COLOR.dark_indigo;
+      this.color4 = CONSTANT.COLOR.bright_purple;
+
+      this.drawGradient(0, 5, this.color1, this.color2, this.color3, this.color4, this.hours);
+
+    } else if(this.hours > 5 && this.hours <= 12 ){
+
+      this.color1 = CONSTANT.COLOR.dark_indigo;
+      this.color2 = CONSTANT.COLOR.bright_purple;
+      this.color3 = CONSTANT.COLOR.blue;
+      this.color4 = CONSTANT.COLOR.bright_yellow;
+
+      this.drawGradient(5, 12, this.color1, this.color2, this.color3, this.color4, this.hours);
+
+    }else if(this.hours > 12 && this.hours <= 16){
+
+      this.color1 = CONSTANT.COLOR.blue;
+      this.color2 = CONSTANT.COLOR.bright_yellow;
+      this.color3 = CONSTANT.COLOR.bright_blue;
+      this.color4 = CONSTANT.COLOR.white;
+
+       this.drawGradient(12, 16, this.color1, this.color2, this.color3, this.color4, this.hours);
+
+    }else if(this.hours > 16 && this.hours <= 20){
+
+      this.color1 = CONSTANT.CONSTANT.COLOR.bright_blue;
+      this.color2 = CONSTANT.CONSTANT.COLOR.white;
+      this.color3 = CONSTANT.CONSTANT.COLOR.dark_purple;
+      this.color4 = CONSTANT.CONSTANT.COLOR.dark_orange;
+
+      this.drawGradient(16, 20, this.color1, this.color2, this.color3, this.color4, this.hours);
+
+    }else if(this.hours > 20 && this.hours <= 24){
+
+      this.color1 = CONSTANT.COLOR.dark_purple;
+      this.color2 = CONSTANT.COLOR.dark_orange;
+      this.color3 = CONSTANT.COLOR.black;
+      this.color4 = CONSTANT.COLOR.bright_indigo;
+
+      this.drawGradient(20, 24, this.color1, this.color2, this.color3, this.color4, this.hours);
+
     }
-}
-
-function drawGradient(start, end, color1, color2, color3, color4, hours){
-
-  r1 = map(hours, start, end, color1.r, color2.r);
-  g1 = map(hours, start, end, color1.g, color2.g);
-  b1 = map(hours, start, end, color1.b, color2.b);
-
-  r2 = map(hours, start, end, color3.r, color4.r);
-  g2 = map(hours, start, end, color3.g, color4.g);
-  b2 = map(hours, start, end, color3.b, color4.b);
-
-  setGradient(0, 0, width, height, color(r1, g1, b1), color(r2, g2, b2) );
-}
-
-function drawSky(tzOffset, width, height){
-
-  var hours = getCityHours(tzOffset);
-
-  if(hours <= 5){
-
-    color1 = CONSTANT.COLOR.black;
-    color2 = CONSTANT.COLOR.bright_indigo;
-    color3 = CONSTANT.COLOR.dark_indigo;
-    color4 = CONSTANT.COLOR.bright_purple;
-
-    drawGradient(0, 5, color1, color2, color3, color4, hours);
-
-  } else if(hours > 5 && hours <= 12 ){
-
-    color1 = CONSTANT.COLOR.dark_indigo;
-    color2 = CONSTANT.COLOR.bright_purple;
-    color3 = CONSTANT.COLOR.blue;
-    color4 = CONSTANT.COLOR.bright_yellow;
-
-    drawGradient(5, 12, color1, color2, color3, color4, hours);
-
-  }else if(hours > 12 && hours <= 16){
-
-    color1 = CONSTANT.COLOR.blue;
-    color2 = CONSTANT.COLOR.bright_yellow;
-    color3 = CONSTANT.COLOR.bright_blue;
-    color4 = CONSTANT.COLOR.white;
-
-     drawGradient(12, 16, color1, color2, color3, color4, hours);
-
-  }else if(hours > 16 && hours <= 20){
-
-    color1 = CONSTANT.CONSTANT.COLOR.bright_blue;
-    color2 = CONSTANT.CONSTANT.COLOR.white;
-    color3 = CONSTANT.CONSTANT.COLOR.dark_purple;
-    color4 = CONSTANT.CONSTANT.COLOR.dark_orange;
-
-    drawGradient(16, 20, color1, color2, color3, color4, hours);
-
-  }else if(hours > 20 && hours <= 24){
-
-    color1 = CONSTANT.COLOR.dark_purple;
-    color2 = CONSTANT.COLOR.dark_orange;
-    color3 = CONSTANT.COLOR.black;
-    color4 = CONSTANT.COLOR.bright_indigo;
-
-    drawGradient(20, 24, color1, color2, color3, color4, hours);
 
   }
 
-}
+  setGradient(x, y, w, h, c1, c2) {
 
+    noFill();
 
-function getCityHours(tzOffset) { // 24시간제
-  var now = new Date();
-  var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
-  now.setTime(tz);
-
-  var s = now.getHours() + now.getMinutes() / 60;
-
-  return s;
-}
-
-
-function leadingZeros(n, digits) {
-  var zero = '';
-  n = n.toString();
-
-  if (n.length < digits) {
-    for (i = 0; i < digits - n.length; i++)
-      zero += '0';
+      for (var i = y; i <= y+h; i++) {
+        var inter = map(i, y, y+h, 0, this.ratio);
+        var c = lerpColor(c1, c2, inter);
+        stroke(c);
+        line(x, i, x+w, i);
+      }
   }
-  return zero + n;
+
+  drawGradient(start, end, color1, color2, color3, color4, hours){
+
+    this.r1 = map(hours, start, end, color1.r, color2.r);
+    this.g1 = map(hours, start, end, color1.g, color2.g);
+    this.b1 = map(hours, start, end, color1.b, color2.b);
+
+    this.r2 = map(hours, start, end, color3.r, color4.r);
+    this.g2 = map(hours, start, end, color3.g, color4.g);
+    this.b2 = map(hours, start, end, color3.b, color4.b);
+
+    this.setGradient(0, 0, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height, color(this.r1, this.g1, this.b1), color(this.r2, this.g2, this.b2) );
+  }
+
 }
