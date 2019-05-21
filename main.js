@@ -35,6 +35,12 @@ function setWheaterData(data) {
 }
 
 function serialDataCallback(data) {
+    /*
+        send : "country_value/sound_value"
+
+        country_value : 1 ~ 5 (divide angle)
+        sound_value : is_wind ? 0 ~ 100 : -1
+    */
     print('main serial data callback receive : ', data);
     // wind, country
     // changeCountry(city)
@@ -47,11 +53,17 @@ function changeCountry(city) {
 }
 
 function blowDandalion(wind) {
+    dandalion.blow(wind);
     // dandalion.blow(wind);
+}
+
+function resetDandalion() {
+    dandalion.reset();
 }
 
 function draw() {
     dandalion.Dandaliondraw();
+    blowDandalion(0.2);
     // rain.draw();
     // snow.draw();
 

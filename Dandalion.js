@@ -10,7 +10,7 @@ var params = {
   angle: 0,
   step: 2,
   p: 20,
-  test: 12
+  test: 0
 };
 
 var gui = new dat.gui.GUI();
@@ -41,6 +41,8 @@ class Dandalion {
     this.centerBranch;
     this.blowArea = 0;
     this.blowStrength = 0;
+
+    this.blowAdd = 0;
   }
 
   init(){
@@ -51,6 +53,21 @@ class Dandalion {
     this.centerBranch = createVector(this.canvas_x / 6, this.canvas_y * 1 / 2);
 
     this.img = loadImage('assets/background.png');
+  }
+
+  blow(value) {
+      this.blowAdd += value;
+      console.log(this.blowArea);
+  }
+
+  reset() {
+      params.displayMode = true;
+      params.windMode = false;
+
+      setTimeout(function() {
+          params.displayMode = false;
+          params.windMode = true;
+      }, 3000);
   }
 
   Dandaliondraw(){
@@ -70,12 +87,13 @@ class Dandalion {
       pop();
     }
 
+    var blowAdd = this.blowAdd;
     for (var i = 0; i < this.particles.length; i++) {
       if (params.displayMode) {
         this.particles[i].moveWithLerp();
       } else if (params.windMode) {
         if (this.blowArea < params.s + 20 / params.test) {
-          this.blowArea += 0.001;
+          this.blowArea = this.blowAdd;
         }
         var distance = this.particles[i].pos.dist(this.centerBranch);
         if (distance > params.s - this.blowArea + 20) {
