@@ -5,16 +5,20 @@ class timeBackground{
   }
 
   init(){
-        this.hours = 0;
 
+        this.hours = 0;
+        //Use background image color change
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
+
+        //Use Sky gradient color change
         this.r1 = 0;
         this.g1 = 0;
         this.b1 = 0;
-
         this.r2 = 0;
         this.g2 = 0;
         this.b2 = 0;
-
         this.color1 = {};
         this.color2 = {};
         this.color3 = {};
@@ -30,6 +34,27 @@ class timeBackground{
 
     this.hours = s;
   }
+
+timeByTint(tzOffset){
+
+  this.getCityHours(tzOffset);
+
+  var alpha;
+
+  if(this.hours <= 5){
+    alpha = map(this.hours, 0, 5, 80, 200);
+  } else if(this.hours > 5 && this.hours <= 12 ){
+    alpha = map(this.hours, 5, 12, 200, 255);
+  }else if(this.hours > 12 && this.hours <= 16){
+    alpha = map(this.hours, 12, 16, 255, 200);
+  }else if(this.hours > 16 && this.hours <= 20){
+    alpha = map(this.hours, 16, 20, 200, 100);
+  }else if(this.hours > 20 && this.hours <= 24){
+    alpha = map(this.hours, 16, 20, 100, 80);
+  }
+
+  tint(alpha);
+}
 
   drawSky(tzOffset){
 
@@ -64,10 +89,10 @@ class timeBackground{
 
     }else if(this.hours > 16 && this.hours <= 20){
 
-      this.color1 = CONSTANT.CONSTANT.COLOR.bright_blue;
-      this.color2 = CONSTANT.CONSTANT.COLOR.white;
-      this.color3 = CONSTANT.CONSTANT.COLOR.dark_purple;
-      this.color4 = CONSTANT.CONSTANT.COLOR.dark_orange;
+      this.color1 = CONSTANT.COLOR.bright_blue;
+      this.color2 = CONSTANT.COLOR.white;
+      this.color3 = CONSTANT.COLOR.dark_purple;
+      this.color4 = CONSTANT.COLOR.dark_orange;
 
       this.drawGradient(16, 20, this.color1, this.color2, this.color3, this.color4, this.hours);
 
@@ -79,10 +104,8 @@ class timeBackground{
       this.color4 = CONSTANT.COLOR.bright_indigo;
 
       this.drawGradient(20, 24, this.color1, this.color2, this.color3, this.color4, this.hours);
-
     }
-
-  }
+}
 
   setGradient(x, y, w, h, c1, c2) {
 

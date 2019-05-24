@@ -35,12 +35,13 @@ class Dandalion {
   constructor(x, y){
     this.canvas_x = x;
     this.canvas_y = y;
-    this.img;
     this.particles = [];
     this.alpha_value = 0;
     this.centerBranch;
     this.blowArea = 0;
     this.blowStrength = 0;
+    this.hours = 0;
+    this.branchColor;
   }
 
   init(){
@@ -49,24 +50,48 @@ class Dandalion {
       this.particles.push(new Particle(random(this.canvas_x), random(this.canvas_y)));
     }
     this.centerBranch = createVector(this.canvas_x / 6, this.canvas_y * 1 / 2);
-
-    this.img = loadImage('assets/background.png');
   }
 
-  Dandaliondraw(){
+  getDandalionHours(tzOffset) { // 24시간제
+    var now = new Date();
+    var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
+    now.setTime(tz);
 
-    image(this.img, 0, 0, this.canvas_x, this.canvas_y);
-    //main branch display
+    var s = now.getHours() + now.getMinutes() / 60;
+
+    this.hours = s;
+  }
+
+  getBranchColor(){
+
+    if(this.hours <= 5){
+      this.branchColor = map(this.hours, 0, 5, 80, 200);
+    } else if(this.hours > 5 && this.hours <= 12 ){
+      this.branchColor = map(this.hours, 5, 12, 200, 255);
+    }else if(this.hours > 12 && this.hours <= 16){
+      this.branchColor = map(this.hours, 12, 16, 255, 200);
+    }else if(this.hours > 16 && this.hours <= 20){
+      this.branchColor = map(this.hours, 16, 20, 200, 100);
+    }else if(this.hours > 20 && this.hours <= 24){
+      this.branchColor = map(this.hours, 16, 20, 100, 80);
+    }
+  }
+
+  Dandaliondraw(tzOffset){
+
+    this.getDandalionHours(tzOffset);
+
+    this.getBranchColor();
 
     if (params.displayMode || params.windMode) {
       push();
       strokeWeight(3);
-      stroke(255, 100);
-      line(this.centerBranch.x, this.canvas_y, this.centerBranch.x, this.centerBranch.y);
+      stroke(this.branchColor, 100);
+      line(this.centerBranch.x, this.canvas_y - 15, this.centerBranch.x, this.centerBranch.y);
 
       strokeWeight(1);
       stroke("#7A5241");
-      line(this.centerBranch.x, this.canvas_y, this.centerBranch.x, this.centerBranch.y);
+      line(this.centerBranch.x, this.canvas_y - 15, this.centerBranch.x, this.centerBranch.y);
 
       pop();
     }
@@ -85,7 +110,7 @@ class Dandalion {
       } else {
         // particles[i].checkBoundaries();
       }
-      this.particles[i].update();
+      this.particles[i].update(tzOffset);
       this.particles[i].display();
     }
 

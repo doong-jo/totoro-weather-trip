@@ -11,9 +11,12 @@ let rain;
 let snow;
 let serial;
 
+var img_hill;
+
 function preload() {
   totoroBody = loadImage('assets/Totoro_body.png');
   totoroFace = loadImage('assets/Totoro_body_02.png');
+  img_hill = loadImage('assets/background.png');
 }
 
 function setup() {
@@ -39,6 +42,7 @@ function setup() {
 
     input = select('#city');
     wheather.loadWeatherData(input.value(), 0, setWheaterData);
+
 }
 
 function setWheaterData(data) {
@@ -63,12 +67,21 @@ function blowDandalion(wind) {
 
 function draw() {
 
-  timebackground.drawSky(CONSTANT.DIMEN.Seoul, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
+  tint(255);
 
-  dandalion.Dandaliondraw();
+  timebackground.drawSky(CONSTANT.DIMEN.NewYock);
+
+  timebackground.timeByTint(CONSTANT.DIMEN.NewYock);
+
+  image(img_hill, 0, 0, 960, 520);
+
+  dandalion.Dandaliondraw(CONSTANT.DIMEN.NewYock);
+
 
   image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  //tint(255, 0, 0, 150);
   image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+//  tint(255, 255);
 
 
     // rain.draw();
