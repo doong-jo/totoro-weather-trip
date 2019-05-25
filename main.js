@@ -24,9 +24,12 @@ function setup() {
 
     timebackground = new timeBackground(0.8);
     timebackground.init();
+    setInterval(timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul), 10000);
+
 
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
+    setInterval(dandalion.getBranchColor(CONSTANT.DIMEN.Seoul), 10000);
 
     wheather = new Weather();
     wheather.init();
@@ -68,20 +71,20 @@ function blowDandalion(wind) {
 function draw() {
 
   tint(255);
+  background(0);
+  timebackground.drawSky();
 
-  timebackground.drawSky(CONSTANT.DIMEN.NewYock);
+  timebackground.timeByTint(CONSTANT.DIMEN.Seoul);
 
-  timebackground.timeByTint(CONSTANT.DIMEN.NewYock);
+  image(img_hill, 0, 370, 960, 150);
 
-  image(img_hill, 0, 0, 960, 520);
-
-  dandalion.Dandaliondraw(CONSTANT.DIMEN.NewYock);
+  dandalion.Dandaliondraw();
 
 
   image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  //tint(255, 0, 0, 150);
+  tint(255, 0, 0, 255);
   image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-//  tint(255, 255);
+  tint(255, 255);
 
 
     // rain.draw();

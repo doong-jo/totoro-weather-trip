@@ -62,7 +62,9 @@ class Dandalion {
     this.hours = s;
   }
 
-  getBranchColor(){
+  getBranchColor(tzOffset){
+
+    this.getDandalionHours(tzOffset);
 
     if(this.hours <= 5){
       this.branchColor = map(this.hours, 0, 5, 80, 200);
@@ -73,15 +75,11 @@ class Dandalion {
     }else if(this.hours > 16 && this.hours <= 20){
       this.branchColor = map(this.hours, 16, 20, 200, 100);
     }else if(this.hours > 20 && this.hours <= 24){
-      this.branchColor = map(this.hours, 16, 20, 100, 80);
+      this.branchColor = map(this.hours, 20, 24, 100, 80);
     }
   }
 
-  Dandaliondraw(tzOffset){
-
-    this.getDandalionHours(tzOffset);
-
-    this.getBranchColor();
+  Dandaliondraw(){
 
     if (params.displayMode || params.windMode) {
       push();
@@ -110,8 +108,8 @@ class Dandalion {
       } else {
         // particles[i].checkBoundaries();
       }
-      this.particles[i].update(tzOffset);
-      this.particles[i].display();
+      this.particles[i].update();
+      this.particles[i].display(this.branchColor);
     }
 
     push();

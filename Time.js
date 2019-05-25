@@ -50,13 +50,13 @@ timeByTint(tzOffset){
   }else if(this.hours > 16 && this.hours <= 20){
     alpha = map(this.hours, 16, 20, 200, 100);
   }else if(this.hours > 20 && this.hours <= 24){
-    alpha = map(this.hours, 16, 20, 100, 80);
+    alpha = map(this.hours, 20, 24, 100, 80);
   }
 
   tint(alpha);
 }
 
-  drawSky(tzOffset){
+  calculateByTimeToSky(tzOffset){
 
     this.getCityHours(tzOffset);
 
@@ -129,7 +129,10 @@ timeByTint(tzOffset){
     this.g2 = map(hours, start, end, color3.g, color4.g);
     this.b2 = map(hours, start, end, color3.b, color4.b);
 
-    this.setGradient(0, 0, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height, color(this.r1, this.g1, this.b1), color(this.r2, this.g2, this.b2) );
+  }
+
+  drawSky(){
+      this.setGradient(0, 0, CONSTANT.DIMEN.width, CONSTANT.DIMEN.height, color(this.r1, this.g1, this.b1), color(this.r2, this.g2, this.b2) );
   }
 
 }
