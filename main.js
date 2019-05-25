@@ -1,18 +1,35 @@
 const CONSTANT = new CONST();
 
 var input, button;
+var totoroBody;
+var totoroFace;
 
+let timebackground;
 let dandalion;
 let wheather;
 let rain;
 let snow;
 let serial;
 
+var img_hill;
+
+function preload() {
+  totoroBody = loadImage('assets/Totoro_body.png');
+  totoroFace = loadImage('assets/Totoro_body_02.png');
+  img_hill = loadImage('assets/background.png');
+}
+
 function setup() {
     createCanvas(960,520);
 
+    timebackground = new timeBackground(0.8);
+    timebackground.init();
+    setInterval(timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul), 10000);
+
+
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
+    setInterval(dandalion.getBranchColor(CONSTANT.DIMEN.Seoul), 10000);
 
     wheather = new Weather();
     wheather.init();
@@ -28,6 +45,7 @@ function setup() {
 
     input = select('#city');
     wheather.loadWeatherData(input.value(), 0, setWheaterData);
+
 }
 
 function setWheaterData(data) {
@@ -51,7 +69,24 @@ function blowDandalion(wind) {
 }
 
 function draw() {
-    dandalion.Dandaliondraw();
+
+  tint(255);
+  background(0);
+  timebackground.drawSky();
+
+  timebackground.timeByTint(CONSTANT.DIMEN.Seoul);
+
+  image(img_hill, 0, 370, 960, 150);
+
+  dandalion.Dandaliondraw();
+
+
+  image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  tint(255, 0, 0, 255);
+  image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  tint(255, 255);
+
+
     // rain.draw();
     // snow.draw();
 
