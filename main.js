@@ -7,6 +7,7 @@ var totoroFace;
 let timebackground;
 let dandalion;
 let wheather;
+let cloudd;
 let rain;
 let snow;
 let serial;
@@ -17,6 +18,8 @@ function preload() {
   totoroBody = loadImage('assets/Totoro_body.png');
   totoroFace = loadImage('assets/Totoro_body_02.png');
   img_hill = loadImage('assets/background.png');
+  //Gif image
+  //gif_createImg = createImg("assets/normal.gif");
 }
 
 function setup() {
@@ -24,15 +27,22 @@ function setup() {
 
     timebackground = new timeBackground(0.8);
     timebackground.init();
-    setInterval(timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul), 10000);
-
+    timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Toronto);
+    setInterval(function(){
+      timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul);
+    }, 60000);
 
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
-    setInterval(dandalion.getBranchColor(CONSTANT.DIMEN.Seoul), 10000);
+    dandalion.getBranchColor(CONSTANT.DIMEN.Seoul);
+    setInterval(function(){
+      dandalion.getBranchColor(CONSTANT.DIMEN.Seoul);
+    }, 60000);
 
     wheather = new Weather();
     wheather.init();
+
+    cloudd = new cloud();
 
     rain = new Rain();
     rain.init();
@@ -50,6 +60,10 @@ function setup() {
 
 function setWheaterData(data) {
     print(data);
+
+    cloudd.init(data[0].clouds.all, data[0].wind.speed);
+
+    console.log(data[0].clouds.all);
 }
 
 function serialDataCallback(data) {
@@ -68,21 +82,23 @@ function blowDandalion(wind) {
     // dandalion.blow(wind);
 }
 
+
 function draw() {
 
-  tint(255);
-  background(0);
   timebackground.drawSky();
 
-  timebackground.timeByTint(CONSTANT.DIMEN.Seoul);
+  timebackground.timeByCloudTint();
+  cloudd.drawCloud();
+
+  timebackground.timeByTint();
 
   image(img_hill, 0, 370, 960, 150);
 
   dandalion.Dandaliondraw();
 
-
+  //gif_createImg.position(50, 350, 250, 350);
   image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 0, 0, 255);
+  tint(200, 50, 50, 255);
   image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
   tint(255, 255);
 

@@ -5,7 +5,7 @@ class Weather {
         self = this;
         this.api = 'http://api.openweathermap.org/data/2.5/forecast?q=';
         this.apiKey = '&APPID=45ffb063f1238f824be465807f3f1935';
-        this.cityNames = ['Seoul', 'London', 'Beijing', 'Tokyo', 'Washington'];
+        this.cityNames = ['Seoul', 'NewYock', 'Beijing', 'Tokyo', 'Toronto'];
     }
 
     init() {
@@ -50,6 +50,7 @@ class Weather {
     drawSnowing(volume) {
 
     }
+
 }
 
 // function getWeatherData() {
