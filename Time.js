@@ -66,7 +66,7 @@ timeByCloudTint(){
     alpha = map(this.hours, 12, 16, 255, 200);
   }else if(this.hours > 16 && this.hours <= 18){
     alpha = map(this.hours, 16, 18, 200, 50);
-  }else if(this.hours > 18 && this.hours <= 18){
+  }else if(this.hours > 18 && this.hours <= 20){
     alpha = map(this.hours, 18, 20, 50, 20);
   }else if(this.hours > 20 && this.hours <= 24){
     alpha = map(this.hours, 20, 24, 20, 0);
