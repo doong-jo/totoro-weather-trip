@@ -23,36 +23,11 @@ class Particle {
 
     this.origialSize = random(0.7, 1.3);
     this.size = 1.0;
-    this.hours = 0;
+    this.seedColor = 0;
   }
 
   init() {
     //
-  }
-
-  getParticleHours(tzOffset) { // 24시간제
-    var now = new Date();
-    var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
-    now.setTime(tz);
-
-    var s = now.getHours() + now.getMinutes() / 60;
-
-    this.hours = s;
-  }
-
-  getSeedColor(){
-
-    if(this.hours <= 5){
-      this.SeedColor = map(this.hours, 0, 5, 80, 200);
-    } else if(this.hours > 5 && this.hours <= 12 ){
-      this.SeedColor = map(this.hours, 5, 12, 200, 255);
-    }else if(this.hours > 12 && this.hours <= 16){
-      this.SeedColor = map(this.hours, 12, 16, 255, 200);
-    }else if(this.hours > 16 && this.hours <= 20){
-      this.SeedColor = map(this.hours, 16, 20, 200, 100);
-    }else if(this.hours > 20 && this.hours <= 24){
-      this.SeedColor = map(this.hours, 16, 20, 100, 80);
-    }
   }
 
   moveWithLerp() {
@@ -64,13 +39,10 @@ class Particle {
     this.acc.add(f)
   }
 
-  update(tzOffset) {
+  update() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
     this.acc.mult(0);
-    this.getParticleHours(tzOffset);
-
-    this.getSeedColor();
   }
 
   wind() {
@@ -81,7 +53,10 @@ class Particle {
     this.update();
   }
 
-  display() {
+  display(branchColor) {
+
+    this.seedColor = branchColor;
+    
     push();
     var center = createVector(width / 6, height * 1 / 2);
     var vector = p5.Vector.sub(center, this.pos);
@@ -169,7 +144,7 @@ class Particle {
     line(0, -15, 5, -20);
 
     strokeWeight(5);
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     line(0, 0, 0, -15);
     line(0, -15, -10, -20);
     line(0, -15, -5, -20);
@@ -195,7 +170,7 @@ class Particle {
 
   node1() {
     strokeWeight(1);
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     line(this.rad, 0, this.rad, -15);
     line(this.rad, -15, this.rad + 10, -18);
     line(this.rad + 10, -18, this.rad + 10, -3);
@@ -204,7 +179,7 @@ class Particle {
   }
   node2() {
     strokeWeight(1);
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     line(this.rad, 0, this.rad, -15);
     ellipse(0, 0, this.rad * 2.3, this.rad * 2);
     beginShape();
@@ -217,14 +192,14 @@ class Particle {
   }
   node3() {
     strokeWeight(1);
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     noFill();
     line(this.rad, 0, this.rad, -15);
     ellipse(this.rad + 4, -15, 3 * this.rad, 2.5 * this.rad);
     pop();
   }
   node4() {
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     noFill();
     line(this.rad, 0, this.rad, -15);
     line(this.rad + 5, -2, this.rad + 5, -17);
@@ -234,7 +209,7 @@ class Particle {
   }
   node5() {
     strokeWeight(1);
-    stroke(this.SeedColor, 100);
+    stroke(this.seedColor, 100);
     line(this.rad, 0, this.rad, -15);
     ellipse(this.rad + 4, -1, 3 * this.rad, 2.5 * this.rad);
   }
