@@ -56,7 +56,7 @@ class Particle {
   display(branchColor) {
 
     this.seedColor = branchColor;
-    
+
     push();
     var center = createVector(width / 6, height * 1 / 2);
     var vector = p5.Vector.sub(center, this.pos);

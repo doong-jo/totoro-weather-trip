@@ -8,6 +8,7 @@ let timebackground;
 let dandalion;
 let wheather;
 let cloudd;
+let tempp;
 let rain;
 let snow;
 let serial;
@@ -17,6 +18,7 @@ var img_hill;
 function preload() {
   totoroBody = loadImage('assets/Totoro_body.png');
   totoroFace = loadImage('assets/Totoro_body_02.png');
+  blueTotoro = createImg('assets/blueTotoro.gif');
   img_hill = loadImage('assets/background.png');
   //Gif image
   //gif_createImg = createImg("assets/normal.gif");
@@ -27,7 +29,7 @@ function setup() {
 
     timebackground = new timeBackground(0.8);
     timebackground.init();
-    timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Toronto);
+    timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul);
     setInterval(function(){
       timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul);
     }, 60000);
@@ -43,6 +45,8 @@ function setup() {
     wheather.init();
 
     cloudd = new cloud();
+
+    tempp = new Temp();
 
     rain = new Rain();
     rain.init();
@@ -63,7 +67,7 @@ function setWheaterData(data) {
 
     cloudd.init(data[0].clouds.all, data[0].wind.speed);
 
-    console.log(data[0].clouds.all);
+    tempp.init(data[0].main.temp);
 }
 
 function serialDataCallback(data) {
@@ -92,16 +96,16 @@ function draw() {
 
   timebackground.timeByTint();
 
-  image(img_hill, 0, 370, 960, 150);
+  image(img_hill, 0, 205, 960, 315);
 
   dandalion.Dandaliondraw();
 
-  //gif_createImg.position(50, 350, 250, 350);
-  image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(200, 50, 50, 255);
-  image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 255);
 
+  image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  tempp.tempByTint();
+  image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
+  tint(255);
+  blueTotoro.position(520, 150);
 
     // rain.draw();
     // snow.draw();
