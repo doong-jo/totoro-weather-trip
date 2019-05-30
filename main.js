@@ -11,6 +11,7 @@ let rain;
 let snow;
 let serial;
 let info;
+let cloud;
 
 let cur_city;
 
@@ -20,6 +21,7 @@ function preload() {
   totoroBody = loadImage('assets/Totoro_body.png');
   totoroFace = loadImage('assets/Totoro_body_02.png');
   img_hill = loadImage('assets/background.png');
+  blueTotoro = createImg('assets/blueTotoro.gif');
 }
 
 function setup() {
@@ -29,9 +31,17 @@ function setup() {
 
     timebackground = new timeBackground(0.8);
     timebackground.init();
+    timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
+    setInterval(function(){
+      timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
+    }, 60000);
 
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
+    dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]);
+    setInterval(function(){
+      dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]);
+    }, 60000);
 
     wheather = new Weather();
     wheather.init();
@@ -40,6 +50,9 @@ function setup() {
     rain.init();
 
     snow = new Snow();
+
+    cloud = new Cloud();
+
 
     // serial = new Serial();
     // serial.init();
@@ -57,12 +70,14 @@ function setup() {
     info.setCityText(cur_city);
     info.setDateText('JUN May 30 23:49');
 
-    setInterval(timebackground.calculateByTimeToSky(CONSTANT.DIMEN.Seoul), 10000);
+    setInterval(timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]), 10000);
     setInterval(dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]), 10000);
 }
 
 function setWheaterData(data) {
     print(data);
+
+    cloud.init(data[0].clouds.all, data[0].wind.speed);
 }
 
 function serialDataCallback(data) {
@@ -82,6 +97,9 @@ function blowDandalion(wind) {
     // dandalion.blow(wind);
 }
 
+var IsSnow = false;
+var IsRain = false;
+
 function draw() {
 
   tint(255);
@@ -90,18 +108,31 @@ function draw() {
   timebackground.drawSky();
   timebackground.timeByTint(CONSTANT.VALUE.city_offset[cur_city]);
 
+  cloud.drawCloud();
+
   image(img_hill, 0, 370, 960, 150);
 
   dandalion.Dandaliondraw();
 
   image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 0, 0, 255);
+  // tempp.tempByTint();
   image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 255);
+  tint(255);
+  blueTotoro.position(520, 110);
+
+  if( dandalion.getRainMode() ) {
+    rain.draw();
+    blueTotoro.attribute('src', 'assets/blueTotoro_rain.gif');
+    // blueTotoro = createImg('assets/blueTotoro_rain.gif');
+  }
+
+  if( dandalion.getSnowMode() ) {
+    snow.draw();
+    blueTotoro.attribute('src', 'assets/blueTotoro_snow.gif');
+  }
 
 
-    // rain.draw();
-    // snow.draw();
+
 
   /*background(0);
   var data = getWeatherData() ;
