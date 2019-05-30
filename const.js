@@ -6,16 +6,18 @@ class CONST {
             'totoro_x' : 500,
             'totoro_y' : 160,
             'totoro_width' : 250,
-            'totoro_heigth' : 350,
-            'Seoul' : +9,
-            'NewYock' : -5,
-            'Toronto' : -5,
-            'Tokyo' : +9,
-            'Beijing' : +8
+            'totoro_heigth' : 350
+        };
+
+        this.ARRAY = {
+            'city' : [ 'Seoul', 'NewYork', 'Toronto', 'Tokyo', 'Beijing' ],
+            'day' : [ 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+            'month' : [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ],
         };
 
         this.COLOR = {
             'rain' : "#557DB0",
+            'white' : "#FFFFFF",
             'dark_indigo' : {
               'r':0,
               'g':0,
@@ -71,6 +73,13 @@ class CONST {
         this.VALUE = {
             'acceleration' : 0.098,
             'rain_num' : 100,
+            'city_offset' : {
+                'Seoul' : +9,
+                'NewYork': -5,
+                'Toronto' : -5,
+                'Tokyo' : +9,
+                'Beijing' : +8
+            },
         }
 
         this.SERIAL = {
