@@ -3,67 +3,119 @@ class Kinect {
     constructor(props) {
         this.kinectron = null;
         this.liveData = true;
+        this.swipeRightToLeftHand = false;
+        this.swipeLeftToRightHand = false;
+        this.swipeLeftHand = false;
     }
 
     initkinectron() {
       if( this.liveData ) {
           // define and create an instance of this.kinectron
-          this.kinectron = new this.kinectron();
+          this.kinectron = new Kinectron();
 
           // connect with application over peer
           this.kinectron.makeConnection();
 
           // request all tracked bodies and pass data to your callback
           this.kinectron.startTrackedBodies(this.bodyTracked);
-          this.kinectron.startTrackedJoint(this.kinectron.HANDRIGHT, this.gotRightHand);
       }
     }
 
     bodyTracked(body) {
-      background(0, 20);
 
       let hands = [];
+      let elbows = [];
+      let thumb = [];
+      let finger_tip = [];
+//       kinectron.HANDTIPLEFT  = 21;
+// kinectron.THUMBLEFT = 22;
+// kinectron.HANDTIPRIGHT = 23;
+// kinectron.THUMBRIGHT = 24;
 
       // get all the joints off the tracked body and do something with them
       for(let jointType in body.joints) {
-        joint = body.joints[jointType];
+        let joint = body.joints[jointType];
 
+        if(jointType == 22){
+          thumb.leftThumb = joint;
+        }
 
-        //drawJoint(joint);
+        if(jointType == 24){
+          thumb.rightThumb = joint;
+        }
+
+        if(jointType == 21){
+          finger_tip.left = joint;
+        }
+
+        if (jointType == 23) {
+          finger_tip.right = joint;
+        }
+
+        //find leftElbow
+        if(jointType == 5){
+          elbows.leftElbow = joint;
+        }
+
+        //find rightElbow
+        if(jointType == 9){
+          elbows.rightElbow = joint;
+        }
 
         // get the hands off the tracked body and do somethign with them
 
         // find right hand
         if (jointType == 11) {
           hands.rightHand = joint;
-          hands.rightHandState = translateHandState(body.rightHandState);
         }
 
         // find left hand
         if (jointType == 7) {
           hands.leftHand = joint;
-          hands.leftHandState = translateHandState(body.leftHandState);
         }
-
       }
 
-        //drawHands(hands);
+      // //console.log(thumb.leftThumb.depthX);
+      // console.log("RIGHT Thumb: " + thumb.rightThumb.depthX);
+      // console.log("RIGHT FINGER TIP: " + finger_tip.right.depthX);
+
+
+      if (elbows.rightElbow.depthY > hands.rightHand.depthY) {
+        //HANDS UP STATE
+        if (elbows.rightElbow.depthX < hands.rightHand.depthX) {
+          //HANDS UP AND RIGHT STATE
+          this.swipeRightToLeftHand = true;
+          if(this.swipeLeftToRightHand){
+            console.log("LEFT to RIGHT HAND SWIPE!!");
+            this.swipeLeftToRightHand = false;
+          }
+        }else {
+          this.swipeLeftToRightHand = true;
+          if(this.swipeRightToLeftHand){
+            console.log("RIGHT to LEFT HAND SWIPE!!!");
+            this.swipeRightToLeftHand = false;
+          }
+        }
+      }else {
+        this.swipeRightToLeftHand = false;
+        this.swipeLeftToRightHand = false;
+      }
+
+      if (elbows.leftElbow.depthY > hands.leftHand.depthY) {
+        if (elbows.leftElbow.depthX < hands.leftHand.depthX) {
+          this.swipeLeftHand = true;
+        }else {
+          if(this.swipeLeftHand){
+            console.log("LEFT HAND SWIPE!!!");
+            this.swipeLeftHand = false;
+          }
+        }
+      }else {
+        this.swipeLeftHand = false;
+      }
 
     }
 
-
-    // draw skeleton
-    drawJoint(joint) {
-      fill(100);
-
-      // kinect location data needs to be normalized to canvas size
-      ellipse(joint.depthX * width, joint.depthY * height, 15, 15);
-
-      fill(200);
-
-      // kinect location data needs to be normalized to canvas size
-      ellipse(joint.depthX * width, joint.depthY * height, 3, 3);
-    }
 
     // make handstate more readable
     translateHandState(handState) {
@@ -150,6 +202,6 @@ class Kinect {
     }
 
     gotRightHand(hand){
-      console.log(hand)
+      console.log(hand.depthX)
     }
 }

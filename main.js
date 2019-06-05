@@ -24,7 +24,7 @@ function setup() {
     createCanvas(960,520);
 
     kinect = new Kinect();
-    kinect.initKinectron();
+    kinect.initkinectron();
 
     timebackground = new timeBackground(0.8);
     timebackground.init();
@@ -74,11 +74,11 @@ function blowDandalion(wind) {
 
 function draw() {
 
-  tint(255);
+  //tint(255);
   background(0);
   timebackground.drawSky();
 
-  timebackground.timeByTint(CONSTANT.DIMEN.Seoul);
+  //timebackground.timeByTint(CONSTANT.DIMEN.Seoul);
 
   image(img_hill, 0, 370, 960, 150);
 
@@ -86,9 +86,9 @@ function draw() {
 
 
   image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 0, 0, 255);
+  //tint(176,162,150);
   image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255, 255);
+  //tint(255, 255);
 
 
     // rain.draw();
