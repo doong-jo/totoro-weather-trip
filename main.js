@@ -1,10 +1,10 @@
 const CONSTANT = new CONST();
 
-var input, button;
-var totoroBody;
-var totoroFace;
+var input, button
 
 let timebackground;
+let totoro;
+let hill;
 let dandalion;
 let wheather;
 let rain;
@@ -12,29 +12,27 @@ let snow;
 let serial;
 let info;
 let cloud;
+let tempp;
 
 let cur_city;
-
-var img_hill;
-
-function preload() {
-  totoroBody = loadImage('assets/Totoro_body.png');
-  totoroFace = loadImage('assets/Totoro_body_02.png');
-  img_hill = loadImage('assets/background.png');
-  blueTotoro = createImg('assets/blueTotoro.gif');
-}
 
 function setup() {
     createCanvas(960,520);
 
     cur_city = CONSTANT.ARRAY.city[0];
 
-    timebackground = new timeBackground(0.8);
+    timebackground = new timeBackground(0.6);
     timebackground.init();
     timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
     setInterval(function(){
       timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
     }, 60000);
+
+    tempp = new Temp();
+
+    hill = new Hill(0, 0);
+
+    totoro = new Totoro(CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_scale);
 
     dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
     dandalion.init();
@@ -52,7 +50,6 @@ function setup() {
     snow = new Snow();
 
     cloud = new Cloud();
-
 
     // serial = new Serial();
     // serial.init();
@@ -78,6 +75,8 @@ function setWheaterData(data) {
     print(data);
 
     cloud.init(data[0].clouds.all, data[0].wind.speed);
+
+    tempp.init(data[0].main.temp);
 }
 
 function serialDataCallback(data) {
@@ -102,28 +101,24 @@ var IsRain = false;
 
 function draw() {
 
-  tint(255);
-  background(0);
-
+  //background(255);
   timebackground.drawSky();
-  timebackground.timeByTint(CONSTANT.VALUE.city_offset[cur_city]);
+  timebackground.timeByTint();
 
   cloud.drawCloud();
 
-  image(img_hill, 0, 370, 960, 150);
+  hill.drawHill();
 
   dandalion.Dandaliondraw();
 
-  image(totoroFace, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  // tempp.tempByTint();
-  image(totoroBody, CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_width, CONSTANT.DIMEN.totoro_heigth);
-  tint(255);
-  blueTotoro.position(520, 110);
+  tempp.tempByTint();
+  totoro.drawTotoro();
+  // blueTotoro.position(520, 120);
 
   if( dandalion.getRainMode() ) {
     rain.draw();
     blueTotoro.attribute('src', 'assets/blueTotoro_rain.gif');
-    // blueTotoro = createImg('assets/blueTotoro_rain.gif');
+    blueTotoro = createImg('assets/blueTotoro_rain.gif');
   }
 
   if( dandalion.getSnowMode() ) {
