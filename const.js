@@ -3,10 +3,10 @@ class CONST {
         this.DIMEN = {
             'width' : 960,
             'height' : 520,
-            'totoro_x' : 500,
-            'totoro_y' : 160,
-            'totoro_width' : 250,
-            'totoro_heigth' : 350
+            'totoro_x' : 550,
+            'totoro_y' : 180,
+            'totoro_scale' : 0.9,
+            'cloudSize' : 25,
         };
 
         this.ARRAY = {
@@ -18,6 +18,12 @@ class CONST {
         this.COLOR = {
             'rain' : "#557DB0",
             'white' : "#FFFFFF",
+            'totoroBody' : "#666666",
+            'totoroStomach' : "#F4F4D0",
+            'totoroHeadLeaf' : "#75AB49",
+            'hillDarkGreen' : "#AAD371",
+            'hillGreen' : "#CBED50",
+            'hillBrightGreen' : "#F0ED5F",
             'dark_indigo' : {
               'r':0,
               'g':0,
@@ -67,7 +73,7 @@ class CONST {
               'r' : 51,
               'g' : 0,
               'b' : 102
-            }
+            },
         };
 
         this.VALUE = {

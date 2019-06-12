@@ -35,9 +35,7 @@ class timeBackground{
     this.hours = s;
   }
 
-timeByTint(tzOffset){
-
-  this.getCityHours(tzOffset);
+timeByTint(){
 
   var alpha;
 
@@ -53,7 +51,7 @@ timeByTint(tzOffset){
     alpha = map(this.hours, 20, 24, 100, 80);
   }
 
-  tint(alpha);
+  tint(alpha, alpha);
 }
 
   calculateByTimeToSky(tzOffset){
@@ -62,49 +60,39 @@ timeByTint(tzOffset){
 
     if(this.hours <= 5){
 
-      this.color1 = CONSTANT.COLOR.black;
-      this.color2 = CONSTANT.COLOR.bright_indigo;
-      this.color3 = CONSTANT.COLOR.dark_indigo;
-      this.color4 = CONSTANT.COLOR.bright_purple;
+      this.drawGradient(0, 5,
+        CONSTANT.COLOR.black, CONSTANT.COLOR.bright_indigo,
+        CONSTANT.COLOR.dark_indigo, CONSTANT.COLOR.bright_purple,
+        this.hours);
 
-      this.drawGradient(0, 5, this.color1, this.color2, this.color3, this.color4, this.hours);
+     } else if(this.hours > 5 && this.hours <= 12 ){
 
-    } else if(this.hours > 5 && this.hours <= 12 ){
+       this.drawGradient(5, 12,
+         CONSTANT.COLOR.dark_indigo, CONSTANT.COLOR.bright_purple,
+         CONSTANT.COLOR.blue, CONSTANT.COLOR.bright_yellow,
+         this.hours);
 
-      this.color1 = CONSTANT.COLOR.dark_indigo;
-      this.color2 = CONSTANT.COLOR.bright_purple;
-      this.color3 = CONSTANT.COLOR.blue;
-      this.color4 = CONSTANT.COLOR.bright_yellow;
+     }else if(this.hours > 12 && this.hours <= 16){
 
-      this.drawGradient(5, 12, this.color1, this.color2, this.color3, this.color4, this.hours);
+       this.drawGradient(12, 16,
+         CONSTANT.COLOR.blue, CONSTANT.COLOR.bright_yellow,
+         CONSTANT.COLOR.bright_blue, CONSTANT.COLOR.white,
+         this.hours);
 
-    }else if(this.hours > 12 && this.hours <= 16){
+     }else if(this.hours > 16 && this.hours <= 20){
 
-      this.color1 = CONSTANT.COLOR.blue;
-      this.color2 = CONSTANT.COLOR.bright_yellow;
-      this.color3 = CONSTANT.COLOR.bright_blue;
-      this.color4 = CONSTANT.COLOR.white;
+       this.drawGradient(16, 20,
+         CONSTANT.COLOR.bright_blue, CONSTANT.COLOR.white,
+         CONSTANT.COLOR.dark_purple, CONSTANT.COLOR.dark_orange,
+         this.hours);
 
-       this.drawGradient(12, 16, this.color1, this.color2, this.color3, this.color4, this.hours);
+     }else if(this.hours > 20 && this.hours <= 24){
 
-    }else if(this.hours > 16 && this.hours <= 20){
-
-      this.color1 = CONSTANT.COLOR.bright_blue;
-      this.color2 = CONSTANT.COLOR.white;
-      this.color3 = CONSTANT.COLOR.dark_purple;
-      this.color4 = CONSTANT.COLOR.dark_orange;
-
-      this.drawGradient(16, 20, this.color1, this.color2, this.color3, this.color4, this.hours);
-
-    }else if(this.hours > 20 && this.hours <= 24){
-
-      this.color1 = CONSTANT.COLOR.dark_purple;
-      this.color2 = CONSTANT.COLOR.dark_orange;
-      this.color3 = CONSTANT.COLOR.black;
-      this.color4 = CONSTANT.COLOR.bright_indigo;
-
-      this.drawGradient(20, 24, this.color1, this.color2, this.color3, this.color4, this.hours);
-    }
+       this.drawGradient(20, 24,
+         CONSTANT.COLOR.dark_purple, CONSTANT.COLOR.dark_orange,
+         CONSTANT.COLOR.black, CONSTANT.COLOR.bright_indigo,
+         this.hours);
+     }
 }
 
   setGradient(x, y, w, h, c1, c2) {
@@ -113,7 +101,7 @@ timeByTint(tzOffset){
 
       for (var i = y; i <= y+h; i++) {
         var inter = map(i, y, y+h, 0, this.ratio);
-        var c = lerpColor(c1, c2, inter);
+        var c = lerpColor(c2, c1, inter);
         stroke(c);
         line(x, i, x+w, i);
       }
