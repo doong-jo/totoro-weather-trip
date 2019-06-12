@@ -288,7 +288,7 @@ class Totoro{
 
       scale(this.scale);
 
-      fill(CONSTANT.COLOR.totoroBody); // totoro body color
+      fill(CON.COLOR.totoroBody); // totoro body color
       strokeWeight(2);
       stroke(0);
       this.drawTotoroParts(totoro_body);
@@ -301,9 +301,9 @@ class Totoro{
       ellipse(this.x + 90, this.y + 365, 10, 10);
 
       stroke(0);
-      fill(CONSTANT.COLOR.totoroHeadLeaf);
+      fill(CON.COLOR.totoroHeadLeaf);
       this.drawTotoroParts(totoro_head_leaf);
-      stroke(CONSTANT.COLOR.totoroHeadLeaf);
+      stroke(CON.COLOR.totoroHeadLeaf);
       this.drawTotoroParts(totoro_leaf_head);
 
       stroke(0);
@@ -318,10 +318,10 @@ class Totoro{
 
       this.drawTotoroParts(totoro_nose);
 
-      fill(CONSTANT.COLOR.totoroStomach); // totoro_stomach color
+      fill(CON.COLOR.totoroStomach); // totoro_stomach color
       this.drawTotoroParts(totoro_stomach);
 
-      fill(CONSTANT.COLOR.totoroBody);
+      fill(CON.COLOR.totoroBody);
       noStroke();
       this.drawTototoStomachShape(totoro_stomach_shape, this.x, this.y);
       this.drawTototoStomachShape(totoro_stomach_shape, this.x + 43, this.y + 13);

@@ -506,16 +506,16 @@ class Hill{
 
   drawHill(){
 
-    this.drawHillParts(this.x, this.y, hill1, CONSTANT.COLOR.hillDarkGreen);
-    this.drawHillParts(this.x + 10, this.y + 3, hill2, CONSTANT.COLOR.hillGreen);
-    this.drawHillParts(this.x, this.y, hill3, CONSTANT.COLOR.hillBrightGreen);
-    this.drawHillParts(this.x, this.y, hill4, CONSTANT.COLOR.hillBrightGreen);
+    this.drawHillParts(this.x, this.y, hill1, CON.COLOR.hillDarkGreen);
+    this.drawHillParts(this.x + 10, this.y + 3, hill2, CON.COLOR.hillGreen);
+    this.drawHillParts(this.x, this.y, hill3, CON.COLOR.hillBrightGreen);
+    this.drawHillParts(this.x, this.y, hill4, CON.COLOR.hillBrightGreen);
 
     this.drawHillParts(this.x - 10, this.y + 5, hill5, color(230, 251, 113));
-    this.drawHillParts(this.x - 50, this.y + 8, hill6, CONSTANT.COLOR.hillBrightGreen);
-    this.drawHillParts(this.x - 10, this.y + 5, hill7, CONSTANT.COLOR.hillGreen);
-    this.drawHillParts(this.x - 10, this.y + 7, hill8, CONSTANT.COLOR.hillDarkGreen);
-    this.drawHillParts(this.x - 40, this.y + 7, hill9, CONSTANT.COLOR.hillDarkGreen);
+    this.drawHillParts(this.x - 50, this.y + 8, hill6, CON.COLOR.hillBrightGreen);
+    this.drawHillParts(this.x - 10, this.y + 5, hill7, CON.COLOR.hillGreen);
+    this.drawHillParts(this.x - 10, this.y + 7, hill8, CON.COLOR.hillDarkGreen);
+    this.drawHillParts(this.x - 40, this.y + 7, hill9, CON.COLOR.hillDarkGreen);
 
     this.drawHillParts(this.x, this.y, stone, color(135, 130, 134));
     this.drawHillParts(this.x, this.y, stone1, color(155, 150, 154));

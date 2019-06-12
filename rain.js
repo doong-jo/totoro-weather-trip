@@ -19,7 +19,7 @@ class Drop {
         };
 
         this.draw = function() {
-            stroke(CONSTANT.COLOR.rain);
+            stroke(CON.COLOR.rain);
             strokeWeight(2);
             line(this.x, this.y, this.x, this.y + this.length);
         };
@@ -27,7 +27,7 @@ class Drop {
         this.drop = function() {
             if (this.y < height) {
                 this.y += this.speed;
-                this.speed += CONSTANT.VALUE.acceleration;
+                this.speed += CON.VALUE.acceleration;
             } else {
                 this.speed = random();
                 this.initY();
@@ -43,7 +43,7 @@ class Rain {
     }
 
     init() {
-        for (var i = 0; i < CONSTANT.VALUE.rain_num; i++) {
+        for (var i = 0; i < CON.VALUE.rain_num; i++) {
             this.drops.push(new Drop());
         }
     }
