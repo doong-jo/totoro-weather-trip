@@ -58,6 +58,7 @@ function setup() {
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     wheather.init();
+    cloud.init();
     rain.init();
     snow.init();
     dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
@@ -113,9 +114,9 @@ function draw() {
 }
 
 function setWheaterData(data) {
-    print(data);
+  print(data);
 
-    cloud.init(data[0].clouds.all, data[0].wind.speed);
+    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
 }
 
 function serialData(data) {

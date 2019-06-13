@@ -12,6 +12,7 @@ class CONST {
         this.DIMEN = {
             'width' : 960,
             'height' : 520,
+            'random_cloud_height' : 150,
             'totoro_x' : 550,
             'totoro_y' : 180,
             'totoro_scale' : 0.9,
