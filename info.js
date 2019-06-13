@@ -7,7 +7,11 @@ class Info {
         this.dateTextView.style('color', "#FFFFFF");
     }
 
-    init(cityPos, datePos) {
+    init() {
+
+    }
+
+    setPosition(cityPos, datePos) {
         this.cityTextView.position(cityPos.x, cityPos.y);
         this.dateTextView.position(datePos.x, datePos.y);
     }

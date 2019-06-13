@@ -1,5 +1,14 @@
 class CONST {
     constructor(props) {
+        this.API = {
+            'weather' : 'http://api.openweathermap.org/data/2.5/forecast?q=',
+        };
+
+        this.TIME = {
+            'min' : 60000,
+            'sec' : 1000,
+        };
+
         this.DIMEN = {
             'width' : 960,
             'height' : 520,
@@ -86,6 +95,15 @@ class CONST {
                 'Tokyo' : +9,
                 'Beijing' : +8
             },
+            'kinect_swipe_min_dis' : 0.1,
+            'kinect_time_min_x_dis' : 0.001,
+            'kinect_time_min_y_dis' : 0.002,
+        }
+
+        this.GESTURE = {
+            'left' : 0,
+            'right' : 1,
+            'timestone' : 2,
         }
 
         this.SERIAL = {

@@ -36,6 +36,8 @@ class SnowFlake {
 class Snow {
     constructor(props) { }
 
+    init() { }
+
     draw() {
         fill(240);
         noStroke();
