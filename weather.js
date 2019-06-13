@@ -3,9 +3,9 @@ let self;
 class Weather {
     constructor(props) {
         self = this;
-        this.api = 'http://api.openweathermap.org/data/2.5/forecast?q=';
-        this.apiKey = '&APPID=45ffb063f1238f824be465807f3f1935';
-        this.cityNames = ['Seoul', 'London', 'Beijing', 'Tokyo', 'Washington'];
+        this.api = CON.API.weather;
+        this.apiKey = KEYINFO.weather;
+        this.cityNames = CON.ARRAY.city;
     }
 
     init() {
@@ -28,7 +28,6 @@ class Weather {
     }
 
     assembleData(data) {
-        // print(weatherData);
         let weatherList = data.list;
 
         let beforeDate = "";
@@ -39,25 +38,5 @@ class Weather {
                 this.weatherDic[Object.keys(this.weatherDic).length] = weatherList[i];
             } beforeDate = date;
         }
-
-        // print(weatherDic);
-    }
-
-    drawRaining(volume) {
-
-    }
-
-    drawSnowing(volume) {
-
     }
 }
-
-// function getWeatherData() {
-//     return weatherData;
-// }
-//
-// function getWeatherData(i) {
-//     if( i > 5 ) { return null; }
-//
-//     return weatherDic[i];
-// }

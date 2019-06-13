@@ -1,142 +1,137 @@
-const CONSTANT = new CONST();
+const CON = new CONST();
+const KEYINFO = new KEY();
 
-var input, button
-
-let timebackground;
-let totoro;
-let hill;
+let sky, hill;
 let dandalion;
-let wheather;
-let rain;
-let snow;
-let serial;
 let info;
-let cloud;
-let tempp;
 
-let cur_city;
+let wheather, rain, snow, cloud;
+let totoro;
+let serial;
+
+const datGuiParams = {
+    displayMode: true,
+    debugMode: false,
+    windMode: false,
+    rainMode: false,
+    snowMode: false,
+    n: 4.5,
+    d: 12.3,
+    t: 20,
+    s: 40,
+    c: 0,
+    angle: 0,
+    step: 2,
+    p: 20,
+    test: 12
+};
+
+// TODO : track user ip and find country
+let cur_city = CON.ARRAY.city[0];
 
 function setup() {
-  createCanvas(960, 520);
+    createCanvas(CON.DIMEN.width, CON.DIMEN.height);
 
-  cur_city = CONSTANT.ARRAY.city[0];
+    var gui = new dat.GUI();
+    gui.add(datGuiParams, "displayMode");
+    gui.add(datGuiParams, "debugMode");
+    gui.add(datGuiParams, "windMode");
+    gui.add(datGuiParams, "snowMode");
+    gui.add(datGuiParams, "rainMode");
+    gui.add(datGuiParams, "s").min(20).max(350).step(1);
+    gui.add(datGuiParams, "angle").min(-5).max(5).step(0.01);
+    gui.add(datGuiParams, "t").min(40).max(400).step(1);
+    gui.add(datGuiParams, "test").min(1).max(15).step(0.1);
 
-  timebackground = new timeBackground(0.6);
-  timebackground.init();
-  timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
-  setInterval(function() {
-    timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]);
-  }, 60000);
+    sky = new Sky();
+    hill = new Hill();
+    totoro = new Totoro();
+    dandalion = new Dandalion();
+    wheather = new Weather();
+    rain = new Rain();
+    snow = new Snow();
+    cloud = new Cloud();
+    info = new Info();
+    // serial = new Serial();
 
-  tempp = new Temp();
+    sky.init(0.6);
+    hill.init(0, 0);
+    totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
+    wheather.init();
+    cloud.init();
+    rain.init();
+    snow.init();
+    dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
+    info.init();
+    // serial.init();
 
-  hill = new Hill(0, 0);
+    sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
+    dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
+    wheather.loadWeatherData(cur_city, 0, setWheaterData);
+    info.setPosition(
+        { 'x': 20, 'y': CON.DIMEN.height - 60 },
+        { 'x': CON.DIMEN.width - 140, 'y': -10 }
+    );
+    info.setCityText(cur_city);
+    let today = new Date();
+    const makeDateFormat = (date) => {
+        const day = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const makeTwoDigit = (num) => {
+            return num >= 10 ? num : '0' + num;
+        };
 
-  totoro = new Totoro(CONSTANT.DIMEN.totoro_x, CONSTANT.DIMEN.totoro_y, CONSTANT.DIMEN.totoro_scale);
+        const result =
+            '' + day[date.getDay()] +
+            ' ' + makeTwoDigit(date.getMonth() + 1) +
+            '-' + makeTwoDigit(date.getDate()) +
+            ' ' + makeTwoDigit(date.getHours()) +
+            ':' + makeTwoDigit(date.getMinutes());
+        return result;
+    }; today = makeDateFormat(today);
+    info.setDateText(today);
+    // serial.setMainSerialEventCallback(serialData);
 
-  dandalion = new Dandalion(CONSTANT.DIMEN.width, CONSTANT.DIMEN.height);
-  dandalion.init();
-  dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]);
-  setInterval(function() {
-    dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]);
-  }, 60000);
+    /* Adjust brightness of objects */
+    // setInterval(sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
+    // setInterval(dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
+    // setInterval(() => {
+    //   sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
+    // }, CON.TIME.min);
+    // setInterval(() => {
+    //   dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
+    // }, CON.TIME.min);
+}
 
-  wheather = new Weather();
-  wheather.init();
+function draw() {
+  sky.draw();
+  cloud.draw();
+  hill.draw();
+  dandalion.draw();
+  totoro.draw();
 
-  rain = new Rain();
-  rain.init();
-
-  snow = new Snow();
-
-  cloud = new Cloud();
-  cloud.init();
-
-  // serial = new Serial();
-  // serial.init();
-  // serial.setMainSerialEventCallback(serialDataCallback);
-
-  wheather.loadWeatherData('Seoul', 0, setWheaterData);
-
-  info = new Info();
-  info.init({
-    'x': 20,
-    'y': CONSTANT.DIMEN.height - 60
-  }, {
-    'x': CONSTANT.DIMEN.width - 150,
-    'y': -10
-  });
-
-  // TODO: set city, time
-  info.setCityText(cur_city);
-  info.setDateText('JUN May 30 23:49');
-
-  setInterval(timebackground.calculateByTimeToSky(CONSTANT.VALUE.city_offset[cur_city]), 10000);
-  setInterval(dandalion.getBranchColor(CONSTANT.VALUE.city_offset[cur_city]), 10000);
+  if( datGuiParams.snowMode ) { snow.draw(); }
+  if( datGuiParams.rainMode ) { rain.draw(); }
 }
 
 function setWheaterData(data) {
   print(data);
 
-  cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
-
-  tempp.init(data[0].main.temp);
+    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
 }
 
-function serialDataCallback(data) {
-  print('main serial data callback receive : ', data);
-  // wind, country
-  // changeCountry(city)
-  // blowDandalion(wind)
-}
-
-function changeCountry(city) {
-  wheather.loadWeatherData(city, 0, setWheaterData);
-  cur_city = CONSTANT.ARRAY.city[city];
-  info.setCityText(cur_city);
+function serialData(data) {
+    print('main serial data callback receive : ', data);
+    // TODO: set coutnry, blow value
+    // changeCountry(city)
+    // blowDandalion(wind)
 }
 
 function blowDandalion(wind) {
-  // dandalion.blow(wind);
+
 }
 
-var IsSnow = false;
-var IsRain = false;
-
-function draw() {
-
-  //background(255);
-  timebackground.drawSky();
-  timebackground.timeByTint();
-
-  cloud.drawCloud();
-
-  hill.drawHill();
-
-  dandalion.Dandaliondraw();
-
-  tempp.tempByTint();
-  totoro.drawTotoro();
-  // blueTotoro.position(520, 120);
-
-  if (dandalion.getRainMode()) {
-    rain.draw();
-    //blueTotoro.attribute('src', 'assets/blueTotoro_rain.gif');
-    //blueTotoro = createImg('assets/blueTotoro_rain.gif');
-  }
-
-  if (dandalion.getSnowMode()) {
-    snow.draw();
-    //blueTotoro.attribute('src', 'assets/blueTotoro_snow.gif');
-  }
-
-
-
-
-  /*background(0);
-  var data = getWeatherData() ;
-  if( data ){
-      ellipse(100,100, data.main.temp, data.main.temp);
-      ellipse(300,100, data.main.humidity, data.main.humidity);
-  }*/
+function changeCountry(city) {
+    wheather.loadWeatherData(city, 0, setWheaterData);
+    cur_city = CON.ARRAY.city[city];
+    info.setCityText(cur_city);
 }

@@ -100,7 +100,7 @@ class Cloud {
       }
     }
 
-    this.cloudAmount = clouds / 3;
+    this.cloudAmount = clouds / 5;
     this.windSpeed = windSpeed / 10.0;
   }
 
@@ -159,7 +159,7 @@ class Cloud {
     endShape(CLOSE);
   }
 
-  drawCloud() {
+  draw() {
 
     if (this.windSpeed) this.deltaX = this.windSpeed;
 
@@ -182,18 +182,16 @@ class Cloud {
         default:
           break;
       }
-      // console.log("cloud = " + i + " ypos = " + this.clouds[i].ypos);
-      // console.log("clouds", this.clouds);
       this.clouds[i].xpos += this.deltaX;
 
-      if (this.clouds[i].xpos / 2 + 70 * 0.7 - 50 > CONSTANT.DIMEN.width && (i + 1) % 4 == 0) {
+      if (this.clouds[i].xpos / 2 + 70 * 0.7 - 50 > CON.DIMEN.width && (i + 1) % 4 == 0) {
         this.clouds[i].xpos = -360;
-      }else if (this.clouds[i].xpos + 50 * this.clouds[i].cloudScale - 50 > CONSTANT.DIMEN.width && (i + 1) % 4 == 1) {
+      }else if (this.clouds[i].xpos + 50 * this.clouds[i].cloudScale - 50 > CON.DIMEN.width && (i + 1) % 4 == 1) {
         this.clouds[i].xpos = -110 * this.clouds[i].cloudScale;
-      } else if (this.clouds[i].xpos + 51 * this.clouds[i].cloudScale - 50 > CONSTANT.DIMEN.width && (i + 1) % 4 == 2) {
-        this.clouds[i].xpos = -170 * this.clouds[i].cloudScale;
-      } else if (this.clouds[i].xpos + 49 * this.clouds[i].cloudScale - 50 > CONSTANT.DIMEN.width && (i + 1) % 4 == 3) {
-        this.clouds[i].xpos = -110 * this.clouds[i].cloudScale;
+      } else if (this.clouds[i].xpos + 51 * this.clouds[i].cloudScale - 50 > CON.DIMEN.width && (i + 1) % 4 == 2) {
+        this.clouds[i].xpos = -180 * this.clouds[i].cloudScale;
+      } else if (this.clouds[i].xpos + 49 * this.clouds[i].cloudScale - 50 > CON.DIMEN.width && (i + 1) % 4 == 3) {
+        this.clouds[i].xpos = -120 * this.clouds[i].cloudScale;
       }
     }
   }
