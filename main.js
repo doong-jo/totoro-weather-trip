@@ -69,10 +69,25 @@ function setup() {
     wheather.loadWeatherData(cur_city, 0, setWheaterData);
     info.setPosition(
         { 'x': 20, 'y': CON.DIMEN.height - 60 },
-        { 'x': CON.DIMEN.width - 150, 'y': -10 }
+        { 'x': CON.DIMEN.width - 140, 'y': -10 }
     );
     info.setCityText(cur_city);
-    info.setDateText('JUN May 30 23:49');
+    let today = new Date();
+    const makeDateFormat = (date) => {
+        const day = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+        const makeTwoDigit = (num) => {
+            return num >= 10 ? num : '0' + num;
+        };
+
+        const result =
+            '' + day[date.getDay()] +
+            ' ' + makeTwoDigit(date.getMonth() + 1) +
+            '-' + makeTwoDigit(date.getDate()) +
+            ' ' + makeTwoDigit(date.getHours()) +
+            ':' + makeTwoDigit(date.getMinutes());
+        return result;
+    }; today = makeDateFormat(today);
+    info.setDateText(today);
     // serial.setMainSerialEventCallback(serialData);
 
     /* Adjust brightness of objects */
