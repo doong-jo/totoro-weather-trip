@@ -2,10 +2,12 @@ var params = {
   displayMode: true,
   debugMode: false,
   windMode: false,
+  rainMode: false,
+  snowMode: false,
   n: 4.5,
   d: 12.3,
-  t: 80,
-  s: 105,
+  t: 20,
+  s: 80,
   c: 0,
   angle: 0,
   step: 2,
@@ -17,6 +19,8 @@ var gui = new dat.gui.GUI();
 gui.add(params, "displayMode");
 gui.add(params, "debugMode");
 gui.add(params, "windMode");
+gui.add(params, "snowMode");
+gui.add(params, "rainMode");
 gui.add(params, "s").min(20).max(350).step(1);
 gui.add(params, "angle").min(-5).max(5).step(0.01);
 gui.add(params, "t").min(40).max(400).step(1);
@@ -46,10 +50,15 @@ class Dandalion {
 
   init(){
     textSize(12);
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 50; i++) {
       this.particles.push(new Particle(random(this.canvas_x), random(this.canvas_y)));
     }
     this.centerBranch = createVector(this.canvas_x / 6, this.canvas_y * 1 / 2);
+
+    // setTimeout(function(){
+    //   params.displayMode = true;
+    //   params.windowMode = true;
+    // }, 5000);
   }
 
   getDandalionHours(tzOffset) { // 24시간제
@@ -156,5 +165,13 @@ class Dandalion {
       //ellipse(centerBranch.x, centerBranch.y, 2 * params.s + params.c, 2 * params.s + params.c);
       ellipse(this.centerBranch.x, this.centerBranch.y, this.blowArea, this.blowArea);
     }
+  }
+
+  getRainMode() {
+      return params.rainMode;
+  }
+
+  getSnowMode() {
+      return params.snowMode;
   }
 }

@@ -1,10 +1,13 @@
+let kinnectSelf;
 
 class Kinect {
     constructor(props) {
         this.kinectron = null;
+
         this.liveData = true;
         this.swipeRightToLeftHand = false;
         this.swipeLeftToRightHand = false;
+        this.timeStoneState = false;
     }
 
     initkinectron() {
@@ -16,108 +19,47 @@ class Kinect {
           this.kinectron.makeConnection();
 
           // request all tracked bodies and pass data to your callback
+          kinnectSelf = this;
           this.kinectron.startTrackedBodies(this.bodyTracked);
       }
     }
 
     bodyTracked(body) {
+      const self = kinnectSelf;
 
       let hands = [];
       let elbows = [];
       let thumb = [];
       let finger_tip = [];
-//       kinectron.HANDTIPLEFT  = 21;
-// kinectron.THUMBLEFT = 22;
-// kinectron.HANDTIPRIGHT = 23;
-// kinectron.THUMBRIGHT = 24;
+
 
       // get all the joints off the tracked body and do something with them
       for(let jointType in body.joints) {
         let joint = body.joints[jointType];
 
-        if(jointType == 22){
-          thumb.leftThumb = joint;
-        }
-
-        if(jointType == 24){
+        if(jointType == self.kinectron.THUMBRIGHT){
           thumb.rightThumb = joint;
         }
 
-        if(jointType == 21){
-          finger_tip.left = joint;
-        }
-
-        if (jointType == 23) {
+        if (jointType == self.kinectron.HANDTIPRIGHT) {
           finger_tip.right = joint;
         }
 
-        //find leftElbow
-        if(jointType == 5){
-          elbows.leftElbow = joint;
-        }
-
         //find rightElbow
-        if(jointType == 9){
+        if(jointType == self.kinectron.ELBOWRIGHT){
           elbows.rightElbow = joint;
         }
 
         // get the hands off the tracked body and do somethign with them
 
         // find right hand
-        if (jointType == 11) {
+        if (jointType == self.kinectron.HANDRIGHT) {
           hands.rightHand = joint;
         }
-
-        // find left hand
-        if (jointType == 7) {
-          hands.leftHand = joint;
-        }
       }
 
-      if (elbows.rightElbow.depthY > hands.rightHand.depthY) {
-        //HANDS UP STATE
-        if (elbows.rightElbow.depthX < hands.rightHand.depthX) {
-          //HANDS UP AND RIGHT STATE
-          this.swipeRightToLeftHand = true;     //손이 오른쪽에서 왼쪽으로 가기전의 준비
-          if(this.swipeLeftToRightHand){        //손이 왼쪽에서 오른쪽으로 왔다면?
-            console.log("LEFT to RIGHT HAND SWIPE!!");
-            this.swipeLeftToRightHand = false;  //한번 왔으니 다시 false
-          }
-        }else {
-          this.swipeLeftToRightHand = true;     //손이 왼쪽에 있고 이제 오른쪽으로 갈 준비를 마쳤다.
-          if(this.swipeRightToLeftHand){        //손이 오른쪽에서 왼쪽으로 왔다면?
-            console.log("RIGHT to LEFT HAND SWIPE!!!");
-            this.swipeRightToLeftHand = false;
-          }
-        }
-      }else {                                   //손이 팔꿈치보다 아래에있다면
-        this.swipeRightToLeftHand = false;
-        this.swipeLeftToRightHand = false;
-      }
-
-
-      console.log("Thumb X: " + thumb.rightThumb.depthX);
-      console.log("Hand X: " + hands.rightHand.depthX);
-      console.log("fingerTip X: " + finger_tip.right.depthX);
-
-      if(elbows.rightElbow.depthY > hands.rightHand.depthY){
-
-
-      }
-
-//왼손 상태
-      // if (elbows.leftElbow.depthY > hands.leftHand.depthY) {
-      //   if (elbows.leftElbow.depthX < hands.leftHand.depthX) {
-      //     this.swipeLeftHand = true;
-      //   }else {
-      //     if(this.swipeLeftHand){
-      //       console.log("LEFT HAND SWIPE!!!");
-      //       this.swipeLeftHand = false;
-      //     }
-      //   }
-      // }else {
-      //   this.swipeLeftHand = false;
-      // }
+      self.checkSwipeState(hands.rightHand, elbows.rightElbow);
+      self.checkTimeStoneState(elbows.rightElbow, hands.rightHand, thumb.rightThumb, finger_tip.right)
     }
 
 
@@ -203,5 +145,57 @@ class Kinect {
 
       // Kinect location needs to be normalized to canvas size
       ellipse(hand.depthX * width, hand.depthY * height, diameter, diameter);
+    }
+
+    initState() {
+      this.swipeRightToLeftHand = false;
+      this.swipeLeftToRightHand = false;
+      this.timeStoneState = false;
+    }
+
+    checkSwipeState(hand, elbow){
+
+        let mDistance = elbow.depthX - hand.depthX;
+        //console.log(mDistance);
+        if (elbow.depthY > hand.depthY) {
+          //HANDS UP STATE
+          if (elbow.depthX < hand.depthX) {
+            //HANDS UP AND RIGHT STATE
+            this.swipeRightToLeftHand = true;     //손이 오른쪽에서 왼쪽으로 가기전의 준비
+            if(this.swipeLeftToRightHand){        //손이 왼쪽에서 오른쪽으로 왔다면?
+              if(mDistance < -0.1){
+                console.log("LEFT to RIGHT HAND SWIPE!!");
+                this.initState();
+              }
+            }
+          }else {
+            this.swipeLeftToRightHand = true;     //손이 왼쪽에 있고 이제 오른쪽으로 갈 준비를 마쳤다.
+            if(this.swipeRightToLeftHand){        //손이 오른쪽에서 왼쪽으로 왔다면?
+              if(mDistance > 0.1){
+                console.log("RIGHT to LEFT HAND SWIPE!!!");
+                this.initState();
+              }
+            }
+          }
+        }else {                                   //손이 팔꿈치보다 아래에있다면
+          this.initState();
+        }
+    }
+
+    checkTimeStoneState(elbow, hand, thumb, finger_tip){
+      if(elbow.depthY > hand.depthY){
+        if(thumb.depthX < hand.depthX && finger_tip.depthY < hand.depthY)
+        {
+          this.timeStoneState = true;
+        }else if(thumb.depthX > hand.depthX && finger_tip.depthY > hand.depthY){
+          if(this.timeStoneState){
+            console.log("Doromamu CHECK")
+            this.initState();
+          }
+        }
+      }else {
+        this.initState();
+      }
+
     }
 }
