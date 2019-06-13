@@ -5,7 +5,6 @@ class Kinect {
         this.liveData = true;
         this.swipeRightToLeftHand = false;
         this.swipeLeftToRightHand = false;
-        this.swipeLeftHand = false;
     }
 
     initkinectron() {
@@ -75,45 +74,50 @@ class Kinect {
         }
       }
 
-      // //console.log(thumb.leftThumb.depthX);
-      // console.log("RIGHT Thumb: " + thumb.rightThumb.depthX);
-      // console.log("RIGHT FINGER TIP: " + finger_tip.right.depthX);
-
-
       if (elbows.rightElbow.depthY > hands.rightHand.depthY) {
         //HANDS UP STATE
         if (elbows.rightElbow.depthX < hands.rightHand.depthX) {
           //HANDS UP AND RIGHT STATE
-          this.swipeRightToLeftHand = true;
-          if(this.swipeLeftToRightHand){
+          this.swipeRightToLeftHand = true;     //손이 오른쪽에서 왼쪽으로 가기전의 준비
+          if(this.swipeLeftToRightHand){        //손이 왼쪽에서 오른쪽으로 왔다면?
             console.log("LEFT to RIGHT HAND SWIPE!!");
-            this.swipeLeftToRightHand = false;
+            this.swipeLeftToRightHand = false;  //한번 왔으니 다시 false
           }
         }else {
-          this.swipeLeftToRightHand = true;
-          if(this.swipeRightToLeftHand){
+          this.swipeLeftToRightHand = true;     //손이 왼쪽에 있고 이제 오른쪽으로 갈 준비를 마쳤다.
+          if(this.swipeRightToLeftHand){        //손이 오른쪽에서 왼쪽으로 왔다면?
             console.log("RIGHT to LEFT HAND SWIPE!!!");
             this.swipeRightToLeftHand = false;
           }
         }
-      }else {
+      }else {                                   //손이 팔꿈치보다 아래에있다면
         this.swipeRightToLeftHand = false;
         this.swipeLeftToRightHand = false;
       }
 
-      if (elbows.leftElbow.depthY > hands.leftHand.depthY) {
-        if (elbows.leftElbow.depthX < hands.leftHand.depthX) {
-          this.swipeLeftHand = true;
-        }else {
-          if(this.swipeLeftHand){
-            console.log("LEFT HAND SWIPE!!!");
-            this.swipeLeftHand = false;
-          }
-        }
-      }else {
-        this.swipeLeftHand = false;
+
+      console.log("Thumb X: " + thumb.rightThumb.depthX);
+      console.log("Hand X: " + hands.rightHand.depthX);
+      console.log("fingerTip X: " + finger_tip.right.depthX);
+
+      if(elbows.rightElbow.depthY > hands.rightHand.depthY){
+
+
       }
 
+//왼손 상태
+      // if (elbows.leftElbow.depthY > hands.leftHand.depthY) {
+      //   if (elbows.leftElbow.depthX < hands.leftHand.depthX) {
+      //     this.swipeLeftHand = true;
+      //   }else {
+      //     if(this.swipeLeftHand){
+      //       console.log("LEFT HAND SWIPE!!!");
+      //       this.swipeLeftHand = false;
+      //     }
+      //   }
+      // }else {
+      //   this.swipeLeftHand = false;
+      // }
     }
 
 
@@ -199,9 +203,5 @@ class Kinect {
 
       // Kinect location needs to be normalized to canvas size
       ellipse(hand.depthX * width, hand.depthY * height, diameter, diameter);
-    }
-
-    gotRightHand(hand){
-      console.log(hand.depthX)
     }
 }
