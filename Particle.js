@@ -56,7 +56,7 @@ class Particle {
   display(branchColor) {
 
     this.seedColor = branchColor;
-    
+
     push();
     var center = createVector(width / 6, height * 1 / 2);
     var vector = p5.Vector.sub(center, this.pos);
@@ -70,10 +70,10 @@ class Particle {
     noStroke();
     fill(255, 200);
 
-    if (params.displayMode) {
+    if (datGuiParams.displayMode) {
       rotate(angle - PI / 2);
       this.seedShape();
-    } else if (params.windMode) {
+    } else if (datGuiParams.windMode) {
       if (this.pos.x > width * 0.3) {
         if (this.life > 0) {
           this.life -= random(0.9,1.4);
