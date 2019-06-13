@@ -24,25 +24,18 @@ class Cloud {
     $.getJSON(jsonFile, function(json) {
         console.log("success");
 
-        self.cloud1.push(json.cloud1);
-        self.cloud1.push(json.cloud1_01);
-        self.cloud1.push(json.cloud1_02);
+        const setCloud = [ self.cloud1, self.cloud2, self.cloud3, self.cloud4 ];
+        const getCloud = [ [json.cloud1, json.cloud1_01, json.cloud1_02],
+                           [json.cloud2, json.cloud2_01, json.cloud2_02],
+                           [json.cloud3, json.cloud3_01, json.cloud3_02, json.cloud3_03, json.cloud3_04],
+                           [json.cloud4, json.cloud4_01, json.cloud4_02, json.cloud4_03, json.cloud4_04]
+                         ];
 
-        self.cloud2.push(json.cloud2);
-        self.cloud2.push(json.cloud2_01);
-        self.cloud2.push(json.cloud2_02);
-
-        self.cloud3.push(json.cloud3);
-        self.cloud3.push(json.cloud3_01);
-        self.cloud3.push(json.cloud3_02);
-        self.cloud3.push(json.cloud3_03);
-        self.cloud3.push(json.cloud3_04);
-
-        self.cloud4.push(json.cloud4);
-        self.cloud4.push(json.cloud4_01);
-        self.cloud4.push(json.cloud4_02);
-        self.cloud4.push(json.cloud4_03);
-        self.cloud4.push(json.cloud4_04);
+        for(var i = 0; i < setCloud.length; i++){
+          for(var j = 0; j < getCloud[i].length; j++){
+            setCloud[i].push(getCloud[i][j]);
+          }
+        }
 
       })
       .done(function() {
