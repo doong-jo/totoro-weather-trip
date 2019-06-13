@@ -5,7 +5,7 @@
   // list of guis
   var guis = [];
 
-  // default slider params
+  // default slider datGuiParams
   var sliderMin = 0;
   var sliderMax = 100;
   var sliderStep = 1;
@@ -86,22 +86,22 @@
       qs.bindGlobals(arguments);
     };
 
-    // addObject(object) to add all params of the object
-    // addObject(object, param1, param2, ...) to add selected params
+    // addObject(object) to add all datGuiParams of the object
+    // addObject(object, param1, param2, ...) to add selected datGuiParams
     this.addObject = function() {
       // get object
       object = arguments[0];
       // convert arguments object to array
-      var params = [];
+      var datGuiParams = [];
       if(arguments.length > 1) {
-        params = Array.prototype.slice.call(arguments)
-        params = params.slice(1);
+        datGuiParams = Array.prototype.slice.call(arguments)
+        datGuiParams = datGuiParams.slice(1);
       }
       // if no arguments are provided take all keys of the object
-      if(params.length === 0) {
-        params = object.keys();
+      if(datGuiParams.length === 0) {
+        datGuiParams = object.keys();
       }
-      qs.bindParams(object, params);
+      qs.binddatGuiParams(object, datGuiParams);
     };
 
     // noLoop() to call draw every time the gui changes when we are not looping
@@ -130,12 +130,12 @@
 
   // Extend Quicksettings
   // so it can magically create a GUI for parameters passed by name
-  QuickSettings.bindParams = function(object, params) {
+  QuickSettings.binddatGuiParams = function(object, datGuiParams) {
 
     // iterate over all the arguments
-    for(var i = 0; i < params.length; i++) {
+    for(var i = 0; i < datGuiParams.length; i++) {
 
-      var arg = params[i];
+      var arg = datGuiParams[i];
       var val = object[arg];
       var typ = typeof val;
 
@@ -200,9 +200,9 @@
     }
   };
 
-  // bind params that are defined globally
-  QuickSettings.bindGlobals = function(params) {
-    this.bindParams(window, params);
+  // bind datGuiParams that are defined globally
+  QuickSettings.bindGlobals = function(datGuiParams) {
+    this.binddatGuiParams(window, datGuiParams);
   };
 
 })();

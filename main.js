@@ -1,8 +1,6 @@
 const CON = new CONST();
 const KEYINFO = new KEY();
 
-var input, button;
-
 let sky, hill;
 let dandalion;
 let info;
@@ -11,16 +9,44 @@ let wheather, rain, snow, cloud;
 let totoro;
 let serial;
 
+const datGuiParams = {
+    displayMode: true,
+    debugMode: false,
+    windMode: false,
+    rainMode: false,
+    snowMode: false,
+    n: 4.5,
+    d: 12.3,
+    t: 20,
+    s: 40,
+    c: 0,
+    angle: 0,
+    step: 2,
+    p: 20,
+    test: 12
+};
+
 // TODO : track user ip and find country
 let cur_city = CON.ARRAY.city[0];
 
 function setup() {
     createCanvas(CON.DIMEN.width, CON.DIMEN.height);
 
-    sky = new Sky(0.6);
-    hill = new Hill(0, 0);
-    totoro = new Totoro(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
-    dandalion = new Dandalion(CON.DIMEN.width, CON.DIMEN.height);
+    var gui = new dat.GUI();
+    gui.add(datGuiParams, "displayMode");
+    gui.add(datGuiParams, "debugMode");
+    gui.add(datGuiParams, "windMode");
+    gui.add(datGuiParams, "snowMode");
+    gui.add(datGuiParams, "rainMode");
+    gui.add(datGuiParams, "s").min(20).max(350).step(1);
+    gui.add(datGuiParams, "angle").min(-5).max(5).step(0.01);
+    gui.add(datGuiParams, "t").min(40).max(400).step(1);
+    gui.add(datGuiParams, "test").min(1).max(15).step(0.1);
+
+    sky = new Sky();
+    hill = new Hill();
+    totoro = new Totoro();
+    dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
     snow = new Snow();
@@ -28,10 +54,13 @@ function setup() {
     info = new Info();
     // serial = new Serial();
 
-    sky.init();
+    sky.init(0.6);
+    hill.init(0, 0);
+    totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     wheather.init();
     rain.init();
-    dandalion.init();
+    snow.init();
+    dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
     info.init();
     // serial.init();
 
@@ -39,21 +68,33 @@ function setup() {
     dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     wheather.loadWeatherData(cur_city, 0, setWheaterData);
     info.setPosition(
-        {'x': 20, 'y': CON.DIMEN.height - 60},
-        {'x': CON.DIMEN.width - 150, 'y': -10}
+        { 'x': 20, 'y': CON.DIMEN.height - 60 },
+        { 'x': CON.DIMEN.width - 150, 'y': -10 }
     );
     info.setCityText(cur_city);
     info.setDateText('JUN May 30 23:49');
-    // serial.setMainSerialEventCallback(serialDataCallback);
+    // serial.setMainSerialEventCallback(serialData);
 
-    setInterval(sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]), 10000);
-    setInterval(dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]), 10000);
-    setInterval(function(){
-      sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
-    }, 60000);
-    setInterval(function() {
-      dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
-    }, 60000);
+    /* Adjust brightness of objects */
+    // setInterval(sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
+    // setInterval(dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
+    // setInterval(() => {
+    //   sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
+    // }, CON.TIME.min);
+    // setInterval(() => {
+    //   dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
+    // }, CON.TIME.min);
+}
+
+function draw() {
+  sky.draw();
+  cloud.draw();
+  hill.draw();
+  dandalion.draw();
+  totoro.draw();
+
+  if( datGuiParams.snowMode ) { snow.draw(); }
+  if( datGuiParams.rainMode ) { rain.draw(); }
 }
 
 function setWheaterData(data) {
@@ -62,29 +103,19 @@ function setWheaterData(data) {
     cloud.init(data[0].clouds.all, data[0].wind.speed);
 }
 
-function serialDataCallback(data) {
+function serialData(data) {
     print('main serial data callback receive : ', data);
-    // wind, country
+    // TODO: set coutnry, blow value
     // changeCountry(city)
     // blowDandalion(wind)
-}
-
-function changeCountry(city) {
-    wheather.loadWeatherData(city, 0, setWheaterData);
-    cur_city = CON.ARRAY.city[city];
-    info.setCityText(cur_city);
 }
 
 function blowDandalion(wind) {
 
 }
 
-function draw() {
-  //background(255);
-  sky.drawSky();
-  sky.timeByTint();
-  cloud.drawCloud();
-  hill.drawHill();
-  dandalion.Dandaliondraw();
-  totoro.drawTotoro();
+function changeCountry(city) {
+    wheather.loadWeatherData(city, 0, setWheaterData);
+    cur_city = CON.ARRAY.city[city];
+    info.setCityText(cur_city);
 }

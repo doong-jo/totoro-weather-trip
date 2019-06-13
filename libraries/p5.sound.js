@@ -1580,7 +1580,7 @@ soundfile = function () {
    * Inspired by Wavesurfer.js.
    * 
    * @method  getPeaks
-   * @params {Number} [length] length is the size of the returned array.
+   * @datGuiParams {Number} [length] length is the size of the returned array.
    *                          Larger length results in more precision.
    *                          Defaults to 5*width of the browser window.
    * @returns {Float32Array} Array of peaks.
@@ -2989,16 +2989,16 @@ Tone_core_Tone = function () {
       this.output = new Array(inputs);
     }
   };
-  Tone.prototype.set = function (params, value, rampTime) {
-    if (this.isObject(params)) {
+  Tone.prototype.set = function (datGuiParams, value, rampTime) {
+    if (this.isObject(datGuiParams)) {
       rampTime = value;
-    } else if (this.isString(params)) {
+    } else if (this.isString(datGuiParams)) {
       var tmpObj = {};
-      tmpObj[params] = value;
-      params = tmpObj;
+      tmpObj[datGuiParams] = value;
+      datGuiParams = tmpObj;
     }
-    for (var attr in params) {
-      value = params[attr];
+    for (var attr in datGuiParams) {
+      value = datGuiParams[attr];
       var parent = this;
       if (attr.indexOf('.') !== -1) {
         var attrSplit = attr.split('.');
@@ -3031,15 +3031,15 @@ Tone_core_Tone = function () {
     }
     return this;
   };
-  Tone.prototype.get = function (params) {
-    if (isUndef(params)) {
-      params = this._collectDefaults(this.constructor);
-    } else if (this.isString(params)) {
-      params = [params];
+  Tone.prototype.get = function (datGuiParams) {
+    if (isUndef(datGuiParams)) {
+      datGuiParams = this._collectDefaults(this.constructor);
+    } else if (this.isString(datGuiParams)) {
+      datGuiParams = [datGuiParams];
     }
     var ret = {};
-    for (var i = 0; i < params.length; i++) {
-      var attr = params[i];
+    for (var i = 0; i < datGuiParams.length; i++) {
+      var attr = datGuiParams[i];
       var parent = this;
       var subRet = ret;
       if (attr.indexOf('.') !== -1) {
@@ -3053,7 +3053,7 @@ Tone_core_Tone = function () {
         attr = attrSplit[attrSplit.length - 1];
       }
       var param = parent[attr];
-      if (this.isObject(params[attr])) {
+      if (this.isObject(datGuiParams[attr])) {
         subRet[attr] = param.get();
       } else if (Tone.Signal && param instanceof Tone.Signal) {
         subRet[attr] = param.value;
@@ -7193,7 +7193,7 @@ reverb = function () {
     this.input.gain.value = 0.5;
     this.input.connect(this.convolverNode);
     this.convolverNode.connect(this.output);
-    // default params
+    // default datGuiParams
     this._seconds = 3;
     this._decay = 2;
     this._reverse = false;

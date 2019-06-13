@@ -1,9 +1,13 @@
 class CONST {
     constructor(props) {
         this.API = {
-            'weather' : 'http://api.openweathermap.org/data/2.5/forecast?q=', 
+            'weather' : 'http://api.openweathermap.org/data/2.5/forecast?q=',
         };
 
+        this.TIME = {
+            'min' : 60000,
+            'sec' : 1000,
+        };
 
         this.DIMEN = {
             'width' : 960,

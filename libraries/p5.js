@@ -5456,9 +5456,9 @@ exports.sizeOf = sizeOf;
       for (i = 0; o && i < o.length; i++) add(o[i]['name'], o[i]['value'])
     } else {
       // If traditional, encode the "old" way (the way 1.3.2 or older
-      // did it), otherwise encode params recursively.
+      // did it), otherwise encode datGuiParams recursively.
       for (prefix in o) {
-        if (o.hasOwnProperty(prefix)) buildParams(prefix, o[prefix], traditional, add)
+        if (o.hasOwnProperty(prefix)) builddatGuiParams(prefix, o[prefix], traditional, add)
       }
     }
 
@@ -5466,7 +5466,7 @@ exports.sizeOf = sizeOf;
     return s.join('&').replace(/%20/g, '+')
   }
 
-  function buildParams(prefix, obj, traditional, add) {
+  function builddatGuiParams(prefix, obj, traditional, add) {
     var name, i, v
       , rbracket = /\[\]$/
 
@@ -5478,13 +5478,13 @@ exports.sizeOf = sizeOf;
           // Treat each array item as a scalar.
           add(prefix, v)
         } else {
-          buildParams(prefix + '[' + (typeof v === 'object' ? i : '') + ']', v, traditional, add)
+          builddatGuiParams(prefix + '[' + (typeof v === 'object' ? i : '') + ']', v, traditional, add)
         }
       }
     } else if (obj && obj.toString() === '[object Object]') {
       // Serialize object item.
       for (name in obj) {
-        buildParams(prefix + '[' + name + ']', obj[name], traditional, add)
+        builddatGuiParams(prefix + '[' + name + ']', obj[name], traditional, add)
       }
 
     } else {
@@ -8353,7 +8353,7 @@ p5.prototype.sphere = function(){
   for (var i = 0; i < args.length; ++i) {
     args[i] = arguments[i];
   }
-  //@todo validate params here
+  //@todo validate datGuiParams here
   //
   var radius = args[0] || 50;
   var detailX = typeof args[1] === 'number' ? args[1] : 24;
@@ -13686,24 +13686,24 @@ p5.prototype.getURLPath = function() {
   return location.pathname.split('/').filter(function(v){return v!=='';});
 };
 /**
- * Gets the current URL params as an Object.
- * @method getURLParams
- * @return {Object} URL params
+ * Gets the current URL datGuiParams as an Object.
+ * @method getURLdatGuiParams
+ * @return {Object} URL datGuiParams
  * @example
  * <div class='norender'>
  * <code>
  * // Example: http://p5js.org?year=2014&month=May&day=15
  *
  * function setup() {
- *   var params = getURLParams();
- *   text(params.day, 10, 20);
- *   text(params.month, 10, 40);
- *   text(params.year, 10, 60);
+ *   var datGuiParams = getURLdatGuiParams();
+ *   text(datGuiParams.day, 10, 20);
+ *   text(datGuiParams.month, 10, 40);
+ *   text(datGuiParams.year, 10, 60);
  * }
  * </code>
  * </div>
  */
-p5.prototype.getURLParams = function() {
+p5.prototype.getURLdatGuiParams = function() {
   var re = /[?&]([^&=]+)(?:[&=])([^&=]+)/gim;
   var m;
   var v={};
@@ -13786,7 +13786,7 @@ function typeMatches(defType, argType, arg) {
  *
  * @return console logs
  */
-// Wrong number of params, undefined param, wrong type
+// Wrong number of datGuiParams, undefined param, wrong type
 var PARAM_COUNT = 0;
 var EMPTY_VAR = 1;
 var WRONG_TYPE = 2;
@@ -21088,7 +21088,7 @@ p5.prototype.loadImage = function(path, successCallback, failureCallback) {
 };
 
 /**
- * Validates clipping params. Per drawImage spec sWidth and sHight cannot be
+ * Validates clipping datGuiParams. Per drawImage spec sWidth and sHight cannot be
  * negative or greater than image intrinsic width and height
  * @private
  * @param {Number} sVal
@@ -21657,9 +21657,9 @@ p5.Image.prototype.updatePixels = function(x, y, w, h){
 /**
  * Get a region of pixels from an image.
  *
- * If no params are passed, those whole image is returned,
- * if x and y are the only params passed a single pixel is extracted
- * if all params are passed a rectangle region is extracted and a p5.Image
+ * If no datGuiParams are passed, those whole image is returned,
+ * if x and y are the only datGuiParams passed a single pixel is extracted
+ * if all datGuiParams are passed a rectangle region is extracted and a p5.Image
  * is returned.
  *
  * Returns undefined if the region is outside the bounds of the image

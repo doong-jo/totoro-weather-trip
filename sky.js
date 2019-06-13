@@ -1,10 +1,9 @@
 class Sky{
 
-    constructor(ratio){
-        this.ratio = ratio;
-    }
+    constructor() { }
 
-    init(){
+    init(ratio) {
+        this.ratio = ratio;
         this.hours = 0;
 
         //Use background image color change
@@ -35,7 +34,7 @@ class Sky{
         this.hours = s;
     }
 
-    timeByTint(){
+    timeByTint() {
         var alpha;
 
         if(this.hours <= 5){
@@ -111,7 +110,8 @@ class Sky{
         this.b2 = map(hours, start, end, color3.b, color4.b);
     }
 
-    drawSky(){
+    draw() {
         this.setGradient(0, 0, CON.DIMEN.width, CON.DIMEN.height, color(this.r1, this.g1, this.b1), color(this.r2, this.g2, this.b2) );
+        this.timeByTint();
     }
 }
