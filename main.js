@@ -104,7 +104,7 @@ function intervalSetup() {
 
 function draw() {
     sky.draw();
-    cloud.draw();
+    // cloud.draw();
     hill.draw();
     dandalion.draw();
     totoro.draw();

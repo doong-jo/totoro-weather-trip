@@ -1,14 +1,12 @@
 class Info {
     constructor(props) {
         this.cityTv = {
-            'view' : createElement('h4', 'cityTextView'),
             'pos' : {'x': 0, 'y': 0},
             'size' : 18,
             'color' : '#FFFFFF',
         };
 
         this.dateTv = {
-            'view' : createElement('h4', 'dateTextView'),
             'pos' : {'x': 0, 'y': 0},
             'size' : 18,
             'color' : '#FFFFFF',
@@ -23,21 +21,20 @@ class Info {
     }
 
     init() {
-        this.cityTv.view.style('color', this.cityTv.color);
-        this.dateTv.view.style('color', this.dateTv.color);
+        // this.cityTv.view.style('color', this.cityTv.color);
+        // this.dateTv.view.style('color', this.dateTv.color);
+        textAlign(CENTER, CENTER);
     }
 
     draw() {
         if( this.cityScaleAnimTrig ) {
             this.positioning(this.cityTv);
-            this.scaling(this.cityTv);
 
-            this.cityTv.view.style('font-size', this.cityTv.size + 'px');
+            text(this.cityTv.text, this.cityTv.pos.x, this.cityTv.pos.y);
         } else if( this.dateScaleAnimTrig ) {
             this.positioning(this.dateTv);
-            this.scaling(this.dateTv);
 
-            this.dateTv.view.style('font-size', this.dateTv.size + 'px');
+            text(this.dateTv.text, this.dateTv.pos.x, this.dateTv.pos.y);
         }
     }
 
@@ -46,7 +43,7 @@ class Info {
         const dt = { 'x': CON.DIMEN.width/2, 'y': CON.DIMEN.height/2 };
         const subX = abs(dt.x - st.x);
         const subY = abs(dt.y - st.y);
-        const speed = 0.05;
+        const speed = 0.02;
 
         this.posAnimDest = dt;
 
@@ -67,13 +64,16 @@ class Info {
             'x': object.pos.x + this.posAnimMove.x,
             'y': object.pos.y + this.posAnimMove.y,
         };
-        object.view.position(object.pos.x, object.pos.y);
-
         this.moveAmount -= abs(this.posAnimMove.x);
-    }
 
-    scaling(object) {
+        // scale
+        textSize(this.cityTv.size += 10);
 
+        if( this.moveAmount <= 0 ) {
+            object.pos = { 'x': this.posAnimDest.x, 'y': this.posAnimDest.y };
+            // object.view.position(this.posAnimDest.x, this.posAnimDest.y);
+            return;
+        }
     }
 
     startCityAnim() {
@@ -88,17 +88,18 @@ class Info {
 
     setPosition(cityPos, datePos) {
         this.cityTv.pos = cityPos;
-        this.cityTv.view.position(this.cityTv.pos.x, this.cityTv.pos.y);
+        // this.cityTv.view.position(this.cityTv.pos.x, this.cityTv.pos.y);
 
         this.dateTv.pos = datePos;
-        this.dateTv.view.position(this.dateTv.pos.x, this.dateTv.pos.y);
+        // this.dateTv.view.position(this.dateTv.pos.x, this.dateTv.pos.y);
     }
 
     setCityText(cityText) {
-        this.cityTv.view.html(cityText);
+        this.cityTv.text = cityText;
     }
 
     setDateText(dateText) {
-        this.dateTv.view.html(dateText);
+        this.dateTv.text = dateText;
+        // this.dateTv.view.html(dateText);
     }
 }
