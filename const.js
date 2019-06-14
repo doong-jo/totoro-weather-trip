@@ -7,6 +7,7 @@ class CONST {
         this.TIME = {
             'min' : 60000,
             'sec' : 1000,
+            'textEffectDelay' : 1500,
         };
 
         this.DIMEN = {
