@@ -60,7 +60,6 @@ function setup() {
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     wheather.init();
-    cloud.init();
     rain.init();
     snow.init();
     dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
@@ -71,21 +70,6 @@ function setup() {
     sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
     dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     wheather.loadWeatherData(cur_city, 0, setWheaterData);
-    // info.setPosition(
-    //     { 'x': 20, 'y': CON.DIMEN.height - 60 },
-    //     { 'x': CON.DIMEN.width - 140, 'y': 0 }
-    // );
-    button = createButton('date-effect');
-    button.position(0, 0);
-    button.mousePressed(()=> {
-        info.startDateAnim();
-    });
-
-    button = createButton('city-effect');
-    button.position(0, 100);
-    button.mousePressed(()=> {
-        info.startCityAnim();
-    });
 
     info.setCityText(cur_city);
     info.setDateText(custom_date.getDate());
@@ -104,7 +88,6 @@ function setup() {
     // setInterval(() => {
     //   dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     // }, CON.TIME.min);
-
 }
 function intervalSetup() {
     // update date
@@ -126,9 +109,9 @@ function draw() {
 }
 
 function setWheaterData(data) {
-  print(data);
+    print(data);
 
-    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
+    cloud.init(data[0].clouds.all, data[0].wind.speed);
 }
 
 function serialData(data) {
@@ -146,4 +129,5 @@ function changeCountry(city) {
     // wheather.loadWeatherData(city, 0, setWheaterData);
     cur_city = CON.ARRAY.city[city];
     info.setCityText(cur_city);
+    info.startCityAnim();
 }

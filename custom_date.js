@@ -1,5 +1,6 @@
 class CustomDate {
     constructor(props) {
+        this.jsDate = new Date();
         this.curDate = null;
         this.pivot = 0;
     }
@@ -29,9 +30,9 @@ class CustomDate {
 
     nextDate() {
         if( this.pivot < 5) {
-            this.curDate.setDate(this.curDate.getDate() + 1);
+            this.jsDate.setDate(this.jsDate.getDate() + 1);
 
-            getDateFormat(this.curDate);
+            this.curDate = this.getDateFormat(this.jsDate);
             this.pivot++;
         }
 
@@ -40,9 +41,9 @@ class CustomDate {
 
     prevDate() {
         if( this.pivot > 0 ) {
-            this.curDate.setDate(this.curDate.getDate() - 1);
+            this.jsDate.setDate(this.jsDate.getDate() - 1);
 
-            getDateFormat(this.curDate);
+            this.curDate = this.getDateFormat(this.jsDate);
             this.pivot--;
         }
 
