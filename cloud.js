@@ -22,7 +22,7 @@ class Cloud {
     const self = this;
 
     $.getJSON(jsonFile, function(json) {
-        console.log("success");
+        console.log("get cloudArray data success");
 
         const setCloud = [ self.cloud1, self.cloud2, self.cloud3, self.cloud4 ];
         const getCloud = [ [json.cloud1, json.cloud1_01, json.cloud1_02],
@@ -37,15 +37,6 @@ class Cloud {
           }
         }
 
-      })
-      .done(function() {
-        console.log("second success");
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
       });
   }
 

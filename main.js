@@ -7,7 +7,10 @@ let info;
 
 let wheather, rain, snow, cloud;
 let totoro;
+let smallTotoro;
 let serial;
+
+let small_Totoro;
 
 const datGuiParams = {
     displayMode: true,
@@ -29,6 +32,10 @@ const datGuiParams = {
 // TODO : track user ip and find country
 let cur_city = CON.ARRAY.city[0];
 
+function preload() {
+  small_Totoro = loadImage('smallTotoro.PNG');
+}
+
 function setup() {
     createCanvas(CON.DIMEN.width, CON.DIMEN.height);
 
@@ -46,6 +53,7 @@ function setup() {
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
+    smallTotoro = new SmallTotoro();
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
@@ -57,6 +65,7 @@ function setup() {
     sky.init(0.6);
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
+    smallTotoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
     wheather.init();
     cloud.init();
     rain.init();
@@ -103,14 +112,23 @@ function setup() {
 }
 
 function draw() {
-  sky.draw();
-  cloud.draw();
-  hill.draw();
-  dandalion.draw();
-  totoro.draw();
+   sky.draw();
+   cloud.draw();
+   hill.draw();
+   dandalion.draw();
+   totoro.draw();
+   smallTotoro.draw();
 
-  if( datGuiParams.snowMode ) { snow.draw(); }
-  if( datGuiParams.rainMode ) { rain.draw(); }
+   if( datGuiParams.snowMode ) { snow.draw(); }
+   if( datGuiParams.rainMode ) { rain.draw(); }
+
+  //image(small_Totoro, 0, 0);
+
+}
+
+function mouseClicked() {
+  ellipse(mouseX, mouseY, 5, 5);
+   console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
 }
 
 function setWheaterData(data) {
