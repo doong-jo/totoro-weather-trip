@@ -1,23 +1,34 @@
 class Info {
     constructor(props) {
         this.cityTv = {
-            'pos' : {'x': 0, 'y': 0},
-            'size' : 18,
+            'trigger' : false,
+            'pos' : { 'x': 50, 'y': CON.DIMEN.height + 20 },
+            'size' : 25,
+            'sizeAdd' : 5,
             'color' : '#FFFFFF',
+            'startPos' : { 'x': 50, 'y': CON.DIMEN.height + 20 },
+
+            'posAnimMove' : { 'x': 0, 'y': 0},
+            'posAnimDest' : { 'x': 0, 'y': 0},
+            'moveAmount' : 0,
+            'moveAmountOrigin' : 0,
+            'pivotMillis' : -99999,
         };
 
         this.dateTv = {
-            'pos' : {'x': 0, 'y': 0},
-            'size' : 18,
+            'trigger' : false,
+            'pos' : { 'x': CON.DIMEN.width - 10, 'y': 30 },
+            'size' : 25,
+            'sizeAdd' : 5,
             'color' : '#FFFFFF',
+            'startPos' : { 'x': CON.DIMEN.width - 10, 'y': 30 },
+
+            'posAnimMove' : { 'x': 0, 'y': 0},
+            'posAnimDest' : { 'x': 0, 'y': 0},
+            'moveAmount' : 0,
+            'moveAmountOrigin' : 0,
+            'pivotMillis' : -99999,
         };
-
-        this.cityScaleAnimTrig = false;
-        this.dateScaleAnimTrig = false;
-
-        this.posAnimMove = { 'x': 0, 'y': 0 };
-        this.posAnimDest = { 'x': 0, 'y': 0 };
-        this.moveAmount = 0;
     }
 
     init() {
@@ -27,71 +38,85 @@ class Info {
     }
 
     draw() {
-        if( this.cityScaleAnimTrig ) {
+        if( this.cityTv.trigger ) {
             this.positioning(this.cityTv);
-
-            text(this.cityTv.text, this.cityTv.pos.x, this.cityTv.pos.y);
-        } else if( this.dateScaleAnimTrig ) {
+        } else if( this.dateTv.trigger ) {
             this.positioning(this.dateTv);
-
-            text(this.dateTv.text, this.dateTv.pos.x, this.dateTv.pos.y);
         }
+
+        textSize(this.cityTv.size);
+        text(this.cityTv.text, this.cityTv.pos.x, this.cityTv.pos.y);
+
+        textSize(this.dateTv.size);
+        text(this.dateTv.text, this.dateTv.pos.x, this.dateTv.pos.y);
     }
 
-    prePositioning(object) {
-        const st = { 'x': object.pos.x, 'y':  object.pos.y};
-        const dt = { 'x': CON.DIMEN.width/2, 'y': CON.DIMEN.height/2 };
+    prePositioning(object, isStart) {
+        const st = { 'x': object.startPos.x, 'y':  object.startPos.y};
+        const dt = { 'x': CON.DIMEN.width/2 + 50, 'y': CON.DIMEN.height/2 };
         const subX = abs(dt.x - st.x);
         const subY = abs(dt.y - st.y);
         const speed = 0.02;
 
-        this.posAnimDest = dt;
-
         const dis = sqrt(pow(subX, 2) + pow(subY, 2));
 
-        this.posAnimMove.x = subX / (dis * speed);
-        this.posAnimMove.x = dt.x - st.x  >= 0 ? this.posAnimMove.x : -this.posAnimMove.x;
-        this.posAnimMove.y = subY / (dis * speed);
-        this.posAnimMove.y = dt.y - st.y  >= 0 ? this.posAnimMove.y : -this.posAnimMove.y;
+        object.posAnimMove.x = subX / (dis * speed);
+        object.posAnimMove.x = dt.x - st.x  >= 0 ? object.posAnimMove.x : -object.posAnimMove.x;
+        object.posAnimMove.y = subY / (dis * speed);
+        object.posAnimMove.y = dt.y - st.y  >= 0 ? object.posAnimMove.y : -object.posAnimMove.y;
 
-        this.moveAmount = subX;
+        if( !isStart ) {
+            object.posAnimMove.x = -object.posAnimMove.x;
+            object.posAnimMove.y = -object.posAnimMove.y;
+            object.sizeAdd = -object.sizeAdd;
+            object.posAnimDest = st;
+        } else {
+            object.posAnimDest = dt;
+        }
+
+        object.moveAmount = object.moveAmountOrigin = subX;
     }
 
     positioning(object) {
-        if( this.moveAmount <= 0 ) { return; }
+        if( millis() - object.pivotMillis  < CON.TIME.textEffectDelay ) {
+            return;
+        }
+
+        if( object.pos.x == object.posAnimDest.x &&
+            object.pos.y == object.posAnimDest.y ) {
+                object.trigger = false;
+                return; }
 
         object.pos = {
-            'x': object.pos.x + this.posAnimMove.x,
-            'y': object.pos.y + this.posAnimMove.y,
+            'x': object.pos.x + object.posAnimMove.x,
+            'y': object.pos.y + object.posAnimMove.y,
         };
-        this.moveAmount -= abs(this.posAnimMove.x);
+        object.moveAmount -= abs(object.posAnimMove.x);
 
         // scale
-        textSize(this.cityTv.size += 10);
+        object.size += object.sizeAdd;
 
-        if( this.moveAmount <= 0 ) {
-            object.pos = { 'x': this.posAnimDest.x, 'y': this.posAnimDest.y };
+        if( object.moveAmount <= 0 ) {
+            object.pos = { 'x': object.posAnimDest.x, 'y': object.posAnimDest.y };
+            this.prePositioning(object, false);
+            object.pivotMillis = millis();
             // object.view.position(this.posAnimDest.x, this.posAnimDest.y);
             return;
         }
     }
 
     startCityAnim() {
-        this.cityScaleAnimTrig = true;
-        this.prePositioning(this.cityTv);
+        if( !this.cityTv.trigger ) {
+            this.cityTv.trigger = true;
+            this.prePositioning(this.cityTv, true);
+        }
     }
 
     startDateAnim() {
-        this.dateScaleAnimTrig = true;
-        this.prePositioning(this.dateTv);
-    }
-
-    setPosition(cityPos, datePos) {
-        this.cityTv.pos = cityPos;
-        // this.cityTv.view.position(this.cityTv.pos.x, this.cityTv.pos.y);
-
-        this.dateTv.pos = datePos;
-        // this.dateTv.view.position(this.dateTv.pos.x, this.dateTv.pos.y);
+        if( !this.dateTv.trigger ) {
+            this.dateTv.trigger = true;
+            this.prePositioning(this.dateTv, true);
+        }
     }
 
     setCityText(cityText) {

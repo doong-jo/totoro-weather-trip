@@ -70,14 +70,25 @@ function setup() {
     sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
     dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     wheather.loadWeatherData(cur_city, 0, setWheaterData);
-    info.setPosition(
-        { 'x': 20, 'y': CON.DIMEN.height - 60 },
-        { 'x': CON.DIMEN.width - 140, 'y': -10 }
-    );
+    // info.setPosition(
+    //     { 'x': 20, 'y': CON.DIMEN.height - 60 },
+    //     { 'x': CON.DIMEN.width - 140, 'y': 0 }
+    // );
+    button = createButton('date-effect');
+    button.position(0, 0);
+    button.mousePressed(()=> {
+        info.startDateAnim();
+    });
+
+    button = createButton('city-effect');
+    button.position(0, 100);
+    button.mousePressed(()=> {
+        info.startCityAnim();
+    });
+
     info.setCityText(cur_city);
     info.setDateText(custom_date.getDate());
 
-    this.changeCountry(1);
     // serial.setMainSerialEventCallback(serialData);
 
 
@@ -94,7 +105,6 @@ function setup() {
     // }, CON.TIME.min);
 
 }
-
 function intervalSetup() {
     // update date
     setInterval(() => {
@@ -135,5 +145,4 @@ function changeCountry(city) {
     // wheather.loadWeatherData(city, 0, setWheaterData);
     cur_city = CON.ARRAY.city[city];
     info.setCityText(cur_city);
-    info.startDateAnim();
 }
