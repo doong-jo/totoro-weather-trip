@@ -25,6 +25,8 @@ class CustomDate {
     }
 
     getDate() {
+        this.curDate = this.getDateFormat(new Date());
+
         return this.curDate;
     }
 
