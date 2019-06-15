@@ -19,7 +19,7 @@
 ---
 
 ## 개발현황
-#### [👉 Trello](https://trello.com/b/iE9JH2v1)
+#### <a href="https://trello.com/b/iE9JH2v1" target="_blank">👉 Trello</a>
 
 ---
 
