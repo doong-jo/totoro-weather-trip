@@ -212,7 +212,6 @@
       }
     ]
   },
-
   "cloud1_01":{
     "color": "#D3E5F9",
     "points": [
@@ -522,7 +521,6 @@
     }
   ]
   },
-
   "cloud1_02": {
     "color": "#ADCEF7",
     "points":[
@@ -998,7 +996,6 @@
     }
   ]
   },
-
   "cloud2_01":{
     "color": "#D3E5F9",
     "points" : [
@@ -1156,7 +1153,6 @@
     }
   ]
   },
-
   "cloud2_02":{
     "color": "#ADCEF7",
     "points": [
@@ -1885,7 +1881,6 @@
     }
   ]
   },
-
   "cloud3_02": {
     "color": "#C1E2FF",
     "points": [
@@ -2059,7 +2054,6 @@
     }
   ]
   },
-
   "cloud3_03": {
     "color": "#C1E2FF",
     "points": [
@@ -2752,7 +2746,6 @@
     }
   ]
   },
-
   "cloud4_01": {
     "color": "#C1E2FF",
     "points": [
@@ -2834,7 +2827,6 @@
     }
   ]
   },
-
   "cloud4_02": {
     "color": "#C1E2FF",
     "points": [
@@ -2963,8 +2955,7 @@
       "y": 82
     }
   ]
-  },
-
+},
   "cloud4_03": {
     "color": "#C1E2FF",
     "points": [
@@ -3002,7 +2993,6 @@
     }
   ]
   },
-
   "cloud4_04": {
     "color": "#EFF6FC",
     "points": [

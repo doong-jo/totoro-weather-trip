@@ -17,6 +17,9 @@ class CONST {
             'totoro_x' : 550,
             'totoro_y' : 180,
             'totoro_scale' : 0.9,
+            'small_totoro_x' : 810,
+            'small_totoro_y' : 300,
+            'small_totoro_scale': 0.3,
             'cloudSize' : 25,
         };
 

@@ -38,6 +38,8 @@ class Info {
     }
 
     draw() {
+        fill(255);
+
         if( this.cityTv.trigger ) {
             this.positioning(this.cityTv);
         } else if( this.dateTv.trigger ) {

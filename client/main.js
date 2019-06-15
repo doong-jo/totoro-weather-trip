@@ -7,8 +7,11 @@ let info;
 
 let wheather, rain, snow, cloud;
 let totoro;
+let smallTotoro;
 let custom_date;
 let serial;
+
+let small_Totoro;
 
 const datGuiParams = {
     displayMode: true,
@@ -47,6 +50,7 @@ function setup() {
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
+    smallTotoro = new SmallTotoro();
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
@@ -57,8 +61,10 @@ function setup() {
     // serial = new Serial();
 
     sky.init(0.6);
+    cloud.init();
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
+    smallTotoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
     wheather.init();
     rain.init();
     snow.init();
@@ -97,21 +103,23 @@ function intervalSetup() {
 }
 
 function draw() {
-    sky.draw();
-    cloud.draw();
-    hill.draw();
-    dandalion.draw();
-    totoro.draw();
-    info.draw();
+   sky.draw();
+   cloud.draw();
+   hill.draw();
+   dandalion.draw();
+   totoro.draw();
+   smallTotoro.draw();
+   info.draw();
 
-    if( datGuiParams.snowMode ) { snow.draw(); }
-    if( datGuiParams.rainMode ) { rain.draw(); }
+   if( datGuiParams.snowMode ) { snow.draw(); }
+   if( datGuiParams.rainMode ) { rain.draw(); }
+
 }
 
 function setWheaterData(data) {
     print(data);
 
-    cloud.init(data[0].clouds.all, data[0].wind.speed);
+    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
 }
 
 function serialData(data) {

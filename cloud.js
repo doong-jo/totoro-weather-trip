@@ -14,7 +14,7 @@ class Cloud {
     this.cloud3 = new Array();
     this.cloud4 = new Array();
 
-    this.loadCloudsFromJSON('cloud.json');
+    this.loadCloudsFromJSON('cloudArray.json');
 
   }
 
@@ -22,7 +22,7 @@ class Cloud {
     const self = this;
 
     $.getJSON(jsonFile, function(json) {
-        console.log("success");
+        console.log("get cloudArray data success");
 
         const setCloud = [ self.cloud1, self.cloud2, self.cloud3, self.cloud4 ];
         const getCloud = [ [json.cloud1, json.cloud1_01, json.cloud1_02],
@@ -36,7 +36,6 @@ class Cloud {
             setCloud[i].push(getCloud[i][j]);
           }
         }
-
       });
   }
 
@@ -45,7 +44,7 @@ class Cloud {
     this.cloudAmount = clouds / 5;
     this.windSpeed = windSpeed / 10;
 
-    for (var i = 0; i < this.cloudAmount; i++) {
+    for (var i = this.cloudAmount; i < clouds; i++) {
 
       var scale;
       if((i + 1) % 4 == 0) scale = 0.7;
