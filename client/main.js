@@ -13,6 +13,9 @@ let serial;
 
 let small_Totoro;
 
+console.log('windValue', windValue);
+console.log('resistValue', resistValue);
+
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
