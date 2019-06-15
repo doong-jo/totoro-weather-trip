@@ -12,6 +12,9 @@ let leaf;
 let custom_date;
 let serial;
 
+console.log('windValue', windValue);
+console.log('resistValue', resistValue);
+
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
