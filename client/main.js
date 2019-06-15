@@ -8,10 +8,9 @@ let info;
 let wheather, rain, snow, cloud;
 let totoro;
 let smallTotoro;
+let leaf;
 let custom_date;
 let serial;
-
-let small_Totoro;
 
 console.log('windValue', windValue);
 console.log('resistValue', resistValue);
@@ -54,6 +53,7 @@ function setup() {
     hill = new Hill();
     totoro = new Totoro();
     smallTotoro = new SmallTotoro();
+    leaf = new Leaf();
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
@@ -68,6 +68,8 @@ function setup() {
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     smallTotoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    leaf.init(460, 100, 1);
+
     wheather.init();
     rain.init();
     snow.init();
@@ -113,6 +115,8 @@ function draw() {
    totoro.draw();
    smallTotoro.draw();
    info.draw();
+   leaf.draw();
+
 
    if( datGuiParams.snowMode ) { snow.draw(); }
    if( datGuiParams.rainMode ) { rain.draw(); }
