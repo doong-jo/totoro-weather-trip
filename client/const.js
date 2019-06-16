@@ -24,6 +24,8 @@ class CONST {
             'leaf_y': 60,
             'leaf_scale': 1,
             'cloudSize' : 25,
+            'dandalion_center_radius' : 20,
+            'dandalion_stem_weight' : 5,
         };
 
         this.ARRAY = {
@@ -35,6 +37,9 @@ class CONST {
         this.COLOR = {
             'rain' : "#557DB0",
             'white' : "#FFFFFF",
+            'dandalion_stem' : '#426110',
+            'dandalion_center' : '#5C4438',
+            'dandalion' : 245,
             'totoroHeadLeaf' : "#75AB49",
             'hillDarkGreen' : "#AAD371",
             'hillGreen' : "#CBED50",

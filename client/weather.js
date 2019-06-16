@@ -29,6 +29,7 @@ class Weather {
 
     assembleData(data) {
         let weatherList = data.list;
+        this.weatherDic = {};
 
         let beforeDate = "";
         for(var i=0; i<weatherList.length; i++) {

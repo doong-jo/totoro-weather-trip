@@ -8,7 +8,7 @@ class Particle {
     this.pos = createVector(x, y);
     this.vel = createVector(random(-10, 10), random(-10, 10));
     this.acc = createVector(0, 0);
-    this.rad = 2; //random(2, 3.5);
+    this.rad = random(2, 3.5);
 
     this.targetPos = createVector(width / 6, height * 1 / 2);
     this.lerpSpeed = random(0.05, 0.1);
@@ -26,8 +26,19 @@ class Particle {
     this.seedColor = 0;
   }
 
-  init() {
-    //
+  refresh() {
+      this.vel = createVector(random(-10, 10), random(-10, 10));
+      this.acc = createVector(0, 0);
+
+      this.targetPos = createVector(width / 6, height * 1 / 2);
+      this.lerpSpeed = random(0.05, 0.1);
+
+      this.life = random(50, 80);
+      this.transform = false;
+
+      this.offset = createVector();
+      this.offsetFreq = 0;
+      this.size = 1.0;
   }
 
   moveWithLerp() {
@@ -58,57 +69,57 @@ class Particle {
     this.seedColor = branchColor;
 
     push();
-    var center = createVector(width / 6, height * 1 / 2);
-    var vector = p5.Vector.sub(center, this.pos);
-    var angle = vector.heading();
-    var vel_angle = this.vel.heading();
-    translate(this.pos.x + this.offset.x, this.pos.y + this.offset.y);
+        var center = createVector(width / 6, height * 1 / 2);
+        var vector = p5.Vector.sub(center, this.pos);
+        var angle = vector.heading();
+        var vel_angle = this.vel.heading();
+        translate(this.pos.x + this.offset.x, this.pos.y + this.offset.y);
 
-    scale(this.origialSize);
-    scale(this.size);
+        scale(this.origialSize);
+        scale(this.size);
 
-    noStroke();
-    fill(255, 200);
+        noStroke();
+        fill(255, 200);
 
-    if (datGuiParams.displayMode) {
-      rotate(angle - PI / 2);
-      this.seedShape();
-    } else if (datGuiParams.windMode) {
-      if (this.pos.x > width * 0.3) {
-        if (this.life > 0) {
-          this.life -= random(0.9,1.4);
-        } else {
-          this.life = 0;
+        if (datGuiParams.displayMode) {
+          rotate(angle - PI / 2);
+          this.seedShape();
+        } else if (datGuiParams.windMode) {
+          if (this.pos.x > width * 0.3) {
+            if (this.life > 0) {
+              this.life -= random(0.9,1.4);
+            } else {
+              this.life = 0;
+            }
+          }
+
+          if (this.life == 0 && this.transform == false) {
+            this.size -= 0.04;
+            if (this.size < 0) {
+              this.transform = true;
+              this.size = 0.0;
+            }
+          }
+
+          if (this.transform) {
+            this.size = lerp(this.size, 1.0, 0.03);
+            rotate(vel_angle + noise(-PI / 3, PI / 3));
+            if (this.chance < 0.8) {
+              this.musicShape();
+            } else {
+              this.offset.x = 0;
+              this.offset.y = sin(this.offsetFreq) * 3;
+              this.offsetFreq += this.offsetFreqInc;
+              //acc
+              var force = createVector(-0.001, -0.005);
+              this.applyForce(force);
+              this.birdShape();
+            }
+          } else {
+            rotate(angle - PI / 2);
+            this.seedShape();
+          }
         }
-      }
-
-      if (this.life == 0 && this.transform == false) {
-        this.size -= 0.04;
-        if (this.size < 0) {
-          this.transform = true;
-          this.size = 0.0;
-        }
-      }
-
-      if (this.transform) {
-        this.size = lerp(this.size, 1.0, 0.03);
-        rotate(vel_angle + noise(-PI / 3, PI / 3));
-        if (this.chance < 0.8) {
-          this.musicShape();
-        } else {
-          this.offset.x = 0;
-          this.offset.y = sin(this.offsetFreq) * 3;
-          this.offsetFreq += this.offsetFreqInc;
-          //acc
-          var force = createVector(-0.001, -0.005);
-          this.applyForce(force);
-          this.birdShape();
-        }
-      } else {
-        rotate(angle - PI / 2);
-        this.seedShape();
-      }
-    }
     pop();
   }
 
@@ -135,14 +146,16 @@ class Particle {
 
   seedShape() {
 
+    // front
     strokeWeight(1);
-    stroke("#7A5241");
+    stroke(this.seedColor);
     line(0, 0, 0, -15);
     line(0, -15, -10, -20);
     line(0, -15, -5, -20);
     line(0, -15, 10, -20);
     line(0, -15, 5, -20);
 
+    // back
     strokeWeight(5);
     stroke(this.seedColor, 100);
     line(0, 0, 0, -15);
@@ -170,7 +183,7 @@ class Particle {
 
   node1() {
     strokeWeight(1);
-    stroke(this.seedColor, 100);
+    stroke(this.seedColor);
     line(this.rad, 0, this.rad, -15);
     line(this.rad, -15, this.rad + 10, -18);
     line(this.rad + 10, -18, this.rad + 10, -3);
@@ -179,7 +192,7 @@ class Particle {
   }
   node2() {
     strokeWeight(1);
-    stroke(this.seedColor, 100);
+    stroke(this.seedColor);
     line(this.rad, 0, this.rad, -15);
     ellipse(0, 0, this.rad * 2.3, this.rad * 2);
     beginShape();
@@ -192,14 +205,14 @@ class Particle {
   }
   node3() {
     strokeWeight(1);
-    stroke(this.seedColor, 100);
+    stroke(this.seedColor);
     noFill();
     line(this.rad, 0, this.rad, -15);
     ellipse(this.rad + 4, -15, 3 * this.rad, 2.5 * this.rad);
     pop();
   }
   node4() {
-    stroke(this.seedColor, 100);
+    stroke(this.seedColor);
     noFill();
     line(this.rad, 0, this.rad, -15);
     line(this.rad + 5, -2, this.rad + 5, -17);
@@ -209,7 +222,7 @@ class Particle {
   }
   node5() {
     strokeWeight(1);
-    stroke(this.seedColor, 100);
+    stroke(this.seedColor);
     line(this.rad, 0, this.rad, -15);
     ellipse(this.rad + 4, -1, 3 * this.rad, 2.5 * this.rad);
   }
