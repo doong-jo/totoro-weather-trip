@@ -112,23 +112,19 @@ function draw() {
    info.draw();
    leaf.draw();
 
-<<<<<<< HEAD
    this.guiAdjust();
-   this.sensorResponse();
 }
 
 function guiAdjust() {
     if( datGuiParams.snowMode ) { snow.draw(); }
     if( datGuiParams.rainMode ) { rain.draw(); }
-=======
-   if( datGuiParams.snowMode ) { snow.draw(); }
-   if( datGuiParams.rainMode ) { rain.draw(); }
 
 }
 
 function mouseClicked() {
   ellipse(mouseX, mouseY, 5, 5);
    console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
+   dandalion.blow(50);
 }
 
 
@@ -136,43 +132,16 @@ function setWheaterData(data) {
     print(data);
 
     cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
->>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
 }
 
-function sensorResponse() {
-    if( cur_windValue != windValue )  {
-        cur_windValue = windValue;
-
-        dandalion.blow(cur_windValue);
-    }
-
-    if( cur_resistValue != resistValue ) {
-        cur_resistValue = resistValue;
-
-        cur_city = CON.ARRAY.city[cur_resistValue];
-        info.setCityText(cur_city);
-        info.startCityAnim();
-    }
-}
-
-<<<<<<< HEAD
-function setWheaterData(data) {
-    print(data);
-
-    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
-=======
-socket.on('wind', (value)=> {
-	console.log('get socekt wind value', value);
-});
-
-socket.on('resist', (value)=> {
-	console.log('get socekt resist value', value);
-});
-
-function changeCountry(city) {
-    // wheather.loadWeatherData(city, 0, setWheaterData);
-    cur_city = CON.ARRAY.city[city];
-    info.setCityText(cur_city);
-    info.startCityAnim();
->>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
-}
+// socket.on('wind', (value)=> {
+// 	console.log('get socekt wind value', value);
+//     dandalion.blow(value);
+// });
+//
+// socket.on('resist', (value)=> {
+// 	console.log('get socekt resist value', value);
+    // cur_city = CON.ARRAY.city[value];
+    // info.setCityText(cur_city);
+    // info.startCityAnim();
+// });
