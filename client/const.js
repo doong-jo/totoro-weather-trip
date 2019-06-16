@@ -44,55 +44,66 @@ class CONST {
             'hillDarkGreen' : "#AAD371",
             'hillGreen' : "#CBED50",
             'hillBrightGreen' : "#F0ED5F",
-            'dark_indigo' : {
-              'r':0,
-              'g':0,
-              'b':51
-            },
-            'bright_purple' : {
-              'r':102,
-              'g':0,
-              'b':102
-            },
             'bright_blue' : {
-              'r':5,
-              'g':255,
-              'b':180
+                'r':44,
+                'g':151,
+                'b':216,
             },
+
             'white' : {
-              'r':255,
-              'g':255,
-              'b':255
-            },
-            'blue' : {
-              'r':51,
-              'g':0,
-              'b':255
-            },
-            'bright_yellow' : {
-              'r':255,
-              'g':255,
-              'b':204
-            },
-            'dark_purple' : {
-              'r':51,
-              'g':0,
-              'b':51
-            },
-            'dark_orange' : {
-              'r':153,
-              'g':0,
-              'b':0
+                'r':255,
+                'g':255,
+                'b':255
             },
             'black' : {
-              'r' : 0,
-              'g' : 0,
-              'b' : 0
+                'r' : 0,
+                'g' : 0,
+                'b' : 0
+            },
+            'dark_black' : {
+                'r': 56,
+                'b': 56,
+                'g': 56,
             },
             'bright_indigo' : {
-              'r' : 51,
-              'g' : 0,
-              'b' : 102
+                'r' : 51,
+                'g' : 0,
+                'b' : 102
+            },
+            'dark_indigo' : {
+                'r':0,
+                'g':0,
+                'b':51
+            },
+            'bright_purple' : {
+                'r':102,
+                'g':0,
+                'b':102
+            },
+            'blue' : {
+                'r':4,
+                'g':105,
+                'b':198,
+            },
+            'dark_blue' : {
+                'r': 18,
+                'g': 71,
+                'b': 145,
+            },
+            'bright_yellow' : {
+                'r':252,
+                'g':252,
+                'b':208
+            },
+            'dark_purple' : {
+                'r':51,
+                'g':0,
+                'b':51
+            },
+            'dark_orange' : {
+                'r':153,
+                'g':0,
+                'b':0
             },
         };
 

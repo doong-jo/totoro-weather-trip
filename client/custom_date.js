@@ -25,9 +25,13 @@ class CustomDate {
     }
 
     getDate() {
-        this.curDate = this.getDateFormat(new Date());
+        this.curDate = this.getDateFormat(this.jsDate);
 
         return this.curDate;
+    }
+
+    getHours() {
+        this.jsDate.getHours();
     }
 
     nextDate() {

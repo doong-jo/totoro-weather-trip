@@ -97,6 +97,8 @@ function intervalSetup() {
 
     setInterval(() => {
         wheather.loadWeatherData(cur_city, 0, setWheaterData);
+        sky.calculateByTimeToSky(custom_date.getHours());
+        console.log('sky time', CON.VALUE.city_offset[cur_city]);
     },  CON.TIME.min);
 }
 
@@ -150,7 +152,6 @@ function setWheaterData(data) {
         datGuiParams.snowMode = false;
     }
 }
-
 // socket.on('wind', (value)=> {
 // 	console.log('get socket wind value', value);
 //     dandalion.blow(value);

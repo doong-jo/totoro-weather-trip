@@ -22,56 +22,29 @@ class Sky{
         this.color2 = {};
         this.color3 = {};
         this.color4 = {};
+
     }
 
-    getCityHours(tzOffset) { // 24시간제
-        var now = new Date();
-        var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
-        now.setTime(tz);
-
-        var s = now.getHours() + now.getMinutes() / 60;
-
-        this.hours = s;
-    }
-
-    timeByTint() {
-        var alpha;
-
-        if(this.hours <= 5){
-            alpha = map(this.hours, 0, 5, 80, 200);
-        } else if(this.hours > 5 && this.hours <= 12 ){
-            alpha = map(this.hours, 5, 12, 200, 255);
-        }else if(this.hours > 12 && this.hours <= 16){
-            alpha = map(this.hours, 12, 16, 255, 200);
-        }else if(this.hours > 16 && this.hours <= 20){
-            alpha = map(this.hours, 16, 20, 200, 100);
-        }else if(this.hours > 20 && this.hours <= 24){
-            alpha = map(this.hours, 20, 24, 100, 80);
-        }
-
-        tint(alpha, alpha);
-    }
-
-    calculateByTimeToSky(tzOffset) {
-        this.getCityHours(tzOffset);
+    calculateByTimeToSky(hours) {
+        this.hours = hour;
 
         if(this.hours <= 5) {
             this.drawGradient(0, 5,
-                CON.COLOR.black, CON.COLOR.bright_indigo,
+                CON.COLOR.black, CON.COLOR.dark_black,
                 CON.COLOR.dark_indigo, CON.COLOR.bright_purple,
                 this.hours);
         } else if(this.hours > 5 && this.hours <= 12 ){
 
             this.drawGradient(5, 12,
-                CON.COLOR.dark_indigo, CON.COLOR.bright_purple,
-                CON.COLOR.blue, CON.COLOR.bright_yellow,
+                CON.COLOR.bright_yellow, CON.COLOR.dark_blue,
+                CON.COLOR.dark_blue, CON.COLOR.bright_blue,
                 this.hours);
 
         } else if(this.hours > 12 && this.hours <= 16){
 
             this.drawGradient(12, 16,
                 CON.COLOR.blue, CON.COLOR.bright_yellow,
-                CON.COLOR.bright_blue, CON.COLOR.white,
+                CON.COLOR.bright_blue, CON.COLOR.dark_blue,
                 this.hours);
 
         } else if(this.hours > 16 && this.hours <= 20){
@@ -81,10 +54,9 @@ class Sky{
                 CON.COLOR.dark_purple, CON.COLOR.dark_orange,
                 this.hours);
         } else if(this.hours > 20 && this.hours <= 24){
-
             this.drawGradient(20, 24,
-                CON.COLOR.dark_purple, CON.COLOR.dark_orange,
-                CON.COLOR.black, CON.COLOR.bright_indigo,
+                CON.COLOR.dark_indigo, CON.COLOR.bright_purple,
+                CON.COLOR.dark_black, CON.COLOR.black,
                 this.hours);
         }
     }
@@ -112,6 +84,5 @@ class Sky{
 
     draw() {
         this.setGradient(0, 0, CON.DIMEN.width, CON.DIMEN.height, color(this.r1, this.g1, this.b1), color(this.r2, this.g2, this.b2) );
-        this.timeByTint();
     }
 }
