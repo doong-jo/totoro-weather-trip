@@ -21,7 +21,7 @@ class Cloud {
                        ['cloud4', 'cloud4_01', 'cloud4_02', 'cloud4_03', 'cloud4_04']
                      ];
 
-    drawFromJson = new DrawFromJson();
+    drawFromJson = new DrawJSON();
 
      for(var i = 0; i < setCloud.length; i++){
          drawFromJson.loadDataFromJson('cloud.json', setCloud[i], getCloud[i]);

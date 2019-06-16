@@ -11,7 +11,7 @@ class SmallTotoro{
         const setSmallTotoroParts = [ 'smalltotoroStomach', 'smalltotoroArm', 'smalltotoroTail', 'smalltotoroBody',
         'smalltotoroLeftEye', 'smalltotoroRightEye', 'smalltotoroLeftChest', 'smalltotoroMiddleChest', 'smalltotoroRightChest' ];
 
-        drawFromJson = new DrawFromJson();
+        drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('small_totoro.json', this.small_totoro, setSmallTotoroParts);
     }

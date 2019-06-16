@@ -14,7 +14,7 @@ class Totoro {
             'totoro_stomach_shape_03', 'totoro_stomach_shape_04', 'totoro_stomach_shape_05', 'totoro_stomach_shape_06'
         ];
 
-        drawFromJson = new DrawFromJson();
+        drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('totoro.json', this.totoro, setTotoroParts);
     }

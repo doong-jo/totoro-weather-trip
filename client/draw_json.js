@@ -1,4 +1,4 @@
-class DrawFromJson{
+class DrawJSON{
     constructor() { }
     init() {}
 

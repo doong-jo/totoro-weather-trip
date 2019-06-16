@@ -10,7 +10,7 @@ class Leaf{
 
         const setLeafParts = [ 'leafSmallBody', 'leafbody', 'leafShadow', 'leafTail' ];
 
-        drawFromJson = new DrawFromJson();
+        drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('leaf.json', this.totoro_leaf, setLeafParts);
     }
