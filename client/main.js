@@ -12,15 +12,6 @@ let leaf;
 let custom_date;
 let serial;
 
-<<<<<<< HEAD
-let cur_windValue = -1;
-let cur_resistValue = -1;
-
-console.log('windValue', windValue);
-console.log('resistValue', resistValue);
-
-=======
->>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
