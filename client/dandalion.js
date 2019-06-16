@@ -14,52 +14,28 @@ class Dandalion {
         this.blowArea = 0;
         this.blowStrength = 0;
         this.hours = 0;
-        this.branchColor;
+        this.color = 255;
     }
 
     init(x, y){
         this.canvas_x = x;
         this.canvas_y = y;
 
-        textSize(12);
         for (var i = 0; i < 50; i++) {
             this.particles.push(new Particle(random(this.canvas_x), random(this.canvas_y)));
         }
         this.centerBranch = createVector(this.canvas_x / 6, this.canvas_y * 1 / 2);
     }
 
-    getDandalionHours(tzOffset) { // 24시간제
-        var now = new Date();
-        var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
-        now.setTime(tz);
+    blow(wind) {
 
-        var s = now.getHours() + now.getMinutes() / 60;
-
-        this.hours = s;
-    }
-
-    getBranchColor(tzOffset){
-
-        this.getDandalionHours(tzOffset);
-
-        if(this.hours <= 5){
-            this.branchColor = map(this.hours, 0, 5, 80, 200);
-        } else if(this.hours > 5 && this.hours <= 12 ){
-            this.branchColor = map(this.hours, 5, 12, 200, 255);
-        } else if(this.hours > 12 && this.hours <= 16){
-            this.branchColor = map(this.hours, 12, 16, 255, 200);
-        } else if(this.hours > 16 && this.hours <= 20){
-            this.branchColor = map(this.hours, 16, 20, 200, 100);
-        } else if(this.hours > 20 && this.hours <= 24){
-            this.branchColor = map(this.hours, 20, 24, 100, 80);
-        }
     }
 
     draw(){
         if (datGuiParams.displayMode || datGuiParams.windMode) {
             push();
             strokeWeight(3);
-            stroke(this.branchColor, 100);
+            stroke(this.color);
             line(this.centerBranch.x, this.canvas_y - 15, this.centerBranch.x, this.centerBranch.y);
 
             strokeWeight(1);
@@ -84,7 +60,7 @@ class Dandalion {
                 // particles[i].checkBoundaries();
             }
             this.particles[i].update();
-            this.particles[i].display(this.branchColor);
+            this.particles[i].display(this.color);
         }
 
         push();
@@ -131,13 +107,5 @@ class Dandalion {
             //ellipse(centerBranch.x, centerBranch.y, 2 * datGuiParams.s + datGuiParams.c, 2 * datGuiParams.s + datGuiParams.c);
             ellipse(this.centerBranch.x, this.centerBranch.y, this.blowArea, this.blowArea);
         }
-    }
-
-    getRainMode() {
-        return datGuiParams.rainMode;
-    }
-
-    getSnowMode() {
-        return datGuiParams.snowMode;
     }
 }

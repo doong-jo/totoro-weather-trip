@@ -12,6 +12,9 @@ let leaf;
 let custom_date;
 let serial;
 
+let cur_windValue = -1;
+let cur_resistValue = -1;
+
 console.log('windValue', windValue);
 console.log('resistValue', resistValue);
 
@@ -79,14 +82,12 @@ function setup() {
     // serial.init();
 
     sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
-    dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     wheather.loadWeatherData(cur_city, 0, setWheaterData);
 
     info.setCityText(cur_city);
     info.setDateText(custom_date.getDate());
 
     // serial.setMainSerialEventCallback(serialData);
-
 
     intervalSetup();
 
@@ -117,32 +118,33 @@ function draw() {
    info.draw();
    leaf.draw();
 
+   this.guiAdjust();
+   this.sensorResponse();
+}
 
-   if( datGuiParams.snowMode ) { snow.draw(); }
-   if( datGuiParams.rainMode ) { rain.draw(); }
+function guiAdjust() {
+    if( datGuiParams.snowMode ) { snow.draw(); }
+    if( datGuiParams.rainMode ) { rain.draw(); }
+}
 
+function sensorResponse() {
+    if( cur_windValue != windValue )  {
+        cur_windValue = windValue;
+
+        dandalion.blow(cur_windValue);
+    }
+
+    if( cur_resistValue != resistValue ) {
+        cur_resistValue = resistValue;
+
+        cur_city = CON.ARRAY.city[cur_resistValue];
+        info.setCityText(cur_city);
+        info.startCityAnim();
+    }
 }
 
 function setWheaterData(data) {
     print(data);
 
     cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
-}
-
-function serialData(data) {
-    print('main serial data callback receive : ', data);
-    // TODO: set coutnry, blow value
-    // changeCountry(city)
-    // blowDandalion(wind)
-}
-
-function blowDandalion(wind) {
-
-}
-
-function changeCountry(city) {
-    // wheather.loadWeatherData(city, 0, setWheaterData);
-    cur_city = CON.ARRAY.city[city];
-    info.setCityText(cur_city);
-    info.startCityAnim();
 }
