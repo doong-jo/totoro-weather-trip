@@ -22,7 +22,7 @@ class Cloud {
     const self = this;
 
     $.getJSON(jsonFile, function(json) {
-        console.log("success");
+        console.log("totoroJson get Data success");
 
         const setCloud = [ self.cloud1, self.cloud2, self.cloud3, self.cloud4 ];
         const getCloud = [ [json.cloud1, json.cloud1_01, json.cloud1_02],

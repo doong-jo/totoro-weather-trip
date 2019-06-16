@@ -14,12 +14,15 @@ class CONST {
             'width' : 960,
             'height' : 520,
             'random_cloud_height' : 150,
-            'totoro_x' : 550,
-            'totoro_y' : 180,
+            'totoro_x' : 520,
+            'totoro_y' : 165,
             'totoro_scale' : 0.9,
-            'small_totoro_x' : 810,
-            'small_totoro_y' : 300,
+            'small_totoro_x' : 720,
+            'small_totoro_y' : 260,
             'small_totoro_scale': 0.3,
+            'leaf_x': 370,
+            'leaf_y': 60,
+            'leaf_scale': 1,
             'cloudSize' : 25,
         };
 
@@ -32,8 +35,6 @@ class CONST {
         this.COLOR = {
             'rain' : "#557DB0",
             'white' : "#FFFFFF",
-            'totoroBody' : "#666666",
-            'totoroStomach' : "#F4F4D0",
             'totoroHeadLeaf' : "#75AB49",
             'hillDarkGreen' : "#AAD371",
             'hillGreen' : "#CBED50",
