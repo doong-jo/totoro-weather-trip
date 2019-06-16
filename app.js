@@ -11,6 +11,9 @@ const port = 80;
 let windValue = 0;
 let resistValue = 0;
 
+// let countryCode = "";
+// let cityCode = ""
+
 app.use((req, res, next) => {
 	// get ip
 	/*
@@ -21,8 +24,9 @@ app.use((req, res, next) => {
 	// get geo-location
 	/*
 	var geo = geoip.lookup(clientIp);
-	console.log('geo country', geo);
+	console.log('geo data', geo);
 	*/
+	
 	next();
 });
 
