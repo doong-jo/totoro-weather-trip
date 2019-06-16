@@ -114,8 +114,16 @@ function guiAdjust() {
     if( datGuiParams.rainMode ) { rain.draw(); }
 }
 
+function keyPressed() {
+  if (keyCode === ENTER || keyCode === RETURN) {
+      let fs = fullscreen();
+      fullscreen(!fs);
+  }
+}
+
 function mouseClicked() {
-   // dandalion.blow(50);
+
+    dandalion.blow(50);
 }
 
 function setWheaterData(data) {
