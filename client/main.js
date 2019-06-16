@@ -6,6 +6,7 @@ let dandalion;
 let info;
 
 let wheather, rain, snow, cloud;
+let drawFromJson;
 let totoro;
 let small_totoro;
 let leaf;

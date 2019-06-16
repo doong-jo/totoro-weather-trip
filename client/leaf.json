@@ -1,6 +1,7 @@
 {
     "leafbody": {
         "color":"#79B22C",
+        "bStroke": false,
         "points":[
     {"x":13, "y":34},
      {"x":27, "y":31},
@@ -57,6 +58,7 @@
     },
     "leafTail": {
         "color":"#BBEC73",
+        "bStroke": false,
         "points":[
             {"x":114, "y":26},
  {"x":118, "y":24},
@@ -267,6 +269,7 @@
     },
     "leafSmallBody":{
         "color":"#5C8625",
+        "bStroke": false,
         "points":[
             {"x":13, "y":33},
  {"x":8, "y":44},
@@ -303,6 +306,7 @@
     },
     "leafShadow": {
         "color": "#71A22C",
+        "bStroke": false,
         "points":[
             {"x":14, "y":34},
  {"x":23, "y":32},
