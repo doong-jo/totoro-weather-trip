@@ -12,39 +12,29 @@ let leaf;
 let custom_date;
 let serial;
 
+let cur_day = 0;
+let cur_city = CON.ARRAY.city[0];
+
 const datGuiParams = {
     displayMode: true,
-    debugMode: false,
-    windMode: false,
+    debugMode: true,
+    windMode: true,
     rainMode: false,
     snowMode: false,
-    n: 4.5,
-    d: 12.3,
-    t: 20,
-    s: 40,
-    c: 0,
-    angle: 0,
-    step: 2,
-    p: 20,
-    test: 12
 };
 
-// TODO : track user ip and find country
-let cur_city = CON.ARRAY.city[0];
 
 function setup() {
     createCanvas(CON.DIMEN.width, CON.DIMEN.height);
 
     var gui = new dat.GUI();
-    gui.add(datGuiParams, "displayMode");
+    gui.add(datGuiParams, "displayMode").listen();
     gui.add(datGuiParams, "debugMode");
-    gui.add(datGuiParams, "windMode");
-    gui.add(datGuiParams, "snowMode");
-    gui.add(datGuiParams, "rainMode");
-    gui.add(datGuiParams, "s").min(20).max(350).step(1);
-    gui.add(datGuiParams, "angle").min(-5).max(5).step(0.01);
-    gui.add(datGuiParams, "t").min(40).max(400).step(1);
-    gui.add(datGuiParams, "test").min(1).max(15).step(0.1);
+    gui.add(datGuiParams, "windMode").listen();
+    gui.add(datGuiParams, "snowMode").listen();
+    gui.add(datGuiParams, "rainMode").listen();
+
+    setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec  * 3);
 
     sky = new Sky();
     hill = new Hill();
@@ -94,23 +84,27 @@ function setup() {
     //   dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
     // }, CON.TIME.min);
 }
+
 function intervalSetup() {
     // update date
     setInterval(() => {
         info.setDateText(custom_date.getDate());
     }, CON.TIME.sec);
+
+    setInterval(() => {
+        wheather.loadWeatherData(cur_city, 0, setWheaterData);
+    },  CON.TIME.min);
 }
 
 function draw() {
    sky.draw();
    cloud.draw();
    hill.draw();
-   dandalion.draw();
    totoro.draw();
    small_totoro.draw();
    leaf.draw();
+   dandalion.draw();
    info.draw();
-   leaf.draw();
 
    this.guiAdjust();
 }
@@ -118,30 +112,27 @@ function draw() {
 function guiAdjust() {
     if( datGuiParams.snowMode ) { snow.draw(); }
     if( datGuiParams.rainMode ) { rain.draw(); }
-
 }
 
 function mouseClicked() {
-  ellipse(mouseX, mouseY, 5, 5);
-   console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
-   dandalion.blow(50);
+   // dandalion.blow(50);
 }
-
 
 function setWheaterData(data) {
     print(data);
 
-    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
+    cloud.setCloudData(data[cur_day].clouds.all, data[cur_day].wind.speed);
+    dandalion.blow(data[cur_day].wind.speed * 5);
 }
 
 // socket.on('wind', (value)=> {
-// 	console.log('get socekt wind value', value);
+// 	console.log('get socket wind value', value);
 //     dandalion.blow(value);
 // });
 //
 // socket.on('resist', (value)=> {
 // 	console.log('get socekt resist value', value);
-    // cur_city = CON.ARRAY.city[value];
-    // info.setCityText(cur_city);
-    // info.startCityAnim();
+//     cur_city = CON.ARRAY.city[value];
+//     info.setCityText(cur_city);
+//     info.startCityAnim();
 // });
