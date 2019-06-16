@@ -7,21 +7,14 @@ let info;
 
 let wheather, rain, snow, cloud;
 let totoro;
-<<<<<<< HEAD
 let small_totoro;
-=======
-let smallTotoro;
->>>>>>> 4e33c5ff0e3c68b77b28a804a9e98e3773f11d01
 let leaf;
 let custom_date;
 let serial;
 
-<<<<<<< HEAD
-=======
 console.log('windValue', windValue);
 console.log('resistValue', resistValue);
 
->>>>>>> 4e33c5ff0e3c68b77b28a804a9e98e3773f11d01
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
@@ -59,13 +52,8 @@ function setup() {
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
-<<<<<<< HEAD
     small_totoro = new SmallTotoro();
     leaf =  new Leaf();
-=======
-    smallTotoro = new SmallTotoro();
-    leaf = new Leaf();
->>>>>>> 4e33c5ff0e3c68b77b28a804a9e98e3773f11d01
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
