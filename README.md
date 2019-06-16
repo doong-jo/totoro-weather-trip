@@ -2,6 +2,7 @@
 - 2019-1 "비주얼 프로그래밍"
 - 개발기간 : 19년 5월 9일 ~ 19년 6월 20일
 - **조성동(p5.js, RPI, Server)**, 김형호(p5.js), 유승훈(문서자료 및 리소스), 최환(Kinect, RPI, 3D printing)
+- [함께 사용되는 라즈베리파이 프로젝트 Github](https://github.com/sdong001/rpi-weather-media-art)
 
 
 ## 목차
