@@ -22,6 +22,7 @@ const datGuiParams = {
     windMode: true,
     rainMode: false,
     snowMode: false,
+    leafMode: false,
 };
 
 
@@ -34,6 +35,8 @@ function setup() {
     gui.add(datGuiParams, "windMode").listen();
     gui.add(datGuiParams, "snowMode").listen();
     gui.add(datGuiParams, "rainMode").listen();
+    gui.add(datGuiParams, "leafMode").listen();
+    gui.close();
 
     setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec  * 3);
 
@@ -103,14 +106,14 @@ function draw() {
    hill.draw();
    totoro.draw();
    small_totoro.draw();
-   leaf.draw();
+   if(  datGuiParams.leafMode ) { leaf.draw(); }
    dandalion.draw();
    info.draw();
 
-   this.guiAdjust();
+   this.skyDraw();
 }
 
-function guiAdjust() {
+function skyDraw() {
     if( datGuiParams.snowMode ) { snow.draw(); }
     if( datGuiParams.rainMode ) { rain.draw(); }
 }
@@ -132,6 +135,20 @@ function setWheaterData(data) {
 
     cloud.setCloudData(data[cur_day].clouds.all, data[cur_day].wind.speed);
     dandalion.blow(data[cur_day].wind.speed * 5);
+
+    const weatherMain = data[cur_day].weather[0].main;
+
+    if( weatherMain === "Rain" ) {
+        datGuiParams.rainMode = true;
+        datGuiParams.leafMode = true;
+    }  else if( weatherMain === "Snow" ) {
+        datGuiParams.snowMode = true;
+        datGuiParams.leafMode = true;
+    } else {
+        datGuiParams.leafMode = false;
+        datGuiParams.rainMode = false;
+        datGuiParams.snowMode = false;
+    }
 }
 
 // socket.on('wind', (value)=> {
