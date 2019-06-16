@@ -8,42 +8,16 @@ class SmallTotoro{
 
         this.small_totoro = new Array();
 
-        this.loadSmallTotoroFromJson('small_totoro.json');
-    }
+        const setSmallTotoroParts = [ 'smalltotoroStomach', 'smalltotoroArm', 'smalltotoroTail', 'smalltotoroBody',
+        'smalltotoroLeftEye', 'smalltotoroRightEye', 'smalltotoroLeftChest', 'smalltotoroMiddleChest', 'smalltotoroRightChest' ];
 
-    loadSmallTotoroFromJson(jsonFile){
-        const self = this;
+        drawFromJson = new DrawFromJson();
 
-        $.getJSON(jsonFile, function(json) {
-            console.log("smallTotoroJson get Data success");
-
-            const setSmallTotoroParts = [ json.smalltotoroStomach, json.smalltotoroArm, json.smalltotoroTail, json.smalltotoroBody,
-            json.smalltotoroLeftEye, json.smalltotoroRightEye, json.smalltotoroLeftChest, json.smalltotoroMiddleChest, json.smalltotoroRightChest ];
-
-            for(var i = 0; i < setSmallTotoroParts.length; i++){
-                self.small_totoro.push(setSmallTotoroParts[i]);
-            }
-
-        });
-    }
-
-    drawTotoroParts(smallTotoroPart) {
-        //noStroke();
-        stroke(0);
-        strokeWeight(1.5);
-        beginShape();
-        fill(smallTotoroPart.color);
-        for(var a = 0; a < smallTotoroPart.points.length; a++){
-            curveVertex(this.x + smallTotoroPart.points[a].x * this.scale, this.y + smallTotoroPart.points[a].y * this.scale);
-        }
-        endShape(CLOSE);
+        drawFromJson.loadDataFromJson('small_totoro.json', this.small_totoro, setSmallTotoroParts);
     }
 
     draw(){
-
-        for(var i = 0; i < this.small_totoro.length; i++){
-            this.drawTotoroParts(this.small_totoro[i]);
-        }
+        drawFromJson.draw(this.small_totoro, this.x, this.y, this.scale);
 
         //Nose
         fill(0, 0, 0);

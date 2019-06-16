@@ -14,30 +14,18 @@ class Cloud {
     this.cloud3 = new Array();
     this.cloud4 = new Array();
 
-    this.loadCloudsFromJSON('cloud.json');
+    const setCloud = [ this.cloud1, this.cloud2, this.cloud3, this.cloud4 ];
+    const getCloud = [ ['cloud1', 'cloud1_01', 'cloud1_02'],
+                       ['cloud2', 'cloud2_01', 'cloud2_02'],
+                       ['cloud3', 'cloud3_01', 'cloud3_02', 'cloud3_03', 'cloud3_04'],
+                       ['cloud4', 'cloud4_01', 'cloud4_02', 'cloud4_03', 'cloud4_04']
+                     ];
 
-  }
+    drawFromJson = new DrawFromJson();
 
-  loadCloudsFromJSON(jsonFile) {
-    const self = this;
-
-    $.getJSON(jsonFile, function(json) {
-        console.log("totoroJson get Data success");
-
-        const setCloud = [ self.cloud1, self.cloud2, self.cloud3, self.cloud4 ];
-        const getCloud = [ [json.cloud1, json.cloud1_01, json.cloud1_02],
-                           [json.cloud2, json.cloud2_01, json.cloud2_02],
-                           [json.cloud3, json.cloud3_01, json.cloud3_02, json.cloud3_03, json.cloud3_04],
-                           [json.cloud4, json.cloud4_01, json.cloud4_02, json.cloud4_03, json.cloud4_04]
-                         ];
-
-        for(var i = 0; i < setCloud.length; i++){
-          for(var j = 0; j < getCloud[i].length; j++){
-            setCloud[i].push(getCloud[i][j]);
-          }
-        }
-
-      });
+     for(var i = 0; i < setCloud.length; i++){
+         drawFromJson.loadDataFromJson('cloud.json', setCloud[i], getCloud[i]);
+    }
   }
 
   setCloudData(clouds, windSpeed) {
@@ -60,27 +48,9 @@ class Cloud {
 
   }
 
-  drawCloudArray(x, y, cloud, size){
-
-    for(var i = 0; i < cloud.length; i++){
-        fill(cloud[i].color);
-        this.drawImgCloudPart(x, y, cloud[i].points, size);
-      }
-  }
-
-  drawImgCloudPart(x, y, cloud, size) {
-    noStroke();
-    beginShape();
-    for (var a = 0; a < cloud.length; a++) {
-
-      curveVertex(x + cloud[a].x * size - 50, y + cloud[a].y * size - 50);
-    }
-    endShape(CLOSE);
-  }
-
   drawImgCloud(x, y, cloudArr, size, num) {
-    if(num == 0) this.drawCloudArray(x/2, y, cloudArr, size);
-    else this.drawCloudArray(x, y, cloudArr, size);
+    if(num == 0) drawFromJson.draw(cloudArr, x/2 - 50, y - 50, size);
+    else drawFromJson.draw(cloudArr, x - 50, y - 50, size);
   }
 
   draw() {

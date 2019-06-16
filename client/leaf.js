@@ -8,38 +8,14 @@ class Leaf{
 
         this.totoro_leaf = new Array();
 
-        this.loadLeafFromJson('leaf.json');
-    }
+        const setLeafParts = [ 'leafSmallBody', 'leafbody', 'leafShadow', 'leafTail' ];
 
-    loadLeafFromJson(jsonFile){
-        const self = this;
+        drawFromJson = new DrawFromJson();
 
-        $.getJSON(jsonFile, function(json) {
-            console.log("leaf data get Data success");
-
-            const setLeafParts = [ json.leafSmallBody, json.leafbody, json.leafShadow, json.leafTail ];
-
-            for(var i = 0; i < setLeafParts.length; i++){
-                self.totoro_leaf.push(setLeafParts[i]);
-            }
-
-        });
-    }
-
-    drawLeafParts(leafPart) {
-        noStroke();
-        beginShape();
-        fill(leafPart.color);
-        for(var a = 0; a < leafPart.points.length; a++){
-            curveVertex(this.x + leafPart.points[a].x * this.scale, this.y + leafPart.points[a].y * this.scale);
-        }
-        endShape(CLOSE);
+        drawFromJson.loadDataFromJson('leaf.json', this.totoro_leaf, setLeafParts);
     }
 
     draw(){
-
-        for(var i = 0; i < this.totoro_leaf.length; i++){
-            this.drawLeafParts(this.totoro_leaf[i]);
-        }
+        drawFromJson.draw(this.totoro_leaf, this.x, this.y, this.scale);
     }
 }

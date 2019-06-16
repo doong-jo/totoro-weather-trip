@@ -1,7 +1,9 @@
 {
   "smalltotoroBody": {
     "color": "#3676AB",
-    "points": [{
+    "bStroke": true,
+    "points": [
+     {
         "x": 330,
         "y": 44
       },
@@ -485,7 +487,9 @@
   },
   "smalltotoroStomach": {
     "color": "#FAFAFA",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 246,
         "y": 355
       },
@@ -637,7 +641,9 @@
   },
   "smalltotoroArm": {
     "color": "#3676AB",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 263,
         "y": 281
       },
@@ -709,7 +715,9 @@
   },
   "smalltotoroTail": {
     "color": "#3676AB",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 508,
         "y": 396
       },
@@ -797,7 +805,9 @@
   },
   "smalltotoroLeftEye": {
     "color": "#FAFAFA",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 306,
         "y": 208
       },
@@ -853,7 +863,9 @@
   },
   "smalltotoroRightEye": {
     "color": "#FAFAFA",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 382,
         "y": 240
       },
@@ -917,7 +929,9 @@
   },
   "smalltotoroLeftChest": {
     "color": "#3676AB",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 276,
         "y": 324
       },
@@ -977,7 +991,9 @@
   },
   "smalltotoroMiddleChest": {
     "color": "#3676AB",
-    "points": [{
+    "bStroke": true,
+    "points": [
+      {
         "x": 304,
         "y": 330
       },
@@ -1037,6 +1053,7 @@
 },
   "smalltotoroRightChest": {
       "color":"#3676AB",
+      "bStroke": true,
       "points":[
           {"x":355, "y":335},
  {"x":358, "y":332},
