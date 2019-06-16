@@ -117,7 +117,6 @@ function draw() {
    info.draw();
    leaf.draw();
 
-
    if( datGuiParams.snowMode ) { snow.draw(); }
    if( datGuiParams.rainMode ) { rain.draw(); }
 
@@ -139,6 +138,14 @@ function serialData(data) {
 function blowDandalion(wind) {
 
 }
+
+socket.on('wind', (value)=> {
+	console.log('get socekt wind value', value);
+});
+
+socket.on('resist', (value)=> {
+	console.log('get socekt resist value', value);
+});
 
 function changeCountry(city) {
     // wheather.loadWeatherData(city, 0, setWheaterData);
