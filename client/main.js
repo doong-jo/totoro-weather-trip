@@ -7,11 +7,10 @@ let info;
 
 let wheather, rain, snow, cloud;
 let totoro;
-let smallTotoro;
+let small_totoro;
+let leaf;
 let custom_date;
 let serial;
-
-let small_Totoro;
 
 const datGuiParams = {
     displayMode: true,
@@ -50,7 +49,8 @@ function setup() {
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
-    smallTotoro = new SmallTotoro();
+    small_totoro = new SmallTotoro();
+    leaf =  new Leaf();
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
@@ -64,7 +64,8 @@ function setup() {
     cloud.init();
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
-    smallTotoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    small_totoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    leaf.init(CON.DIMEN.leaf_x, CON.DIMEN.leaf_y, CON.DIMEN.leaf_scale);
     wheather.init();
     rain.init();
     snow.init();
@@ -108,13 +109,20 @@ function draw() {
    hill.draw();
    dandalion.draw();
    totoro.draw();
-   smallTotoro.draw();
+   small_totoro.draw();
+   leaf.draw();
    info.draw();
 
    if( datGuiParams.snowMode ) { snow.draw(); }
    if( datGuiParams.rainMode ) { rain.draw(); }
 
 }
+
+function mouseClicked() {
+  ellipse(mouseX, mouseY, 5, 5);
+   console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
+}
+
 
 function setWheaterData(data) {
     print(data);
