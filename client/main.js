@@ -7,17 +7,20 @@ let info;
 
 let wheather, rain, snow, cloud;
 let totoro;
-let smallTotoro;
+let small_totoro;
 let leaf;
 let custom_date;
 let serial;
 
+<<<<<<< HEAD
 let cur_windValue = -1;
 let cur_resistValue = -1;
 
 console.log('windValue', windValue);
 console.log('resistValue', resistValue);
 
+=======
+>>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
@@ -55,8 +58,8 @@ function setup() {
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
-    smallTotoro = new SmallTotoro();
-    leaf = new Leaf();
+    small_totoro = new SmallTotoro();
+    leaf =  new Leaf();
     dandalion = new Dandalion();
     wheather = new Weather();
     rain = new Rain();
@@ -70,9 +73,8 @@ function setup() {
     cloud.init();
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
-    smallTotoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
-    leaf.init(460, 100, 1);
-
+    small_totoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    leaf.init(CON.DIMEN.leaf_x, CON.DIMEN.leaf_y, CON.DIMEN.leaf_scale);
     wheather.init();
     rain.init();
     snow.init();
@@ -114,10 +116,12 @@ function draw() {
    hill.draw();
    dandalion.draw();
    totoro.draw();
-   smallTotoro.draw();
+   small_totoro.draw();
+   leaf.draw();
    info.draw();
    leaf.draw();
 
+<<<<<<< HEAD
    this.guiAdjust();
    this.sensorResponse();
 }
@@ -125,6 +129,23 @@ function draw() {
 function guiAdjust() {
     if( datGuiParams.snowMode ) { snow.draw(); }
     if( datGuiParams.rainMode ) { rain.draw(); }
+=======
+   if( datGuiParams.snowMode ) { snow.draw(); }
+   if( datGuiParams.rainMode ) { rain.draw(); }
+
+}
+
+function mouseClicked() {
+  ellipse(mouseX, mouseY, 5, 5);
+   console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
+}
+
+
+function setWheaterData(data) {
+    print(data);
+
+    cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
+>>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
 }
 
 function sensorResponse() {
@@ -143,8 +164,24 @@ function sensorResponse() {
     }
 }
 
+<<<<<<< HEAD
 function setWheaterData(data) {
     print(data);
 
     cloud.setCloudData(data[0].clouds.all, data[0].wind.speed);
+=======
+socket.on('wind', (value)=> {
+	console.log('get socekt wind value', value);
+});
+
+socket.on('resist', (value)=> {
+	console.log('get socekt resist value', value);
+});
+
+function changeCountry(city) {
+    // wheather.loadWeatherData(city, 0, setWheaterData);
+    cur_city = CON.ARRAY.city[city];
+    info.setCityText(cur_city);
+    info.startCityAnim();
+>>>>>>> 4573def254d7eab9b744d13bf0d43acb41aa9bab
 }

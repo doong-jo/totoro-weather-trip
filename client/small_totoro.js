@@ -8,7 +8,7 @@ class SmallTotoro{
 
         this.small_totoro = new Array();
 
-        this.loadSmallTotoroFromJson('smallTotoroArray.json');
+        this.loadSmallTotoroFromJson('small_totoro.json');
     }
 
     loadSmallTotoroFromJson(jsonFile){
