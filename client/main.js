@@ -10,11 +10,7 @@ let drawFromJson;
 let totoro;
 let small_totoro;
 let leaf;
-let custom_date;
-let serial;
-
-let cur_day = 0;
-let cur_city = CON.ARRAY.city[0];
+let custom_date, custom_city;
 
 const datGuiParams = {
     displayMode: true,
@@ -52,6 +48,7 @@ function setup() {
     cloud = new Cloud();
     info = new Info();
     custom_date = new CustomDate();
+    custom_city = new CustomCity();
     // serial = new Serial();
 
     sky.init(0.6);
@@ -66,15 +63,13 @@ function setup() {
     dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
     info.init();
     custom_date.init();
-    // serial.init();
+    custom_city.init();
 
-    sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
-    wheather.loadWeatherData(cur_city, 0, setWheaterData);
+    sky.calculateByTimeToSky(custom_date.getHours());
+    wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
 
-    info.setCityText(cur_city);
+    info.setCityText(custom_city.getCity());
     info.setDateText(custom_date.getDate());
-
-    // serial.setMainSerialEventCallback(serialData);
 
     intervalSetup();
 
@@ -92,13 +87,16 @@ function setup() {
 function intervalSetup() {
     // update date
     setInterval(() => {
-        info.setDateText(custom_date.getDate());
+        if( custom_date.getDatePivot() == 0 ) {
+            info.setDateText(custom_date.getDate());
+        }
     }, CON.TIME.sec);
 
     setInterval(() => {
-        wheather.loadWeatherData(cur_city, 0, setWheaterData);
-        sky.calculateByTimeToSky(custom_date.getHours());
-        console.log('sky time', CON.VALUE.city_offset[cur_city]);
+        if( custom_date.getDatePivot() == 0 ) {
+            wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+            sky.calculateByTimeToSky(custom_date.getHours());
+        }
     },  CON.TIME.min);
 }
 
@@ -108,7 +106,7 @@ function draw() {
    hill.draw();
    totoro.draw();
    small_totoro.draw();
-   if(  datGuiParams.leafMode ) { leaf.draw(); }
+   if( datGuiParams.leafMode ) { leaf.draw(); }
    dandalion.draw();
    info.draw();
 
@@ -120,25 +118,34 @@ function skyDraw() {
     if( datGuiParams.rainMode ) { rain.draw(); }
 }
 
+// TODO: for test. have to remove.
 function keyPressed() {
   if (keyCode === ENTER || keyCode === RETURN) {
       let fs = fullscreen();
       fullscreen(!fs);
+  } else if (keyCode == LEFT_ARROW) {
+      this.prevDate();
+  } else if (keyCode == RIGHT_ARROW) {
+      this.nextDate();
+  } else if (keyCode == UP_ARROW) {
+      this.nextCity();
+  } else if (keyCode == DOWN_ARROW) {
+      this.prevCity();
   }
 }
 
 function mouseClicked() {
-
     dandalion.blow(50);
 }
 
 function setWheaterData(data) {
-    print(data);
+    print('weather data', data);
 
-    cloud.setCloudData(data[cur_day].clouds.all, data[cur_day].wind.speed);
-    dandalion.blow(data[cur_day].wind.speed * 5);
+    const datePivot = custom_date.getDatePivot();
+    cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
+    dandalion.blow(data[datePivot].wind.speed * 5);
 
-    const weatherMain = data[cur_day].weather[0].main;
+    const weatherMain = data[datePivot].weather[0].main;
 
     if( weatherMain === "Rain" ) {
         datGuiParams.rainMode = true;
@@ -150,6 +157,60 @@ function setWheaterData(data) {
         datGuiParams.leafMode = false;
         datGuiParams.rainMode = false;
         datGuiParams.snowMode = false;
+    }
+}
+
+function prevDate() {
+    if( !info.getDateAnimTrig() ) {
+        custom_date.prevDate();
+        info.startDateAnim();
+        info.setDateText(custom_date.getDate());
+
+        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+        sky.calculateByTimeToSky(custom_date.getHours());
+    }
+}
+
+function nextDate() {
+    if( !info.getDateAnimTrig() ) {
+        custom_date.nextDate();
+        info.startDateAnim();
+        info.setDateText(custom_date.getDate());
+
+        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+        sky.calculateByTimeToSky(custom_date.getHours());
+    }
+}
+
+function prevCity() {
+    if( !info.getCityAnimTrig() ) {
+        const cityName = custom_city.prevCity();
+        custom_date.setLocale(cityName);
+        if( custom_date.getDatePivot() != 0 ) {
+            custom_date.setNextDaysHour();
+        }
+
+        info.startCityAnim();
+        info.setCityText(cityName);
+
+        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+        sky.calculateByTimeToSky(custom_date.getHours());
+    }
+}
+
+function nextCity() {
+    if( !info.getCityAnimTrig() ) {
+        const cityName = custom_city.nextCity();
+        custom_date.setLocale(cityName);
+        if( custom_date.getDatePivot() != 0 ) {
+            custom_date.setNextDaysHour();
+        }
+
+        info.startCityAnim();
+        info.setCityText(cityName);
+
+        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+        sky.calculateByTimeToSky(custom_date.getHours());
     }
 }
 // socket.on('wind', (value)=> {

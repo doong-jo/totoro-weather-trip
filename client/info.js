@@ -121,6 +121,14 @@ class Info {
         }
     }
 
+    getCityAnimTrig() {
+        return this.cityTv.trigger;
+    }
+
+    getDateAnimTrig() {
+        return this.dateTv.trigger;
+    }
+
     setCityText(cityText) {
         this.cityTv.text = cityText;
     }

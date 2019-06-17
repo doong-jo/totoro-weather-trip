@@ -8,6 +8,13 @@ class CONST {
             'min' : 60000,
             'sec' : 1000,
             'textEffectDelay' : 1500,
+            'city_offset' : {
+                'Seoul' : +9,
+                'NewYork': -5,
+                'Toronto' : -5,
+                'Tokyo' : +9,
+                'Beijing' : +8
+            },
         };
 
         this.DIMEN = {
@@ -29,7 +36,7 @@ class CONST {
         };
 
         this.ARRAY = {
-            'city' : [ 'Seoul', 'NewYork', 'Toronto', 'Tokyo', 'Beijing' ],
+            'city' : [ 'Seoul', 'New York', 'Toronto', 'Tokyo', 'Beijing' ],
             'day' : [ 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
             'month' : [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ],
         };
@@ -110,13 +117,6 @@ class CONST {
         this.VALUE = {
             'acceleration' : 0.098,
             'rain_num' : 100,
-            'city_offset' : {
-                'Seoul' : +9,
-                'NewYork': -5,
-                'Toronto' : -5,
-                'Tokyo' : +9,
-                'Beijing' : +8
-            },
         }
 
         this.SERIAL = {

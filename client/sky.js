@@ -4,60 +4,39 @@ class Sky{
 
     init(ratio) {
         this.ratio = ratio;
-        this.hours = 0;
 
-        //Use background image color change
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
+        this.timeOfDay = [
+            [1, 5],
+            [6, 12],
+            [13, 18],
+            [19, 20],
+            [20, 24],
+        ];
 
-        //Use Sky gradient color change
+        this.colorOfDay = [
+            [CON.COLOR.black, CON.COLOR.dark_black, CON.COLOR.dark_indigo, CON.COLOR.bright_purple],
+            [CON.COLOR.bright_yellow, CON.COLOR.dark_blue, CON.COLOR.dark_blue, CON.COLOR.bright_blue],
+            [CON.COLOR.blue, CON.COLOR.bright_yellow, CON.COLOR.dark_blue, CON.COLOR.bright_blue],
+            [CON.COLOR.bright_blue, CON.COLOR.white, CON.COLOR.dark_blue, CON.COLOR.dark_orange],
+            [CON.COLOR.dark_indigo, CON.COLOR.bright_purple, CON.COLOR.dark_black, CON.COLOR.black],
+        ];
+
         this.r1 = 0;
         this.g1 = 0;
         this.b1 = 0;
         this.r2 = 0;
         this.g2 = 0;
         this.b2 = 0;
-        this.color1 = {};
-        this.color2 = {};
-        this.color3 = {};
-        this.color4 = {};
-
     }
 
     calculateByTimeToSky(hours) {
-        this.hours = hour;
-
-        if(this.hours <= 5) {
-            this.drawGradient(0, 5,
-                CON.COLOR.black, CON.COLOR.dark_black,
-                CON.COLOR.dark_indigo, CON.COLOR.bright_purple,
-                this.hours);
-        } else if(this.hours > 5 && this.hours <= 12 ){
-
-            this.drawGradient(5, 12,
-                CON.COLOR.bright_yellow, CON.COLOR.dark_blue,
-                CON.COLOR.dark_blue, CON.COLOR.bright_blue,
-                this.hours);
-
-        } else if(this.hours > 12 && this.hours <= 16){
-
-            this.drawGradient(12, 16,
-                CON.COLOR.blue, CON.COLOR.bright_yellow,
-                CON.COLOR.bright_blue, CON.COLOR.dark_blue,
-                this.hours);
-
-        } else if(this.hours > 16 && this.hours <= 20){
-
-            this.drawGradient(16, 20,
-                CON.COLOR.bright_blue, CON.COLOR.white,
-                CON.COLOR.dark_purple, CON.COLOR.dark_orange,
-                this.hours);
-        } else if(this.hours > 20 && this.hours <= 24){
-            this.drawGradient(20, 24,
-                CON.COLOR.dark_indigo, CON.COLOR.bright_purple,
-                CON.COLOR.dark_black, CON.COLOR.black,
-                this.hours);
+        for(let i = 0; i < this.timeOfDay.length; i++) {
+            if( hours > this.timeOfDay[i][0] && hours <= this.timeOfDay[i][1] ) {
+                this.drawGradient(this.timeOfDay[i][0] - 1,
+                    this.timeOfDay[i][1],
+                    this.colorOfDay[i],
+                    hours);
+            }
         }
     }
 
@@ -72,14 +51,14 @@ class Sky{
         }
     }
 
-    drawGradient(start, end, color1, color2, color3, color4, hours) {
-        this.r1 = map(hours, start, end, color1.r, color2.r);
-        this.g1 = map(hours, start, end, color1.g, color2.g);
-        this.b1 = map(hours, start, end, color1.b, color2.b);
+    drawGradient(start, end, colors, hours) {
+        this.r1 = map(hours, start, end, colors[0].r, colors[1].r);
+        this.g1 = map(hours, start, end, colors[0].g, colors[1].g);
+        this.b1 = map(hours, start, end, colors[0].b, colors[1].b);
 
-        this.r2 = map(hours, start, end, color3.r, color4.r);
-        this.g2 = map(hours, start, end, color3.g, color4.g);
-        this.b2 = map(hours, start, end, color3.b, color4.b);
+        this.r2 = map(hours, start, end, colors[2].r, colors[3].r);
+        this.g2 = map(hours, start, end, colors[2].g, colors[3].g);
+        this.b2 = map(hours, start, end, colors[2].b, colors[3].b);
     }
 
     draw() {
