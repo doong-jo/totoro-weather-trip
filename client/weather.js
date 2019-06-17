@@ -14,7 +14,7 @@ class Weather {
         this.returnDataCallback = () => {};
     }
 
-    loadWeatherData(city, disOfDay, callback) {
+    loadWeatherData(city, callback) {
         this.returnDataCallback = callback;
 
         var url  = this.api + city + this.apiKey;
@@ -29,6 +29,7 @@ class Weather {
 
     assembleData(data) {
         let weatherList = data.list;
+        this.weatherDic = {};
 
         let beforeDate = "";
         for(var i=0; i<weatherList.length; i++) {
