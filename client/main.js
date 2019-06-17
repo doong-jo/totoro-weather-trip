@@ -36,6 +36,7 @@ function setup() {
 
     setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec  * 3);
 
+    kinect = new Kinect();
     sky = new Sky();
     hill = new Hill();
     totoro = new Totoro();
@@ -51,6 +52,7 @@ function setup() {
     custom_city = new CustomCity();
     // serial = new Serial();
 
+    kinect.initkinectron(this.getGesture);
     sky.init(0.6);
     cloud.init();
     hill.init(0, 0);
@@ -212,6 +214,17 @@ function nextCity() {
         wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
         sky.calculateByTimeToSky(custom_date.getHours());
     }
+}
+
+function getGesture(dir) {
+    switch(dir) {
+        case CON.GESTURE.left: break;
+        case CON.GESTURE.right: break;
+        case CON.GESTURE.timestone: break;
+        default: break;
+    }
+
+    console.log('getGesture Test', dir);
 }
 // socket.on('wind', (value)=> {
 // 	console.log('get socket wind value', value);

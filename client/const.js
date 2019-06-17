@@ -117,7 +117,18 @@ class CONST {
         this.VALUE = {
             'acceleration' : 0.098,
             'rain_num' : 100,
-        }
+
+            'kinect_swipe_min_dis' : 0.1,
+            'kinect_time_min_x_dis' : 0.001,
+            'kinect_time_min_y_dis' : 0.002,
+            'kinect_time_delay' : 2000,
+        };
+
+        this.GESTURE = {
+            'left' : 0,
+            'right' : 1,
+            'timestone' : 2,
+        };
 
         this.SERIAL = {
             'port' : '/dev/serial0',
