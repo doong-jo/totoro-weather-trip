@@ -32,6 +32,7 @@ class Dandalion {
 
         if( this.blowAreaMax > 100 ) {
             this.refresh(20);
+        }
     }
 
     refresh(sec) {

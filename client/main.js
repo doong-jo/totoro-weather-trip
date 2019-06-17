@@ -220,7 +220,7 @@ function getGesture(dir) {
     switch(dir) {
         case CON.GESTURE.left: prevDate(); break;
         case CON.GESTURE.right: nextDate(); break;
-        case CON.GESTURE.timestone: refresh(1); break;
+        case CON.GESTURE.timestone: dandalion.refresh(1); break;
         default: break;
     }
 
