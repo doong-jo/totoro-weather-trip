@@ -10,10 +10,10 @@ class CONST {
             'textEffectDelay' : 1500,
             'city_offset' : {
                 'Seoul' : +9,
-                'NewYork': -5,
+                'New York': -5,
                 'Toronto' : -5,
                 'Tokyo' : +9,
-                'Beijing' : +8
+                'Beijing' : +8,
             },
         };
 

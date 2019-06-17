@@ -2,11 +2,11 @@ class Info {
     constructor(props) {
         this.cityTv = {
             'trigger' : false,
-            'pos' : { 'x': 50, 'y': CON.DIMEN.height + 20 },
+            'pos' : { 'x': 70, 'y': CON.DIMEN.height - 40 },
             'size' : 25,
             'sizeAdd' : 5,
             'color' : '#FFFFFF',
-            'startPos' : { 'x': 50, 'y': CON.DIMEN.height + 20 },
+            'startPos' : { 'x': 70, 'y': CON.DIMEN.height - 40},
 
             'posAnimMove' : { 'x': 0, 'y': 0},
             'posAnimDest' : { 'x': 0, 'y': 0},
@@ -17,11 +17,11 @@ class Info {
 
         this.dateTv = {
             'trigger' : false,
-            'pos' : { 'x': CON.DIMEN.width - 10, 'y': 30 },
+            'pos' : { 'x': CON.DIMEN.width - 120, 'y': 40 },
             'size' : 25,
             'sizeAdd' : 5,
             'color' : '#FFFFFF',
-            'startPos' : { 'x': CON.DIMEN.width - 10, 'y': 30 },
+            'startPos' : { 'x': CON.DIMEN.width - 120, 'y': 40 },
 
             'posAnimMove' : { 'x': 0, 'y': 0},
             'posAnimDest' : { 'x': 0, 'y': 0},

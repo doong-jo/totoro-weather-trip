@@ -60,7 +60,7 @@ function setup() {
     wheather.init();
     rain.init();
     snow.init();
-    dandalion.init(CON.DIMEN.width, CON.DIMEN.height);
+    dandalion.init(CON.DIMEN.width + 50, CON.DIMEN.height - 20);
     info.init();
     custom_date.init();
     custom_city.init();

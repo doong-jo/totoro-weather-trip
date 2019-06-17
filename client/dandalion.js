@@ -102,9 +102,7 @@ class Dandalion {
 
         if (datGuiParams.debugMode) {
             fill(255);
-            text("frameRate:" + round(frameRate()), 15, 30);
-            text("count:" + count, 15, 50);
-            text("# of particles:" + this.particles.length, 15, 70);
+            text("frameRate:" + round(frameRate()), 95, 30);
 
             stroke(255);
             noFill();
