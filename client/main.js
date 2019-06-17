@@ -11,7 +11,9 @@ let totoro;
 let small_totoro;
 let leaf;
 let custom_date;
+let temp_bubble;
 let serial;
+let bubble;
 
 let cur_day = 0;
 let cur_city = CON.ARRAY.city[0];
@@ -23,6 +25,11 @@ const datGuiParams = {
     rainMode: false,
     snowMode: false,
 };
+
+function preload() {
+  // preload() runs once
+  bubble = loadImage('bubble.jpg');
+}
 
 
 function setup() {
@@ -49,6 +56,7 @@ function setup() {
     cloud = new Cloud();
     info = new Info();
     custom_date = new CustomDate();
+    temp_bubble = new TempBubble();
     // serial = new Serial();
 
     sky.init(0.6);
@@ -56,6 +64,7 @@ function setup() {
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     small_totoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    temp_bubble.init(700, 80, 0.8);
     leaf.init(CON.DIMEN.leaf_x, CON.DIMEN.leaf_y, CON.DIMEN.leaf_scale);
     wheather.init();
     rain.init();
@@ -106,8 +115,11 @@ function draw() {
    leaf.draw();
    dandalion.draw();
    info.draw();
-
+   temp_bubble.draw();
    this.guiAdjust();
+
+   // scale(0.2);
+   // image(bubble, 0, 0);
 }
 
 function guiAdjust() {
@@ -124,13 +136,16 @@ function keyPressed() {
 
 function mouseClicked() {
 
-    dandalion.blow(50);
+    //dandalion.blow(50);
+
+    console.log("{\"x\":"+mouseX + ", \"y\":" + mouseY + "}, ");
 }
 
 function setWheaterData(data) {
     print(data);
 
     cloud.setCloudData(data[cur_day].clouds.all, data[cur_day].wind.speed);
+    temp_bubble.setTempData(data[cur_day].main.temp_max, data[cur_day].main.temp_min)
     dandalion.blow(data[cur_day].wind.speed * 5);
 }
 
