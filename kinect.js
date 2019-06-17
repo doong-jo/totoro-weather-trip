@@ -8,7 +8,9 @@ class Kinect {
         this.swipeRightToLeftHand = false;
         this.swipeLeftToRightHand = false;
         this.timeStoneState = false;
+        this.delayState = false;
         this.gestureCallback = () => {};
+        this.kinectTime;
     }
 
     initkinectron(getstureCallback) {
@@ -23,7 +25,7 @@ class Kinect {
             kinnectSelf = this;
             this.kinectron.startTrackedBodies(this.bodyTracked);
 
-            this.gestureCallback = getstureCallback;
+            this.gestureCallback = getstureCallback
         } else {
             console.log('connect fail kinnectron.');
         }
@@ -62,9 +64,14 @@ class Kinect {
                 hands.rightHand = joint;
             }
         }
-
-        self.checkSwipeState(hands.rightHand, elbows.rightElbow);
-        self.checkTimeStoneState(elbows.rightElbow, hands.rightHand, thumb.rightThumb, finger_tip.right)
+        if(self.delayState){
+            if(millis() - self.kinectTime >= CON.VALUE.kinect_time_delay){
+                self.delayState = !self.delayState;
+            }
+        }else {
+            self.checkSwipeState(hands.rightHand, elbows.rightElbow);
+            self.checkTimeStoneState(elbows.rightElbow, hands.rightHand, thumb.rightThumb, finger_tip.right);
+        }
     }
 
     initState() {
@@ -85,6 +92,8 @@ class Kinect {
                     if(mDistance < -CON.VALUE.kinect_swipe_min_dis){
                         this.gestureCallback(CON.GESTURE.right);
                         this.initState();
+                        this.kinectTime = millis();
+                        this.delayState = true;
                     }
                 }
             }else {
@@ -93,6 +102,8 @@ class Kinect {
                     if(mDistance > CON.VALUE.kinect_swipe_min_dis){
                         this.gestureCallback(CON.GESTURE.left);
                         this.initState();
+                        this.kinectTime = millis();
+                        this.delayState = true;
                     }
                 }
             }
@@ -114,6 +125,8 @@ class Kinect {
                     if(mThumbHandX > CON.VALUE.kinect_time_min_x_dis && mFingerHandY > CON.VALUE.kinect_time_min_y_dis){
                         this.gestureCallback(CON.GESTURE.timestone);
                         this.initState();
+                        this.kinectTime = millis();
+                        this.delayState = true;
                     }
                 }
             }
@@ -199,6 +212,7 @@ class Kinect {
             // create new state for clapping
             case 'clapping':
             this.drawHand(hand, 1, 'red');
+            break;
         }
     }
 
