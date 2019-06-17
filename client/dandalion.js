@@ -29,21 +29,22 @@ class Dandalion {
         this.blowAreaMax += wind / 3;
         console.log('blow', this.blowAreaMax);
 
+
         if( this.blowAreaMax > 100 ) {
-            setTimeout(()=> {
-                this.refresh();
-            }, CON.TIME.sec * 20);
-            setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * 25);
-        }
+            this.refresh(20);
     }
 
-    refresh() {
-        datGuiParams.displayMode = true;
-        this.blowAreaMax = 0;
-        this.blowArea = 0;
-        for (let i = 0; i < this.particles.length; i++) {
-            this.particles[i].refresh();
-        }
+    refresh(sec) {
+        setTimeout(()=> {
+            datGuiParams.displayMode = true;
+            this.blowAreaMax = 0;
+            this.blowArea = 0;
+            for (let i = 0; i < this.particles.length; i++) {
+                this.particles[i].refresh();
+            }
+        }, CON.TIME.sec * sec);
+
+        setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * 25);
     }
 
     draw(){
