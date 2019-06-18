@@ -20,6 +20,7 @@ const datGuiParams = {
     rainMode: false,
     snowMode: false,
     leafMode: false,
+    gwangjinguMode: false,
 };
 
 
@@ -33,6 +34,7 @@ function setup() {
     gui.add(datGuiParams, "snowMode").listen();
     gui.add(datGuiParams, "rainMode").listen();
     gui.add(datGuiParams, "leafMode").listen();
+    gui.add(datGuiParams, "gwangjinguMode").listen();
     gui.close();
 
     setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec  * 3);
@@ -192,7 +194,7 @@ function nextDate() {
 }
 
 function prevCity() {
-    if( !info.getCityAnimTrig() ) {
+    if( !info.getCityAnimTrig() && !datGuiParams.gwangjinguMode ) {
         const cityName = custom_city.prevCity();
         custom_date.setLocale(cityName);
         if( custom_date.getDatePivot() != 0 ) {
@@ -208,7 +210,7 @@ function prevCity() {
 }
 
 function nextCity() {
-    if( !info.getCityAnimTrig() ) {
+    if( !info.getCityAnimTrig() && !datGuiParams.gwangjinguMode ) {
         const cityName = custom_city.nextCity();
         custom_date.setLocale(cityName);
         if( custom_date.getDatePivot() != 0 ) {
