@@ -10,6 +10,7 @@ let drawFromJson;
 let totoro;
 let small_totoro;
 let leaf;
+let bubble;
 let custom_date, custom_city;
 
 const datGuiParams = {
@@ -41,6 +42,7 @@ function setup() {
     hill = new Hill();
     totoro = new Totoro();
     small_totoro = new SmallTotoro();
+    bubble = new TempBubble();
     leaf =  new Leaf();
     dandalion = new Dandalion();
     wheather = new Weather();
@@ -58,6 +60,7 @@ function setup() {
     hill.init(0, 0);
     totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
     small_totoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    bubble.init(710, 120, 0.6);
     leaf.init(CON.DIMEN.leaf_x, CON.DIMEN.leaf_y, CON.DIMEN.leaf_scale);
     wheather.init();
     rain.init();
@@ -110,6 +113,7 @@ function draw() {
    small_totoro.draw();
    if( datGuiParams.leafMode ) { leaf.draw(); }
    dandalion.draw();
+   bubble.draw();
    info.draw();
 
    this.skyDraw();
@@ -162,6 +166,8 @@ function setWheaterData(data) {
         datGuiParams.rainMode = false;
         datGuiParams.snowMode = false;
     }
+
+    bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
 }
 
 function prevDate() {

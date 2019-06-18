@@ -2,11 +2,11 @@ class Info {
     constructor(props) {
         this.cityTv = {
             'trigger' : false,
-            'pos' : { 'x': 70, 'y': CON.DIMEN.height - 40 },
-            'size' : 25,
+            'pos' : { 'x': 90, 'y': CON.DIMEN.height - 45 },
+            'size' : 45,
             'sizeAdd' : 5,
             'color' : '#FFFFFF',
-            'startPos' : { 'x': 70, 'y': CON.DIMEN.height - 40},
+            'startPos' : { 'x': 90, 'y': CON.DIMEN.height - 45 },
 
             'posAnimMove' : { 'x': 0, 'y': 0},
             'posAnimDest' : { 'x': 0, 'y': 0},

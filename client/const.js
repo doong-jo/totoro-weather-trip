@@ -33,6 +33,9 @@ class CONST {
             'cloudSize' : 25,
             'dandalion_center_radius' : 20,
             'dandalion_stem_weight' : 5,
+            'bubble_alpha_speed' : 20,
+            'bubble_alpha_max' : 250,
+            'bubble_alpha_min' : 10,
         };
 
         this.ARRAY = {
