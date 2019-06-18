@@ -5,6 +5,7 @@ class Totoro {
         this.x = x;
         this.y = y;
         this.scale = scale;
+        this.eyeClose = false;
 
         this.totoro = new Array();
 
@@ -17,30 +18,53 @@ class Totoro {
         drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('totoro.json', this.totoro, setTotoroParts);
+
+        setInterval(() => {
+            this.eyeClose =  true;
+            setTimeout(()=> {
+                this.eyeClose =  false;
+            }, 100);
+        }, 2500);
     }
 
     draw() {
         drawFromJson.draw(this.totoro, this.x, this.y, this.scale);
-        this.drawTotoroEye();
+        this.drawTotoroEye(this.eyeClose);
     }
 
-    drawTotoroEye() {
-        //totoro_left_eyes
-        noStroke();
-        fill(255);
-        ellipse(this.x + 94, this.y + 100, 23, 23);
-        fill(0);
-        ellipse(this.x + 94, this.y + 100, 13, 13);
-        fill(255);
-        ellipse(this.x + 89, this.y + 96, 3, 3);
+    drawTotoroEye(isClose) {
+        if( isClose ) {
+            //totoro_left_eyes
+            stroke(0);
+            strokeWeight(1);
+            fill(0);
+            ellipse(this.x + 94, this.y + 100, 23, 3);
 
-        //totoro_right_eyes
-        noStroke();
-        fill(255);
-        ellipse(this.x + 172, this.y + 100, 23, 23);
-        fill(0);
-        ellipse(this.x + 172, this.y + 100, 13, 13);
-        fill(255);
-        ellipse(this.x + 168, this.y + 96, 3, 3);
+            //totoro_right_eyes
+            stroke(0);
+            strokeWeight(1);
+            fill(0);
+            ellipse(this.x + 172, this.y + 100, 23, 3);
+        } else {
+            //totoro_left_eyes
+            noStroke();
+            fill(255);
+            ellipse(this.x + 94, this.y + 100, 23, 23);
+            fill(0);
+            ellipse(this.x + 94, this.y + 100, 13, 13);
+            fill(255);
+            ellipse(this.x + 89, this.y + 96, 3, 3);
+
+            //totoro_right_eyes
+            noStroke();
+            fill(255);
+            ellipse(this.x + 172, this.y + 100, 23, 23);
+            fill(0);
+            ellipse(this.x + 172, this.y + 100, 13, 13);
+            fill(255);
+            ellipse(this.x + 168, this.y + 96, 3, 3);
+        }
+
+
     }
 }
