@@ -42,7 +42,7 @@ class CONST {
         };
 
         this.COLOR = {
-            'rain' : "#557DB0",
+            'rain' : "#EBF4FA",
             'white' : "#FFFFFF",
             'dandalion_stem' : '#426110',
             'dandalion_center' : '#5C4438',

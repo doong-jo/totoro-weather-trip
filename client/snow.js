@@ -34,24 +34,28 @@ class SnowFlake {
 }
 
 class Snow {
-    constructor(props) { }
+    constructor(props) { this.snow_num = 0; }
 
     init() { }
+
+    setAmount(amount) {
+        this.snow_num = int(amount * 10);
+        // this.drops = [];
+        // this.init();
+    }
 
     draw() {
         fill(240);
         noStroke();
-        let t = frameCount / 60; // update time
+        let t = frameCount / 60;
 
-        // create a random number of snowflakes each frame
         for (let i = 0; i < random(5); i++) {
-            snowflakes.push(new SnowFlake()); // append snowflake object
+            snowflakes.push(new SnowFlake());
         }
 
-        // loop through snowflakes with a for..of loop
         for (let flake of snowflakes) {
-            flake.update(t); // update snowflake position
-            flake.display(); // draw snowflake
+            flake.update(t);
+            flake.display();
         }
     }
 }
