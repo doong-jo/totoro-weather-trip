@@ -151,11 +151,13 @@ function setWheaterData(data) {
     cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
     dandalion.blow(data[datePivot].wind.speed * 5);
 
+
     const weatherMain = data[datePivot].weather[0].main;
 
     if( weatherMain === "Rain" ) {
         datGuiParams.rainMode = true;
         datGuiParams.leafMode = true;
+        rain.setAmount(data[datePivot].rain['3h']);
     }  else if( weatherMain === "Snow" ) {
         datGuiParams.snowMode = true;
         datGuiParams.leafMode = true;

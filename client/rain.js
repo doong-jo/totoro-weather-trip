@@ -40,12 +40,19 @@ class Drop {
 class Rain {
     constructor(props) {
         this.drops = [];
+        this.rain_num = CON.VALUE.rain_num;
     }
 
     init() {
-        for (var i = 0; i < CON.VALUE.rain_num; i++) {
+        for (var i = 0; i < this.rain_num; i++) {
             this.drops.push(new Drop());
         }
+    }
+
+    setAmount(amount) {
+        this.rain_num = int(amount * 10);
+        this.drops = [];
+        this.init();
     }
 
     draw() {
