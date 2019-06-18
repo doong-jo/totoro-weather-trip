@@ -107,7 +107,7 @@ function intervalSetup() {
 
 function draw() {
    sky.draw();
-   cloud.draw();
+   cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode);
    hill.draw();
    totoro.draw();
    small_totoro.draw();
