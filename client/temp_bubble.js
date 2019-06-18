@@ -8,28 +8,71 @@ class TempBubble{
         drawFromJson = new DrawJSON();
 
         this.bubble = new Array();
+        this.realStart = true;
+        this.bStart = true;
+        this.bEnd = false;
 
         const getbubble = ['bubble'];
 
         drawFromJson.loadDataFromJson('bubble.json', this.bubble, getbubble);
+        this.goyang = loadFont('Goyang.otf');
+
+        this.bubbleColor =  color(250, 250, 250, 0);
+        this.textColor = color(0, 0, 0, 0);
+        this.bubbleAlpha = alpha(this.bubbleColor);
     }
 
     setTempData(temp_max, temp_min) {
 
+      if(this.realStart == true){
+        this.before_temp_max = temp_max - 273.15;
+        this.before_temp_min = temp_min - 273.15;
+        this.realStart = false;
+      }
+
       this.temp_max = temp_max - 273.15;
       this.temp_min = temp_min - 273.15;
 
+      if(alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_max){
+          this.bStart = false;
+          this.bEnd = true;
+      }
     }
 
     draw(){
-        
-        drawFromJson.draw(this.bubble, this.x, this.y, this.scale);
 
-        fill(0);
-        textSize(15);
-        text('최대 기온 : ' + int(this.temp_max) + '에서', this.x-40, this.y - 100);
-        text('최소 기온 : ' + int(this.temp_min) + '입니다!', this.x-35, this.y - 80)
+        drawFromJson.draw(this.bubble, this.x, this.y, this.scale, this.bubbleColor, this.textColor);
 
+         if(this.bStart == true && alpha(this.bubbleColor) <= CON.DIMEN.bubble_alpha_max){
+
+             if(alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_max){
+                 this.before_temp_max = this.temp_max;
+                 this.before_temp_min = this.temp_min;
+             }
+
+             this.bubbleColor.setAlpha(this.bubbleAlpha += CON.DIMEN.bubble_alpha_speed);
+             this.textColor.setAlpha(this.bubbleAlpha);
+
+         }else if(this.bEnd == true && alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_speed){
+             console.log(this.bubbleAlpha);
+             this.bubbleColor.setAlpha(this.bubbleAlpha -= CON.DIMEN.bubble_alpha_speed);
+             this.textColor.setAlpha(this.bubbleAlpha);
+
+             if(alpha(this.bubbleColor) <= 0) {
+                 this.bStart = true;
+                 this.bEnd = false;
+             }
+
+             if(alpha(this.bubbleColor) <= 0){
+             this.before_temp_max = this.temp_max;
+             this.before_temp_min = this.temp_min;
+            }
+         }
+
+         fill(this.textColor);
+         textSize(17);
+         textFont(this.goyang);
+         text(int(this.before_temp_min) + ' ℃' + ' / ' + int(this.before_temp_max) + " ℃" , this.x + 80, this.y+ 65);
     }
 
 }

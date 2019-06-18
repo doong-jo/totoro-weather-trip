@@ -14,7 +14,7 @@ class Weather {
         this.returnDataCallback = () => {};
     }
 
-    loadWeatherData(city, disOfDay, callback) {
+    loadWeatherData(city, callback) {
         this.returnDataCallback = callback;
 
         var url  = this.api + city + this.apiKey;
