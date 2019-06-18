@@ -29,8 +29,9 @@ class Dandalion {
         this.blowAreaMax += wind / 3;
         console.log('blow', this.blowAreaMax);
 
+        console.log('blowAreaMax', this.blowAreaMax);
 
-        if( this.blowAreaMax > 100 ) {
+        if( this.blowAreaMax > 75 ) {
             this.refresh(20);
         }
     }
