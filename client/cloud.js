@@ -41,7 +41,7 @@ class Cloud {
 
       this.clouds.push({
         xpos: random(0, CON.DIMEN.width),
-        ypos: random(0, CON.DIMEN.random_cloud_height),
+        ypos: random(0, CON.DIMEN.random_cloud_y_area),
         cloudScale: scale
       });
     }

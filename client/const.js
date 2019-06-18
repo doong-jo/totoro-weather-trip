@@ -20,22 +20,23 @@ class CONST {
         this.DIMEN = {
             'width' : 960,
             'height' : 520,
-            'random_cloud_height' : 150,
+            'random_cloud_y_area' : 150,
+        };
+
+        this.SCALE = {
+            'totoro_scale' : 0.9,
+            'small_totoro_scale': 0.3,
+        };
+
+        this.POS = {
             'totoro_x' : 520,
             'totoro_y' : 165,
-            'totoro_scale' : 0.9,
+
             'small_totoro_x' : 720,
             'small_totoro_y' : 260,
-            'small_totoro_scale': 0.3,
+
             'leaf_x': 370,
             'leaf_y': 60,
-            'leaf_scale': 1,
-            'cloudSize' : 25,
-            'dandalion_center_radius' : 20,
-            'dandalion_stem_weight' : 5,
-            'bubble_alpha_speed' : 20,
-            'bubble_alpha_max' : 250,
-            'bubble_alpha_min' : 10,
         };
 
         this.ARRAY = {
@@ -54,67 +55,19 @@ class CONST {
             'hillDarkGreen' : "#AAD371",
             'hillGreen' : "#CBED50",
             'hillBrightGreen' : "#F0ED5F",
-            'bright_blue' : {
-                'r':44,
-                'g':151,
-                'b':216,
-            },
+            'bright_blue' : { 'r':44, 'g':151, 'b':216 },
 
-            'white' : {
-                'r':255,
-                'g':255,
-                'b':255
-            },
-            'black' : {
-                'r' : 0,
-                'g' : 0,
-                'b' : 0
-            },
-            'dark_black' : {
-                'r': 56,
-                'b': 56,
-                'g': 56,
-            },
-            'bright_indigo' : {
-                'r' : 51,
-                'g' : 0,
-                'b' : 102
-            },
-            'dark_indigo' : {
-                'r':0,
-                'g':0,
-                'b':51
-            },
-            'bright_purple' : {
-                'r':102,
-                'g':0,
-                'b':102
-            },
-            'blue' : {
-                'r':4,
-                'g':105,
-                'b':198,
-            },
-            'dark_blue' : {
-                'r': 18,
-                'g': 71,
-                'b': 145,
-            },
-            'bright_yellow' : {
-                'r':252,
-                'g':252,
-                'b':208
-            },
-            'dark_purple' : {
-                'r':51,
-                'g':0,
-                'b':51
-            },
-            'dark_orange' : {
-                'r':153,
-                'g':0,
-                'b':0
-            },
+            'white' : { 'r':255, 'g':255, 'b':255 },
+            'black' : { 'r' : 0, 'g' : 0, 'b' : 0 },
+            'dark_black' : { 'r': 56, 'b': 56, 'g': 56, },
+            'bright_indigo' : { 'r' : 51, 'g' : 0, 'b' : 102 },
+            'dark_indigo' : { 'r':0, 'g':0, 'b':51 },
+            'bright_purple' : { 'r':102, 'g':0, 'b':102 },
+            'blue' : { 'r':4, 'g':105, 'b':198, },
+            'dark_blue' : { 'r': 18, 'g': 71, 'b': 145, },
+            'bright_yellow' : { 'r':252, 'g':252, 'b':208 },
+            'dark_purple' : { 'r':51, 'g':0, 'b':51 },
+            'dark_orange' : { 'r':153, 'g':0, 'b':0 },
         };
 
         this.VALUE = {
@@ -125,6 +78,12 @@ class CONST {
             'kinect_time_min_x_dis' : 0.001,
             'kinect_time_min_y_dis' : 0.002,
             'kinect_time_delay' : 2000,
+
+            'leaf_scale': 1,
+            'bubble_alpha_speed' : 20,
+            'bubble_alpha_max' : 250,
+            'dandalion_center_radius' : 20,
+            'dandalion_stem_weight' : 5,
         };
 
         this.GESTURE = {

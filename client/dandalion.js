@@ -52,15 +52,15 @@ class Dandalion {
     draw(){
         if (datGuiParams.displayMode || datGuiParams.windMode) {
             push();
-                strokeWeight(CON.DIMEN.dandalion_stem_weight);
+                strokeWeight(CON.VALUE.dandalion_stem_weight);
                 stroke(CON.COLOR.dandalion_stem);
                 line(this.centerBranch.x, this.canvas_y, this.centerBranch.x, this.centerBranch.y);
             pop();
 
             push();
-                strokeWeight(CON.DIMEN.dandalion_center_radius);
+                strokeWeight(CON.VALUE.dandalion_center_radius);
                 stroke(CON.COLOR.dandalion_center);
-                ellipse(this.centerBranch.x, this.centerBranch.y, CON.DIMEN.dandalion_center_radius, CON.DIMEN.dandalion_center_radius);
+                ellipse(this.centerBranch.x, this.centerBranch.y, CON.VALUE.dandalion_center_radius, CON.VALUE.dandalion_center_radius);
             pop();
         }
 

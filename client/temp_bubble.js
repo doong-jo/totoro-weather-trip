@@ -33,7 +33,7 @@ class TempBubble{
       this.temp_max = temp_max - 273.15;
       this.temp_min = temp_min - 273.15;
 
-      if(alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_max){
+      if(alpha(this.bubbleColor) >= CON.VALUE.bubble_alpha_max){
           this.bStart = false;
           this.bEnd = true;
       }
@@ -43,19 +43,18 @@ class TempBubble{
 
         drawFromJson.draw(this.bubble, this.x, this.y, this.scale, this.bubbleColor, this.textColor);
 
-         if(this.bStart == true && alpha(this.bubbleColor) <= CON.DIMEN.bubble_alpha_max){
+         if(this.bStart == true && alpha(this.bubbleColor) <= CON.VALUE.bubble_alpha_max){
 
-             if(alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_max){
+             if(alpha(this.bubbleColor) >= CON.VALUE.bubble_alpha_max){
                  this.before_temp_max = this.temp_max;
                  this.before_temp_min = this.temp_min;
              }
 
-             this.bubbleColor.setAlpha(this.bubbleAlpha += CON.DIMEN.bubble_alpha_speed);
+             this.bubbleColor.setAlpha(this.bubbleAlpha += CON.VALUE.bubble_alpha_speed);
              this.textColor.setAlpha(this.bubbleAlpha);
 
-         }else if(this.bEnd == true && alpha(this.bubbleColor) >= CON.DIMEN.bubble_alpha_speed){
-             console.log(this.bubbleAlpha);
-             this.bubbleColor.setAlpha(this.bubbleAlpha -= CON.DIMEN.bubble_alpha_speed);
+         }else if(this.bEnd == true && alpha(this.bubbleColor) >= CON.VALUE.bubble_alpha_speed){
+             this.bubbleColor.setAlpha(this.bubbleAlpha -= CON.VALUE.bubble_alpha_speed);
              this.textColor.setAlpha(this.bubbleAlpha);
 
              if(alpha(this.bubbleColor) <= 0) {

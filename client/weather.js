@@ -22,7 +22,6 @@ class Weather {
     }
 
     gotData(data) {
-
         self.assembleData(data);
         self.returnDataCallback(self.weatherDic);
     }
@@ -33,11 +32,24 @@ class Weather {
 
         let beforeDate = "";
         for(var i=0; i<weatherList.length; i++) {
-            const date = weatherList[i].dt_txt.split(" ")[0];
+            let startDate = weatherList[i].dt_txt.split(" ")[0];
+            let date = startDate;
+            let temp_max = -1;
+            let temp_min = 999;
+            let j = 0;
 
-            if( beforeDate !== date ) {
-                this.weatherDic[Object.keys(this.weatherDic).length] = weatherList[i];
-            } beforeDate = date;
+            while(startDate == date && i != weatherList.length - 1) {
+                temp_max = temp_max < weatherList[i].main.temp_max ? weatherList[i].main.temp_max : temp_max;
+                temp_min = temp_min > weatherList[i].main.temp_min ? weatherList[i].main.temp_min : temp_min;
+
+                i++;
+                j++;
+                date = weatherList[i].dt_txt.split(" ")[0];
+            }
+
+            weatherList[i].main.temp_max = temp_max;
+            weatherList[i].main.temp_min = temp_min;
+            this.weatherDic[Object.keys(this.weatherDic).length] = weatherList[i];
         }
     }
 }

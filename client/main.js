@@ -15,7 +15,7 @@ let custom_date, custom_city;
 
 const datGuiParams = {
     displayMode: true,
-    debugMode: true,
+    debugMode: false,
     windMode: true,
     rainMode: false,
     snowMode: false,
@@ -58,10 +58,10 @@ function setup() {
     sky.init(0.6);
     cloud.init();
     hill.init(0, 0);
-    totoro.init(CON.DIMEN.totoro_x, CON.DIMEN.totoro_y, CON.DIMEN.totoro_scale);
-    small_totoro.init(CON.DIMEN.small_totoro_x, CON.DIMEN.small_totoro_y, CON.DIMEN.small_totoro_scale);
+    totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
+    small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
     bubble.init(710, 120, 0.6);
-    leaf.init(CON.DIMEN.leaf_x, CON.DIMEN.leaf_y, CON.DIMEN.leaf_scale);
+    leaf.init(CON.POS.leaf_x, CON.POS.leaf_y, CON.VALUE.leaf_scale);
     wheather.init();
     rain.init();
     snow.init();
@@ -150,7 +150,6 @@ function setWheaterData(data) {
     const datePivot = custom_date.getDatePivot();
     cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
     dandalion.blow(data[datePivot].wind.speed * 5);
-
 
     const weatherMain = data[datePivot].weather[0].main;
 
