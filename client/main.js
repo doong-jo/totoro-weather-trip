@@ -137,7 +137,7 @@ function draw() {
 
     if( !datGuiParams.gwangjinguMode &&
         (datGuiParams.snowMode || datGuiParams.rainMode) ) { leaf.draw(); }
-    // dandalion.draw();
+    dandalion.draw();
     bubble.draw();
     info.draw();
 
