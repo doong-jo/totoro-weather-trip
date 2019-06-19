@@ -5,6 +5,7 @@ class Gwang{
         this.x = x;
         this.y = y;
         this.scale = scale;
+        this.eyeClose = false;
 
         this.gwang = new Array();
         this.gwangMark = new Array();
@@ -23,14 +24,28 @@ class Gwang{
 
         drawFromJson.loadDataFromJson('gwang.json', this.gwang, setGwangParts);
         drawFromJson.loadDataFromJson('gwang.json', this.gwangMark, setGwangMart);
+
+        setInterval(() => {
+            this.eyeClose =  true;
+            setTimeout(()=> {
+                this.eyeClose =  false;
+            }, 100);
+        }, 2500);
     }
 
     draw(){
         drawFromJson.draw(this.gwang, this.x, this.y, this.scale);
 
-        fill(0);
-        ellipse(this.x + 92 * this.scale, this.y + 136 * this.scale, 4 * this.scale, 17 * this.scale);
-        ellipse(this.x +130 * this.scale, this.y + 137 * this.scale, 4 * this.scale, 17 * this.scale);
+        if( this.eyeClose ) {
+            fill(0);
+            ellipse(this.x + 92 * this.scale, this.y + 136 * this.scale, 3);
+            ellipse(this.x +130 * this.scale, this.y + 137 * this.scale, 3);
+        } else {
+            fill(0);
+            ellipse(this.x + 92 * this.scale, this.y + 136 * this.scale, 4 * this.scale, 17 * this.scale);
+            ellipse(this.x +130 * this.scale, this.y + 137 * this.scale, 4 * this.scale, 17 * this.scale);
+        }
+
 
         fill('#FAC6A1');
         noStroke();

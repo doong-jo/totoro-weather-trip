@@ -1,6 +1,6 @@
 class CustomCity {
     constructor(props) {
-        this.pivot = 0;
+        this.pivot = 2;
     }
 
     init() {
@@ -29,6 +29,12 @@ class CustomCity {
         if( this.pivot > 0 ) {
             this.pivot -= 1;
         }
+
+        return CON.ARRAY.city[this.pivot];
+    }
+
+    changeCity(cityIndex) {
+        this.pivot = cityIndex;
 
         return CON.ARRAY.city[this.pivot];
     }

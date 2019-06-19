@@ -5,8 +5,7 @@ class Bird{
         this.x = x;
         this.y = y;
         this.scale = scale;
-        // this.dance = false;
-        // this.danceY = -5;
+        this.danceY = -5;
 
         this.bird = new Array();
 
@@ -16,21 +15,22 @@ class Bird{
         drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('bird.json', this.bird, setBirdParts);
-        // setInterval(() => {
-        //     this.danceY = -5;
-        //     setTimeout(()=> {
-        //         this.danceY = 0;
-        //     }, 100);
-        // }, 800);
+
+        setInterval(() => {
+            this.danceY = -5;
+            setTimeout(()=> {
+                this.danceY = 0;
+            }, 100);
+        }, 800);
     }
 
     draw(){
-        drawFromJson.draw(this.bird, this.x, this.y, this.scale);
+        drawFromJson.draw(this.bird, this.x, this.y + this.danceY, this.scale);
 
         //Eye
         fill(0);
-        ellipse(this.x + 380 * this.scale, this.y + 80 * this.scale, 20 * this.scale, 20 * this.scale);
+        ellipse(this.x + 380 * this.scale, this.y + 80 * this.scale + this.danceY, 20 * this.scale, 20 * this.scale);
         fill(255);
-        ellipse(this.x + 380 * this.scale, this.y + 80 * this.scale, 18 * this.scale, 18 * this.scale);
+        ellipse(this.x + 380 * this.scale, this.y + 80 * this.scale + this.danceY, 18 * this.scale, 18 * this.scale);
     }
 }

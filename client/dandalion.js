@@ -27,7 +27,7 @@ class Dandalion {
 
     blow(wind) {
         this.blowAreaMax += wind / 3;
-        
+
         if( this.blowAreaMax > 75 ) {
             this.refresh(20);
         }
@@ -43,7 +43,7 @@ class Dandalion {
             }
         }, CON.TIME.sec * sec);
 
-        setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * 25);
+        setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * (sec + 5));
     }
 
     draw(){

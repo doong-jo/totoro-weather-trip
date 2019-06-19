@@ -5,7 +5,6 @@ class SmallTotoro{
         this.x = x;
         this.y = y;
         this.scale = scale;
-        this.dance = false;
         this.danceY = -5;
 
         this.small_totoro = new Array();

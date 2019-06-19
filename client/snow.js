@@ -31,7 +31,9 @@ class SnowFlake {
 class Snow {
     constructor(props) { this.snow_num = 0; }
 
-    init() { }
+    init() {
+        this.snow_num = CON.VALUE.snow_num;
+    }
 
     setAmount(amount) {
         this.snow_num = int(amount * 10);
@@ -42,7 +44,7 @@ class Snow {
         noStroke();
         let t = frameCount / 60;
 
-        if( frameCount % 150 == 0 ) {
+        if( frameCount % 30 == 0 ) {
             for (var i = 0; i < this.snow_num; i++) {
                 snowflakes.push(new SnowFlake());
             }

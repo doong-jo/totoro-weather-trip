@@ -23,7 +23,7 @@ class CONST {
 
         this.DIMEN = {
             'width' : 960,
-            'height' : 520,
+            'height' : 540,
             'random_cloud_y_area' : 150,
         };
 
@@ -52,7 +52,7 @@ class CONST {
         };
 
         this.ARRAY = {
-            'city' : [ 'Seoul', 'New York', 'Toronto', 'Tokyo', 'Beijing' ],
+            'city' : [ 'New York', 'Tokyo', 'Seoul', 'Beijing', 'Toronto' ],
             'day' : [ 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
             'month' : [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ],
         };
@@ -85,6 +85,7 @@ class CONST {
         this.VALUE = {
             'acceleration' : 0.098,
             'rain_num' : 100,
+            'snow_num' : 20,
 
             'kinect_swipe_min_dis' : 0.01,
             'kinect_time_min_x_dis' : 0.001,

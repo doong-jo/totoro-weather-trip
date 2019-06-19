@@ -10,12 +10,11 @@ let drawFromJson;
 let totoro;
 let small_totoro;
 let bird;
+let gwang;
 let leaf;
 let bubble;
 let custom_date, custom_city;
 
-let img_gwang;
-let gwang;
 
 const datGuiParams = {
     displayMode: true,
@@ -23,7 +22,6 @@ const datGuiParams = {
     windMode: true,
     rainMode: false,
     snowMode: false,
-    leafMode: false,
     gwangjinguMode: false,
 };
 
@@ -36,8 +34,11 @@ function setup() {
     gui.add(datGuiParams, "windMode").listen();
     gui.add(datGuiParams, "snowMode").listen();
     gui.add(datGuiParams, "rainMode").listen();
-    gui.add(datGuiParams, "leafMode").listen();
-    gui.add(datGuiParams, "gwangjinguMode").listen();
+    const gwangjinGuModeEvent = gui.add(datGuiParams, "gwangjinguMode").listen();
+    gwangjinGuModeEvent.onChange((value) => {
+
+    });
+
     gui.close();
 
     setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * 3);
@@ -64,12 +65,14 @@ function setup() {
     kinect.initkinectron(this.getGesture);
     sky.init(0.6);
     cloud.init();
-    hill.init(0, 0);
-    //totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
-    small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
+    hill.init(0, 20);
+    totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
     gwang.init(CON.POS.gwang_x, CON.POS.gwang_y, CON.SCALE.gwang_scale);
-    bubble.init(CON.POS.bubble_x, CON.POS.bubble_y, CON.SCALE.bubble_scale);
+
+    small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
     bird.init(CON.POS.small_totoro_x + 50, CON.POS.small_totoro_y + 60, 0.2);
+
+    bubble.init(CON.POS.bubble_x, CON.POS.bubble_y, CON.SCALE.bubble_scale);
 
     leaf.init(CON.POS.leaf_x, CON.POS.leaf_y, CON.VALUE.leaf_scale);
     wheather.init();
@@ -118,7 +121,8 @@ function draw() {
         totoro.draw();
     }
 
-    if( datGuiParams.leafMode && !datGuiParams.gwangjinguMode) { leaf.draw(); }
+    if( !datGuiParams.gwangjinguMode &&
+        (datGuiParams.snowMode || datGuiParams.rainMode) ) { leaf.draw(); }
     dandalion.draw();
     bubble.draw();
     info.draw();
@@ -132,7 +136,7 @@ function skyDraw() {
 }
 
 function mousePressed() {
-    if (mouseButton === RIGHT) { dandalion.blow(10); }
+    if (mouseButton === CENTER) { console.log('blow 10'); dandalion.blow(10); }
 }
 
 // TODO: for test. have to remove.
@@ -152,28 +156,26 @@ function keyPressed() {
 }
 
 function setWheaterData(data) {
-    // print('weather data', data);
-    //
-    // const datePivot = custom_date.getDatePivot();
-    // cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
-    // dandalion.blow(data[datePivot].wind.speed * 5);
-    //
-    // const weatherMain = data[datePivot].weather[0].main;
-    //
-    // if( weatherMain === "Rain" ) {
-    //     datGuiParams.rainMode = true;
-    //     datGuiParams.leafMode = true;
-    //     rain.setAmount(data[datePivot].rain['3h']);
-    // }  else if( weatherMain === "Snow" ) {
-    //     datGuiParams.snowMode = true;
-    //     datGuiParams.leafMode = true;
-    // } else {
-    //     datGuiParams.leafMode = false;
-    //     datGuiParams.rainMode = false;
-    //     datGuiParams.snowMode = false;
-    // }
-    //
-    // bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
+    print('weather data', data);
+
+    const datePivot = custom_date.getDatePivot();
+    cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
+    dandalion.blow(data[datePivot].wind.speed * 5);
+
+    const weatherMain = data[datePivot].weather[0].main;
+
+    if( weatherMain === "Rain" ) {
+        datGuiParams.rainMode = true;
+        rain.setAmount(data[datePivot].rain['3h']);
+    }  else if( weatherMain === "Snow" ) {
+        datGuiParams.snowMode = true;
+        snow.setAmount(data[datePivot].snow['3h']);
+    } else {
+        datGuiParams.rainMode = false;
+        datGuiParams.snowMode = false;
+    }
+
+    bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
 }
 
 function prevDate() {
@@ -204,6 +206,7 @@ function prevCity() {
         custom_date.setLocale(cityName);
         if( custom_date.getDatePivot() != 0 ) {
             custom_date.setNextDaysHour();
+            info.setDateText(custom_date.getDate());
         }
 
         info.startCityAnim();
@@ -220,6 +223,7 @@ function nextCity() {
         custom_date.setLocale(cityName);
         if( custom_date.getDatePivot() != 0 ) {
             custom_date.setNextDaysHour();
+            info.setDateText(custom_date.getDate());
         }
 
         info.startCityAnim();
@@ -247,7 +251,19 @@ socket.on('wind', (value)=> {
 
 socket.on('resist', (value)=> {
     console.log('get socekt resist value', value);
-    cur_city = CON.ARRAY.city[value];
-    info.setCityText(cur_city);
+    custom_city.changeCity(value);
+
+    const cityName = custom_city.getCity();
+
+    custom_date.setLocale(cityName);
+    if( custom_date.getDatePivot() != 0 ) {
+        custom_date.setNextDaysHour();
+        info.setDateText(custom_date.getDate());
+    }
+
     info.startCityAnim();
+    info.setCityText(cityName);
+
+    wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
+    sky.calculateByTimeToSky(custom_date.getHours());
 });
