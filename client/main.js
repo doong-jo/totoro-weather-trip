@@ -16,6 +16,7 @@ let jin;
 let leaf;
 let bubble;
 let custom_date, custom_city;
+let song;
 
 const datGuiParams = {
     displayMode: true,
@@ -24,7 +25,13 @@ const datGuiParams = {
     rainMode: false,
     snowMode: false,
     gwangjinguMode: false,
+	bgmMode: false,
 };
+
+function preload() {
+	song = loadSound("totoro.mp3");
+	song.setLoop(true);
+}
 
 function setup() {
     createCanvas(CON.DIMEN.width, CON.DIMEN.height);
@@ -35,10 +42,12 @@ function setup() {
     gui.add(datGuiParams, "windMode").listen();
     gui.add(datGuiParams, "snowMode").listen();
     gui.add(datGuiParams, "rainMode").listen();
-    const gwangjinGuModeEvent = gui.add(datGuiParams, "gwangjinguMode").listen();
-    gwangjinGuModeEvent.onChange((value) => {
-
-    });
+	const bgmModeEvent = gui.add(datGuiParams, "bgmMode").listen();
+	bgmModeEvent.onChange((value) => {
+		if( value ) { song.play(); }
+		else { song.pause(); }
+	});
+    gui.add(datGuiParams, "gwangjinguMode").listen();
 
     gui.close();
 
