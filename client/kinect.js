@@ -57,6 +57,7 @@ class Kinect {
                 self.delayState = !self.delayState;
             }
         }else {
+          //console.log(hands.rightHand);
             self.checkSwipeState(hands.rightHand, elbows.rightElbow);
             self.checkTimeStoneState(elbows.rightElbow, hands.rightHand, thumb.rightThumb, finger_tip.right);
         }

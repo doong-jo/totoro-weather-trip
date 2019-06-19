@@ -37,7 +37,7 @@ function setup() {
     gui.add(datGuiParams, "gwangjinguMode").listen();
     gui.close();
 
-    setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec  * 3);
+    setTimeout(()=> { datGuiParams.displayMode = false; }, CON.TIME.sec * 3);
 
     kinect = new Kinect();
     sky = new Sky();
@@ -122,6 +122,10 @@ function draw() {
 function skyDraw() {
     if( datGuiParams.snowMode ) { snow.draw(); }
     if( datGuiParams.rainMode ) { rain.draw(); }
+}
+
+function mousePressed() {
+    if (mouseButton === RIGHT) { dandalion.blow(10); }
 }
 
 // TODO: for test. have to remove.
@@ -229,14 +233,14 @@ function getGesture(dir) {
 
     console.log('getGesture Test', dir);
 }
-// socket.on('wind', (value)=> {
-// 	console.log('get socket wind value', value);
-//     dandalion.blow(value);
-// });
-//
-// socket.on('resist', (value)=> {
-// 	console.log('get socekt resist value', value);
-//     cur_city = CON.ARRAY.city[value];
-//     info.setCityText(cur_city);
-//     info.startCityAnim();
-// });
+socket.on('wind', (value)=> {
+	  console.log('get socket wind value', value);
+      dandalion.blow(value);
+});
+
+socket.on('resist', (value)=> {
+    console.log('get socekt resist value', value);
+    cur_city = CON.ARRAY.city[value];
+    info.setCityText(cur_city);
+    info.startCityAnim();
+});

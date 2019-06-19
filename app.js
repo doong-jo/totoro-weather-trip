@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 // const geoip = require('geoip-lite');
 // const requestIp = require('request-ip');
 
-const port = 80;
+const port = 3000;
 
 let windValue = 0;
 let resistValue = 0;
@@ -20,13 +20,13 @@ app.use((req, res, next) => {
 	const clientIp = getUserIP(req);
     console.log(clientIp);
 	*/
-	
+
 	// get geo-location
 	/*
 	var geo = geoip.lookup(clientIp);
 	console.log('geo data', geo);
 	*/
-	
+
 	next();
 });
 
@@ -39,14 +39,14 @@ app.use(express.static('client'));
 app.post('/wind', (req, res) => {
 	windValue = req.query.value;
 	console.log('wind post value', windValue);
-	
+
 	io.emit('wind', windValue);
 });
 
 app.post('/resist', (req, res) => {
 	resistValue = req.query.value;
 	console.log('resist post value', resistValue);
-	
+
 	io.emit('resist', resistValue);
 });
 
@@ -71,4 +71,4 @@ io.on('connection', (socket) => {
 
 http.listen(port);
 
-console.log('Start Server. Listening at: localhost:80');
+console.log('Start Server. Listening at: localhost:' + port);

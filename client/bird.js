@@ -16,8 +16,6 @@ class Bird{
         drawFromJson = new DrawJSON();
 
         drawFromJson.loadDataFromJson('bird.json', this.bird, setBirdParts);
-
-        console.log('bird init!');
         // setInterval(() => {
         //     this.danceY = -5;
         //     setTimeout(()=> {

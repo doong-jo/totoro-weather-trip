@@ -9,11 +9,11 @@ class CONST {
             'sec' : 1000,
             'textEffectDelay' : 1500,
             'city_offset' : {
-                'Seoul' : +9,
                 'New York': -5,
-                'Toronto' : -5,
                 'Tokyo' : +9,
+                'Seoul' : +9,
                 'Beijing' : +8,
+                'Toronto' : -5,
             },
         };
 
@@ -78,7 +78,7 @@ class CONST {
             'acceleration' : 0.098,
             'rain_num' : 100,
 
-            'kinect_swipe_min_dis' : 0.1,
+            'kinect_swipe_min_dis' : 0.01,
             'kinect_time_min_x_dis' : 0.001,
             'kinect_time_min_y_dis' : 0.002,
             'kinect_time_delay' : 2000,
