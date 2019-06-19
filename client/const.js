@@ -26,6 +26,8 @@ class CONST {
         this.SCALE = {
             'totoro_scale' : 0.9,
             'small_totoro_scale': 0.3,
+            'gwang_scale': 0.8,
+            'bubble_scale': 0.6,
         };
 
         this.POS = {
@@ -37,6 +39,12 @@ class CONST {
 
             'leaf_x': 370,
             'leaf_y': 60,
+
+            'gwang_x': 550,
+            'gwang_y': 180,
+
+            'bubble_x': 710,
+            'bubble_y': 120,
         };
 
         this.ARRAY = {
