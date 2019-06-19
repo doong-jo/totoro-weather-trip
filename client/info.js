@@ -47,7 +47,12 @@ class Info {
         }
 
         textSize(this.cityTv.size);
-        text(this.cityTv.text, this.cityTv.pos.x, this.cityTv.pos.y);
+        if( datGuiParams.gwangjinguMode ) {
+            text(CON.STRING.gwangjingu, this.cityTv.pos.x, this.cityTv.pos.y);
+        } else {
+            text(this.cityTv.text, this.cityTv.pos.x, this.cityTv.pos.y);
+        }
+
 
         textSize(this.dateTv.size);
         text(this.dateTv.text, this.dateTv.pos.x, this.dateTv.pos.y);
