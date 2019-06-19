@@ -11,10 +11,10 @@ let totoro;
 let small_totoro;
 let bird;
 let gwang;
+let jin;
 let leaf;
 let bubble;
 let custom_date, custom_city;
-
 
 const datGuiParams = {
     displayMode: true,
@@ -22,7 +22,7 @@ const datGuiParams = {
     windMode: true,
     rainMode: false,
     snowMode: false,
-    gwangjinguMode: false,
+    gwangjinguMode: true,
 };
 
 function setup() {
@@ -49,6 +49,7 @@ function setup() {
     totoro = new Totoro();
     small_totoro = new SmallTotoro();
     gwang = new Gwang();
+    jin = new Jin();
     bird = new Bird();
     bubble = new TempBubble();
     leaf =  new Leaf();
@@ -68,6 +69,7 @@ function setup() {
     hill.init(0, 20);
     totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
     gwang.init(CON.POS.gwang_x, CON.POS.gwang_y, CON.SCALE.gwang_scale);
+    jin.init(CON.POS.gwang_x + 150, CON.POS.gwang_y, CON.SCALE.gwang_scale);
 
     small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
     bird.init(CON.POS.small_totoro_x + 50, CON.POS.small_totoro_y + 60, 0.2);
@@ -115,6 +117,7 @@ function draw() {
 
     if( datGuiParams.gwangjinguMode ) {
         bird.draw();
+        jin.draw();
         gwang.draw();
     } else {
         small_totoro.draw();
