@@ -29,7 +29,7 @@ const datGuiParams = {
 };
 
 function preload() {
-	song = loadSound("totoro.mp3");
+	song = loadSound("./totoro.mp3");
 	song.setLoop(true);
 }
 
@@ -122,7 +122,7 @@ function intervalSetup() {
 
 function draw() {
     sky.draw();
-    cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode || 
+    cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode ||
 			   (18 <= custom_date.getHours() || custom_date.getHours() < 5)  );
     hill.draw();
 
@@ -207,10 +207,10 @@ function changeCity(dir, index) {
         const cityName = custom_city.moveCity(dir, index);
 		console.log('cityName', cityName);
         custom_date.update(cityName, CON.CODE.CUR_DAY);
-		
+
 		info.setDateText(custom_date.getDate());
 		info.setCityText(cityName);
-		
+
         info.startCityAnim();
 
         wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
