@@ -5,6 +5,8 @@ class DrawJSON{
     loadDataFromJson(jsonFile, saveJsonArray, jsonNameArray){
 
         $.getJSON(jsonFile, function(json) {
+            console.log(jsonFile);
+            if( jsonFile === 'bird.json') console.log('jsonNameArray.length', jsonNameArray.length);
             for(var i = 0; i < jsonNameArray.length; i++){
                 saveJsonArray.push(json[jsonNameArray[i]]);
             }

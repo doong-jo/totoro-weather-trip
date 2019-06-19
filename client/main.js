@@ -9,6 +9,7 @@ let wheather, rain, snow, cloud;
 let drawFromJson;
 let totoro;
 let small_totoro;
+let bird;
 let leaf;
 let bubble;
 let custom_date, custom_city;
@@ -47,6 +48,7 @@ function setup() {
     totoro = new Totoro();
     small_totoro = new SmallTotoro();
     gwang = new Gwang();
+    bird = new Bird();
     bubble = new TempBubble();
     leaf =  new Leaf();
     dandalion = new Dandalion();
@@ -67,6 +69,8 @@ function setup() {
     small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
     gwang.init(CON.POS.gwang_x, CON.POS.gwang_y, CON.SCALE.gwang_scale);
     bubble.init(CON.POS.bubble_x, CON.POS.bubble_y, CON.SCALE.bubble_scale);
+    bird.init(CON.POS.small_totoro_x + 50, CON.POS.small_totoro_y + 60, 0.2);
+
     leaf.init(CON.POS.leaf_x, CON.POS.leaf_y, CON.VALUE.leaf_scale);
     wheather.init();
     rain.init();
@@ -83,16 +87,6 @@ function setup() {
     info.setDateText(custom_date.getDate());
 
     intervalSetup();
-
-    /* Adjust brightness of objects */
-    // setInterval(sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
-    // setInterval(dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]), CON.TIME.sec * 10);
-    // setInterval(() => {
-    //   sky.calculateByTimeToSky(CON.VALUE.city_offset[cur_city]);
-    // }, CON.TIME.min);
-    // setInterval(() => {
-    //   dandalion.getBranchColor(CON.VALUE.city_offset[cur_city]);
-    // }, CON.TIME.min);
 }
 
 function intervalSetup() {
@@ -112,19 +106,24 @@ function intervalSetup() {
 }
 
 function draw() {
-   sky.draw();
-   cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode);
-   hill.draw();
-   //totoro.draw();
-   small_totoro.draw();
-   if( datGuiParams.leafMode ) { leaf.draw(); }
-   dandalion.draw();
-   bubble.draw();
-   info.draw();
+    sky.draw();
+    cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode);
+    hill.draw();
 
-   this.skyDraw();
+    if( datGuiParams.gwangjinguMode ) {
+        bird.draw();
+        gwang.draw();
+    } else {
+        small_totoro.draw();
+        totoro.draw();
+    }
 
-   gwang.draw();
+    if( datGuiParams.leafMode && !datGuiParams.gwangjinguMode) { leaf.draw(); }
+    dandalion.draw();
+    bubble.draw();
+    info.draw();
+
+    this.skyDraw();
 }
 
 function skyDraw() {
@@ -134,22 +133,18 @@ function skyDraw() {
 
 // TODO: for test. have to remove.
 function keyPressed() {
-  if (keyCode === ENTER || keyCode === RETURN) {
-      let fs = fullscreen();
-      fullscreen(!fs);
-  } else if (keyCode == LEFT_ARROW) {
-      this.prevDate();
-  } else if (keyCode == RIGHT_ARROW) {
-      this.nextDate();
-  } else if (keyCode == UP_ARROW) {
-      this.nextCity();
-  } else if (keyCode == DOWN_ARROW) {
-      this.prevCity();
-  }
-}
-
-function mouseClicked() {
-    dandalion.blow(50);
+    if (keyCode === ENTER || keyCode === RETURN) {
+        let fs = fullscreen();
+        fullscreen(!fs);
+    } else if (keyCode == LEFT_ARROW) {
+        this.prevDate();
+    } else if (keyCode == RIGHT_ARROW) {
+        this.nextDate();
+    } else if (keyCode == UP_ARROW) {
+        this.nextCity();
+    } else if (keyCode == DOWN_ARROW) {
+        this.prevCity();
+    }
 }
 
 function setWheaterData(data) {

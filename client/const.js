@@ -17,6 +17,10 @@ class CONST {
             },
         };
 
+        this.STRING = {
+            'gwangjingu' : "광진구",
+        };
+
         this.DIMEN = {
             'width' : 960,
             'height' : 520,
