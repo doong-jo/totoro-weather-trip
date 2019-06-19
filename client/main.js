@@ -14,6 +14,9 @@ let leaf;
 let bubble;
 let custom_date, custom_city;
 
+let img_gwang;
+let gwang;
+
 const datGuiParams = {
     displayMode: true,
     debugMode: false,
@@ -44,6 +47,7 @@ function setup() {
     hill = new Hill();
     totoro = new Totoro();
     small_totoro = new SmallTotoro();
+    gwang = new Gwang();
     bird = new Bird();
     bubble = new TempBubble();
     leaf =  new Leaf();
@@ -61,10 +65,12 @@ function setup() {
     sky.init(0.6);
     cloud.init();
     hill.init(0, 0);
-    totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
+    //totoro.init(CON.POS.totoro_x, CON.POS.totoro_y, CON.SCALE.totoro_scale);
     small_totoro.init(CON.POS.small_totoro_x, CON.POS.small_totoro_y, CON.SCALE.small_totoro_scale);
+    gwang.init(CON.POS.gwang_x, CON.POS.gwang_y, CON.SCALE.gwang_scale);
+    bubble.init(CON.POS.bubble_x, CON.POS.bubble_y, CON.SCALE.bubble_scale);
     bird.init(CON.POS.small_totoro_x + 50, CON.POS.small_totoro_y + 60, 0.2);
-    bubble.init(710, 120, 0.6);
+
     leaf.init(CON.POS.leaf_x, CON.POS.leaf_y, CON.VALUE.leaf_scale);
     wheather.init();
     rain.init();
@@ -106,6 +112,7 @@ function draw() {
 
     if( datGuiParams.gwangjinguMode ) {
         bird.draw();
+        gwang.draw();
     } else {
         small_totoro.draw();
         totoro.draw();
@@ -145,28 +152,28 @@ function keyPressed() {
 }
 
 function setWheaterData(data) {
-    print('weather data', data);
-
-    const datePivot = custom_date.getDatePivot();
-    cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
-    dandalion.blow(data[datePivot].wind.speed * 5);
-
-    const weatherMain = data[datePivot].weather[0].main;
-
-    if( weatherMain === "Rain" ) {
-        datGuiParams.rainMode = true;
-        datGuiParams.leafMode = true;
-        rain.setAmount(data[datePivot].rain['3h']);
-    }  else if( weatherMain === "Snow" ) {
-        datGuiParams.snowMode = true;
-        datGuiParams.leafMode = true;
-    } else {
-        datGuiParams.leafMode = false;
-        datGuiParams.rainMode = false;
-        datGuiParams.snowMode = false;
-    }
-
-    bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
+    // print('weather data', data);
+    //
+    // const datePivot = custom_date.getDatePivot();
+    // cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
+    // dandalion.blow(data[datePivot].wind.speed * 5);
+    //
+    // const weatherMain = data[datePivot].weather[0].main;
+    //
+    // if( weatherMain === "Rain" ) {
+    //     datGuiParams.rainMode = true;
+    //     datGuiParams.leafMode = true;
+    //     rain.setAmount(data[datePivot].rain['3h']);
+    // }  else if( weatherMain === "Snow" ) {
+    //     datGuiParams.snowMode = true;
+    //     datGuiParams.leafMode = true;
+    // } else {
+    //     datGuiParams.leafMode = false;
+    //     datGuiParams.rainMode = false;
+    //     datGuiParams.snowMode = false;
+    // }
+    //
+    // bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
 }
 
 function prevDate() {
