@@ -6,7 +6,7 @@ const io = require('socket.io')(http);
 // const geoip = require('geoip-lite');
 // const requestIp = require('request-ip');
 
-const port = 80;
+const port = 3000;
 
 let windValue = 0;
 let resistValue = 0;
