@@ -4,6 +4,16 @@ class CONST {
             'weather' : 'https://api.openweathermap.org/data/2.5/forecast?q=',
         };
 
+		this.CODE ={
+			NEXT_DAY : 0,
+			PREV_DAY : 1,
+			CUR_DAY : 2,
+			
+			NEXT_CITY : 0,
+			PREV_CITY : 1,
+			INDEX_CITY : 2,
+		};
+		
         this.TIME = {
             'min' : 60000,
             'sec' : 1000,
@@ -110,6 +120,6 @@ class CONST {
         this.SERIAL = {
             'port' : '/dev/serial0',
             'baudrate' : {'baudrate': 115200},
-        }
+        };
     };
 }

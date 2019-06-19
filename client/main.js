@@ -7,6 +7,7 @@ let info;
 
 let wheather, rain, snow, cloud;
 let drawFromJson;
+
 let totoro;
 let small_totoro;
 let bird;
@@ -112,7 +113,8 @@ function intervalSetup() {
 
 function draw() {
     sky.draw();
-    cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode);
+    cloud.draw(datGuiParams.rainMode || datGuiParams.snowMode || 
+			   (18 <= custom_date.getHours() || custom_date.getHours() < 5)  );
     hill.draw();
 
     if( datGuiParams.gwangjinguMode ) {
@@ -126,7 +128,7 @@ function draw() {
 
     if( !datGuiParams.gwangjinguMode &&
         (datGuiParams.snowMode || datGuiParams.rainMode) ) { leaf.draw(); }
-    dandalion.draw();
+    // dandalion.draw();
     bubble.draw();
     info.draw();
 
@@ -142,24 +144,23 @@ function mousePressed() {
     if (mouseButton === CENTER) { console.log('blow 10'); dandalion.blow(10); }
 }
 
-// TODO: for test. have to remove.
 function keyPressed() {
     if (keyCode === ENTER || keyCode === RETURN) {
         let fs = fullscreen();
         fullscreen(!fs);
     } else if (keyCode == LEFT_ARROW) {
-        this.prevDate();
+        this.changeDate(CON.CODE.PREV_DAY);
     } else if (keyCode == RIGHT_ARROW) {
-        this.nextDate();
+        this.changeDate(CON.CODE.NEXT_DAY);
     } else if (keyCode == UP_ARROW) {
-        this.nextCity();
+        this.changeCity(CON.CODE.NEXT_CITY);
     } else if (keyCode == DOWN_ARROW) {
-        this.prevCity();
+        this.changeCity(CON.CODE.PREV_CITY);
     }
 }
 
 function setWheaterData(data) {
-    print('weather data', data);
+    // print('weather data', data);
 
     const datePivot = custom_date.getDatePivot();
     cloud.setCloudData(data[datePivot].clouds.all, data[datePivot].wind.speed);
@@ -181,9 +182,9 @@ function setWheaterData(data) {
     bubble.setTempData(data[datePivot].main.temp_max, data[datePivot].main.temp_min);
 }
 
-function prevDate() {
-    if( !info.getDateAnimTrig() ) {
-        custom_date.prevDate();
+function changeDate(dir) {
+	if( !info.getDateAnimTrig() ) {
+        custom_date.update(custom_city.getCity(), dir);
         info.startDateAnim();
         info.setDateText(custom_date.getDate());
 
@@ -192,45 +193,16 @@ function prevDate() {
     }
 }
 
-function nextDate() {
-    if( !info.getDateAnimTrig() ) {
-        custom_date.nextDate();
-        info.startDateAnim();
-        info.setDateText(custom_date.getDate());
-
-        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
-        sky.calculateByTimeToSky(custom_date.getHours());
-    }
-}
-
-function prevCity() {
-    if( !info.getCityAnimTrig() && !datGuiParams.gwangjinguMode ) {
-        const cityName = custom_city.prevCity();
-        custom_date.setLocale(cityName);
-        if( custom_date.getDatePivot() != 0 ) {
-            custom_date.setNextDaysHour();
-            info.setDateText(custom_date.getDate());
-        }
-
+function changeCity(dir, index) {
+	if( !info.getCityAnimTrig() && !datGuiParams.gwangjinguMode ) {
+        const cityName = custom_city.moveCity(dir, index);
+		console.log('cityName', cityName);
+        custom_date.update(cityName, CON.CODE.CUR_DAY);
+		
+		info.setDateText(custom_date.getDate());
+		info.setCityText(cityName);
+		
         info.startCityAnim();
-        info.setCityText(cityName);
-
-        wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
-        sky.calculateByTimeToSky(custom_date.getHours());
-    }
-}
-
-function nextCity() {
-    if( !info.getCityAnimTrig() && !datGuiParams.gwangjinguMode ) {
-        const cityName = custom_city.nextCity();
-        custom_date.setLocale(cityName);
-        if( custom_date.getDatePivot() != 0 ) {
-            custom_date.setNextDaysHour();
-            info.setDateText(custom_date.getDate());
-        }
-
-        info.startCityAnim();
-        info.setCityText(cityName);
 
         wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
         sky.calculateByTimeToSky(custom_date.getHours());
@@ -245,28 +217,14 @@ function getGesture(dir) {
         default: break;
     }
 
-    console.log('getGesture Test', dir);
+    // console.log('getGesture Test', dir);
 }
 socket.on('wind', (value)=> {
-	  console.log('get socket wind value', value);
+	  // console.log('get socket wind value', value);
       dandalion.blow(value);
 });
 
 socket.on('resist', (value)=> {
-    console.log('get socekt resist value', value);
-    custom_city.changeCity(value);
-
-    const cityName = custom_city.getCity();
-
-    custom_date.setLocale(cityName);
-    if( custom_date.getDatePivot() != 0 ) {
-        custom_date.setNextDaysHour();
-        info.setDateText(custom_date.getDate());
-    }
-
-    info.startCityAnim();
-    info.setCityText(cityName);
-
-    wheather.loadWeatherData(custom_city.getCity(), setWheaterData);
-    sky.calculateByTimeToSky(custom_date.getHours());
+    // console.log('get socekt resist value', value);
+	this.changeCity(CON.CODE.INDEX_CITY, value);
 });

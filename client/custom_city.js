@@ -16,30 +16,23 @@ class CustomCity {
             CON.ARRAY.city[this.pivot]
         ];
     }
-
-    nextCity() {
-        if( this.pivot < CON.ARRAY.city.length - 1 ) {
-            this.pivot += 1;
-        }
-
-        return CON.ARRAY.city[this.pivot];
-    }
-
-    prevCity() {
-        if( this.pivot > 0 ) {
-            this.pivot -= 1;
-        }
-
-        return CON.ARRAY.city[this.pivot];
-    }
+	
+	moveCity(dir, index) {
+		if( dir == CON.CODE.NEXT_CITY ) {
+			this.pivot = this.pivot < CON.ARRAY.city.length - 1 ? this.pivot + 1 : this.pivot;
+			console.log('next city', this.pivot);
+		} else if( dir == CON.CODE.PREV_CITY ) {
+			this.pivot = this.pivot > 0 ? this.pivot - 1 : this.pivot;
+		} else if( dir == CON.CODE.INDEX_CITY ) {
+			this.pivot = index;
+		}
+		
+		return CON.ARRAY.city[this.pivot];
+	}
 
     changeCity(cityIndex) {
         this.pivot = cityIndex;
 
         return CON.ARRAY.city[this.pivot];
-    }
-
-    setLocale(city) {
-
     }
 }

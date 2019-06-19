@@ -1,13 +1,12 @@
 class CustomDate {
     constructor(props) {
-        this.jsDate = new Date();
-        this.curDate = null;
+		this.curOffset = CON.TIME.city_offset['Seoul'];
+        this.jsDate = this.getWorldTime(this.curOffset);
+        this.curDate = this.getDateFormat(this.jsDate);
         this.pivot = 0;
     }
 
-    init() {
-        this.curDate = this.getDateFormat(this.jsDate);
-    }
+    init() { }
 
     getDateFormat(date) {
         const day = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -45,46 +44,49 @@ class CustomDate {
         this.curDate = this.getDateFormat(this.jsDate);
     }
 
-    nextDate() {
-        if( this.pivot < 5) {
-            this.jsDate.setDate(this.jsDate.getDate() + 1);
-            this.setNextDaysHour();
-            this.pivot += 1;
-        }
-
-        return this.curDate;
-    }
-
-    prevDate() {
-        if( this.pivot > 0 ) {
-            this.jsDate.setDate(this.jsDate.getDate() - 1);
-            this.pivot -= 1;
-            if( this.pivot != 0 ) {
-                this.setNextDaysHour();
-            } else {
-                this.jsDate = new Date();
-                this.curDate = this.getDateFormat(this.jsDate);
-            }
-        } else if ( this.pivot == 0 ) {
-            this.jsDate = new Date();
-            this.curDate = this.getDateFormat(this.jsDate);
-        }
-
-        return this.curDate;
-    }
-
     getWorldTime(tzOffset) { // 24시간제
         var now = new Date();
         var tz = now.getTime() + (now.getTimezoneOffset() * 60000) + (tzOffset * 3600000);
         now.setTime(tz);
 
-        this.jsDate = now;
+        return now;
     }
+	
+	update(city, dir) {
+		this.setLocale(city);
+		
+		if( this.pivot != 0 ) {
+            this.setNextDaysHour();
+        }
+		
+		if( dir === CON.CODE.NEXT_DAY ) {
+			if( this.pivot < 5) {
+				this.jsDate.setDate(this.jsDate.getDate() + 1);
+				this.setNextDaysHour();
+				this.pivot += 1;
+			}
+		} else if( dir == CON.CODE.PREV_DAY ) {
+			if( this.pivot > 0 ) {
+				this.jsDate.setDate(this.jsDate.getDate() - 1);
+				this.pivot -= 1;
+				if( this.pivot != 0 ) {
+					this.setNextDaysHour();
+				} else {
+					this.jsDate = this.getWorldTime(this.curOffset);
+					this.curDate = this.getDateFormat(this.jsDate);
+				}
+			} else if ( this.pivot == 0 ) {
+				this.jsDate = this.getWorldTime(this.curOffset);
+				this.curDate = this.getDateFormat(this.jsDate);
+			}
+		}
+		
+		return this.curDate;
+	}
 
     setLocale(city) {
-        this.getWorldTime(CON.TIME.city_offset[city]);
-        // Input : cityName
-        // Process : Set date
-        // Output :
+		this.curOffset = CON.TIME.city_offset[city];
+        this.jsDate = this.getWorldTime(CON.TIME.city_offset[city]);
+		this.curDate = this.getDateFormat(this.jsDate);
     }
 }

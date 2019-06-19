@@ -6,7 +6,7 @@ class Sky{
         this.ratio = ratio;
 
         this.timeOfDay = [
-            [1, 5],
+            [0, 5],
             [6, 12],
             [12, 18],
             [18, 20],
@@ -31,11 +31,12 @@ class Sky{
 
     calculateByTimeToSky(hours) {
         for(let i = 0; i < this.timeOfDay.length; i++) {
-            if( hours > this.timeOfDay[i][0] && hours <= this.timeOfDay[i][1] ) {
+            if( hours >= this.timeOfDay[i][0] && hours <= this.timeOfDay[i][1] ) {
                 this.drawGradient(this.timeOfDay[i][0] - 1,
                     this.timeOfDay[i][1],
                     this.colorOfDay[i],
                     hours);
+				break;
             }
         }
     }
