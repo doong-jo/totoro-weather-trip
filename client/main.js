@@ -22,7 +22,7 @@ const datGuiParams = {
     windMode: true,
     rainMode: false,
     snowMode: false,
-    gwangjinguMode: true,
+    gwangjinguMode: false,
 };
 
 function setup() {
