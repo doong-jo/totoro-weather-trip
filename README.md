@@ -17,6 +17,9 @@
 ---
 
 ## [Demo](https://totoroweather.run.goorm.io/)
+#### 공통
+* 오른쪽 상단에 BGM, 지역(광진구), 비, 눈 모드 등을 설정할 수 있는 컨트롤이 위치함
+
 #### (Only) p5.js
 * 키보드 좌/우 press => 이전/다음 날짜 이동
 * 키보드 상/하 press => 이전/다음 도시 이동
