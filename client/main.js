@@ -220,8 +220,8 @@ function changeCity(dir, index) {
 
 function getGesture(dir) {
     switch(dir) {
-        case CON.GESTURE.left: prevDate(); break;
-        case CON.GESTURE.right: nextDate(); break;
+        case CON.GESTURE.left: changeDate(CON.CODE.PREV_DAY); break;
+        case CON.GESTURE.right: changeDate(CON.CODE.NEXT_DAY); break;
         case CON.GESTURE.timestone: dandalion.refresh(1); break;
         default: break;
     }

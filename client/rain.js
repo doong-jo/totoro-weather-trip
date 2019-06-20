@@ -51,6 +51,7 @@ class Rain {
 
     setAmount(amount) {
         this.rain_num = int(amount * 10);
+
         this.drops = [];
         this.init();
     }
