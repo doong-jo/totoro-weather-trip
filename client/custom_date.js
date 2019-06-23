@@ -53,6 +53,9 @@ class CustomDate {
     }
 	
 	update(city, dir) {
+		if( this.pivot >= 4 && dir === CON.CODE.NEXT_DAY ) { return; }
+		if( this.pivot <= 0 && dir === CON.CODE.PREV_DAY ) { return; }
+		
 		this.setLocale(city);
 		
 		if( this.pivot != 0 ) {
@@ -60,9 +63,10 @@ class CustomDate {
         }
 		
 		if( dir === CON.CODE.NEXT_DAY ) {
-			if( this.pivot < 5) {
+			if( this.pivot < 4) {
 				this.jsDate.setDate(this.jsDate.getDate() + 1);
 				this.setNextDaysHour();
+				this.curDate = this.getDateFormat(this.jsDate);
 				this.pivot += 1;
 			}
 		} else if( dir == CON.CODE.PREV_DAY ) {
@@ -85,8 +89,14 @@ class CustomDate {
 	}
 
     setLocale(city) {
-		this.curOffset = CON.TIME.city_offset[city];
-        this.jsDate = this.getWorldTime(CON.TIME.city_offset[city]);
-		this.curDate = this.getDateFormat(this.jsDate);
+		if( this.curOffset != CON.TIME.city_offset[city] ) {
+			this.curOffset = CON.TIME.city_offset[city];
+			this.jsDate = this.getWorldTime(CON.TIME.city_offset[city]);
+			this.jsDate.setDate(this.jsDate.getDate() + this.pivot);
+			if( this.pivot !=0 ) {
+				this.setNextDaysHour();
+			}
+			this.curDate = this.getDateFormat(this.jsDate);	
+		}
     }
 }
